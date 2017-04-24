@@ -431,21 +431,21 @@ msgstr ""
 "\n"
 
 #: lib/plugin/WpProQuiz_Plugin_BpAchievementsV2.php:33
-#: lib/plugin/WpProQuiz_Plugin_BpAchievementsV3.php:6
+#: lib/plugin/WpProQuiz_Plugin_BpAchievementsV1.php:6
 msgid "The user completed a quiz."
 msgstr "El usuario ha terminado un cuestionario."
 
-#: lib/plugin/WpProQuiz_Plugin_BpAchievementsV3.php:7
+#: lib/plugin/WpProQuiz_Plugin_BpAchievementsV1.php:7
 msgid "The user completed a quiz with 100 percent."
 msgstr "Eu usuario completó el cuestionario co el 100 por cien de aciertos."
 
-#: lib/plugin/WpProQuiz_Plugin_BpAchievementsV3.php:18
+#: lib/plugin/WpProQuiz_Plugin_BpAchievementsV1.php:18
 msgid "A powerful and beautiful quiz plugin for WordPress."
 msgstr ""
 "Un potente y elegante plugin para hacer cuestionarios autocorregidos con "
 "Wordpress"
 
-#: lib/plugin/WpProQuiz_Plugin_BpAchievementsV3.php:21
+#: lib/plugin/WpProQuiz_Plugin_BpAchievementsV1.php:21
 #: lib/view/WpProQuiz_View_QuizOverall.php:290
 msgid "WP-Pro-Quiz"
 msgstr "WP-Pro-Quiz"

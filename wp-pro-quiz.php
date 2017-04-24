@@ -3,14 +3,14 @@
 Plugin Name: WP-Pro-Quiz
 Plugin URI: http://wordpress.org/extend/plugins/wp-pro-quiz
 Description: A powerful and beautiful quiz plugin for WordPress.
-Version: 0.37
+Version: 1.0.0
 Author: Julius Fischer
 Author URI: http://www.it-gecko.de
 Text Domain: wp-pro-quiz
 Domain Path: /languages
 */
 
-define('WPPROQUIZ_VERSION', '0.37');
+define('WPPROQUIZ_VERSION', '1.0.0');
 
 define('WPPROQUIZ_DEV', false);
 
@@ -75,7 +75,6 @@ function wpProQuiz_autoload($class)
 
 function wpProQuiz_pluginLoaded()
 {
-
     load_plugin_textdomain('wp-pro-quiz', false, WPPROQUIZ_PPATH . '/languages');
 
     if (get_option('wpProQuiz_version') !== WPPROQUIZ_VERSION) {
@@ -83,13 +82,13 @@ function wpProQuiz_pluginLoaded()
     }
 }
 
-function wpProQuiz_achievementsV3()
+function wpProQuiz_achievementsV1()
 {
     if (function_exists('achievements')) {
-        achievements()->extensions->wp_pro_quiz = new WpProQuiz_Plugin_BpAchievementsV3();
+        achievements()->extensions->wp_pro_quiz = new WpProQuiz_Plugin_BpAchievementsV1();
 
-        do_action('wpProQuiz_achievementsV3');
+        do_action('wpProQuiz_achievementsV1');
     }
 }
 
-add_action('dpa_ready', 'wpProQuiz_achievementsV3');
+add_action('dpa_ready', 'wpProQuiz_achievementsV1');

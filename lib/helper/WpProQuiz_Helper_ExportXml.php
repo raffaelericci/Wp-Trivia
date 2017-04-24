@@ -64,11 +64,6 @@ class WpProQuiz_Helper_ExportXml
     {
         $quizElement = $dom->createElement('quiz');
 
-        $title = $dom->createElement('title');
-        $title->appendChild($dom->createCDATASection($quiz->getName()));
-        $title->setAttribute('titleHidden', $this->booleanToTrueOrFalse($quiz->isTitleHidden()));
-        $quizElement->appendChild($title);
-
         $quizElement->appendChild($text = $dom->createElement('text'));
         $text->appendChild($dom->createCDATASection($quiz->getText()));
 
@@ -96,14 +91,6 @@ class WpProQuiz_Helper_ExportXml
             $quizElement->appendChild($result);
         }
 
-        $quizElement->appendChild($dom->createElement('btnRestartQuizHidden',
-            $this->booleanToTrueOrFalse($quiz->isBtnRestartQuizHidden())));
-        $quizElement->appendChild($dom->createElement('btnViewQuestionHidden',
-            $this->booleanToTrueOrFalse($quiz->isBtnViewQuestionHidden())));
-        $quizElement->appendChild($dom->createElement('questionRandom',
-            $this->booleanToTrueOrFalse($quiz->isQuestionRandom())));
-        $quizElement->appendChild($dom->createElement('answerRandom',
-            $this->booleanToTrueOrFalse($quiz->isAnswerRandom())));
         $quizElement->appendChild($dom->createElement('timeLimit', $quiz->getTimeLimit()));
         $quizElement->appendChild($dom->createElement('showPoints',
             $this->booleanToTrueOrFalse($quiz->isShowPoints())));
@@ -183,9 +170,6 @@ class WpProQuiz_Helper_ExportXml
             $this->booleanToTrueOrFalse($quiz->isSortCategories())));
         $quizElement->appendChild($dom->createElement('showCategory',
             $this->booleanToTrueOrFalse($quiz->isShowCategory())));
-        $quizModus = $dom->createElement('quizModus', $quiz->getQuizModus());
-        $quizModus->setAttribute('questionsPerPage', $quiz->getQuestionsPerPage());
-        $quizElement->appendChild($quizModus);
 
         $quizElement->appendChild($dom->createElement('startOnlyRegisteredUser',
             $this->booleanToTrueOrFalse($quiz->isStartOnlyRegisteredUser())));
@@ -199,12 +183,6 @@ class WpProQuiz_Helper_ExportXml
             /* @var $adminEmail WpProQuiz_Model_Email */
             $adminEmail = $quiz->getAdminEmail();
             $adminEmailXml = $dom->createElement('adminEmail');
-
-            /*
-             * $qElement->appendChild($title = $dom->createElement('title'));
-        $title->appendChild($dom->createCDATASection($question->getTitle()));
-             */
-
             $adminEmailXml->appendChild($dom->createElement('to', $adminEmail->getTo()));
             $adminEmailXml->appendChild($dom->createElement('form', $adminEmail->getFrom()));
             $adminEmailXml->appendChild($dom->createElement('subject', $adminEmail->getSubject()));

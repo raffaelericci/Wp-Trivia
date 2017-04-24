@@ -430,19 +430,19 @@ msgstr ""
 "\n"
 
 #: lib/plugin/WpProQuiz_Plugin_BpAchievementsV2.php:33
-#: lib/plugin/WpProQuiz_Plugin_BpAchievementsV3.php:6
+#: lib/plugin/WpProQuiz_Plugin_BpAchievementsV1.php:6
 msgid "The user completed a quiz."
 msgstr "Kullanıcı bir sınav bitirdi."
 
-#: lib/plugin/WpProQuiz_Plugin_BpAchievementsV3.php:7
+#: lib/plugin/WpProQuiz_Plugin_BpAchievementsV1.php:7
 msgid "The user completed a quiz with 100 percent."
 msgstr "Kullanıcı sınavı %100 sonuç ile bitirdi."
 
-#: lib/plugin/WpProQuiz_Plugin_BpAchievementsV3.php:18
+#: lib/plugin/WpProQuiz_Plugin_BpAchievementsV1.php:18
 msgid "A powerful and beautiful quiz plugin for WordPress."
 msgstr "Wordpress için güzel ve kuvvetli bir sınav eklentisi."
 
-#: lib/plugin/WpProQuiz_Plugin_BpAchievementsV3.php:21
+#: lib/plugin/WpProQuiz_Plugin_BpAchievementsV1.php:21
 #: lib/view/WpProQuiz_View_QuizOverall.php:290
 msgid "WP-Pro-Quiz"
 msgstr "WP-Pro-Quiz"

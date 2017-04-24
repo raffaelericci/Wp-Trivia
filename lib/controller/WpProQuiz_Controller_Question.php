@@ -99,7 +99,7 @@ class WpProQuiz_Controller_Question extends WpProQuiz_Controller_Controller
 
         $quizMapper = new WpProQuiz_Model_QuizMapper();
         $questionMapper = new WpProQuiz_Model_QuestionMapper();
-        $cateoryMapper = new WpProQuiz_Model_CategoryMapper();
+        $categoryMapper = new WpProQuiz_Model_CategoryMapper();
         $templateMapper = new WpProQuiz_Model_TemplateMapper();
 
         if ($questionId && $questionMapper->existsAndWritable($questionId) == 0) {
@@ -144,7 +144,7 @@ class WpProQuiz_Controller_Question extends WpProQuiz_Controller_Controller
         }
 
         $view = new WpProQuiz_View_QuestionEdit();
-        $view->categories = $cateoryMapper->fetchAll();
+        $view->categories = $categoryMapper->fetchAll();
         $view->quiz = $quizMapper->fetch($quizId);
         $view->templates = $templateMapper->fetchAll(WpProQuiz_Model_Template::TEMPLATE_TYPE_QUESTION, false);
         $view->question = $question;

@@ -224,10 +224,7 @@ class WpProQuiz_Helper_ImportXml
 
         $model->setName(trim($xml->title));
         $model->setText(trim($xml->text));
-        $model->setTitleHidden($xml->title->attributes()->titleHidden == 'true');
 
-        $model->setQuestionRandom($xml->questionRandom == 'true');
-        $model->setAnswerRandom($xml->answerRandom == 'true');
         $model->setTimeLimit($xml->timeLimit);
 
         $model->setResultText($xml->resultText);
@@ -257,8 +254,6 @@ class WpProQuiz_Helper_ImportXml
         }
 
         $model->setShowPoints($xml->showPoints == 'true');
-        $model->setBtnRestartQuizHidden($xml->btnRestartQuizHidden == 'true');
-        $model->setBtnViewQuestionHidden($xml->btnViewQuestionHidden == 'true');
         $model->setNumberedAnswer($xml->numberedAnswer == 'true');
         $model->setHideAnswerMessageBox($xml->hideAnswerMessageBox == 'true');
         $model->setDisabledAnswerMark($xml->disabledAnswerMark == 'true');
@@ -308,7 +303,6 @@ class WpProQuiz_Helper_ImportXml
 
         $model->setShowAverageResult($xml->showAverageResult == 'true');
         $model->setPrerequisite($xml->prerequisite == 'true');
-        $model->setQuizModus($xml->quizModus);
         $model->setShowReviewQuestion($xml->showReviewQuestion == 'true');
         $model->setQuizSummaryHide($xml->quizSummaryHide == 'true');
         $model->setSkipQuestionDisabled($xml->skipQuestionDisabled == 'true');
@@ -328,17 +322,8 @@ class WpProQuiz_Helper_ImportXml
         $model->setSortCategories($xml->sortCategories == 'true');
         $model->setShowCategory($xml->showCategory == 'true');
 
-        if (isset($xml->quizModus)) {
-            $attr = $xml->quizModus->attributes();
-
-            if ($attr !== null) {
-                $model->setQuestionsPerPage($attr->questionsPerPage);
-            }
-        }
-
         if (isset($xml->forms)) {
             $attr = $xml->forms->attributes();
-
             $model->setFormActivated($attr->activated == 'true');
             $model->setFormShowPosition($attr->position);
         }

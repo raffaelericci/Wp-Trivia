@@ -19,11 +19,6 @@ class WpProQuiz_Model_Quiz extends WpProQuiz_Model_Model
     const QUIZ_TOPLIST_SHOW_IN_NORMAL = 1;
     const QUIZ_TOPLIST_SHOW_IN_BUTTON = 2;
 
-    const QUIZ_MODUS_NORMAL = 0;
-    const QUIZ_MODUS_BACK_BUTTON = 1;
-    const QUIZ_MODUS_CHECK = 2;
-    const QUIZ_MODUS_SINGLE = 3;
-
     const QUIZ_EMAIL_NOTE_NONE = 0;
     const QUIZ_EMAIL_NOTE_REG_USER = 1;
     const QUIZ_EMAIL_NOTE_ALL = 2;
@@ -35,11 +30,6 @@ class WpProQuiz_Model_Quiz extends WpProQuiz_Model_Model
     protected $_name = '';
     protected $_text = '';
     protected $_resultText;
-    protected $_titleHidden = false;
-    protected $_btnRestartQuizHidden = false;
-    protected $_btnViewQuestionHidden = false;
-    protected $_questionRandom = false;
-    protected $_answerRandom = false;
     protected $_timeLimit = 0;
     protected $_statisticsOn = false;
     protected $_statisticsIpLock = 1440;
@@ -75,7 +65,6 @@ class WpProQuiz_Model_Quiz extends WpProQuiz_Model_Model
 
     //0.22
     protected $_toplistDataAddAutomatic = false;
-    protected $_quizModus = 0;
     protected $_showReviewQuestion = false;
     protected $_quizSummaryHide = false;
     protected $_skipQuestionDisabled = false;
@@ -159,42 +148,6 @@ class WpProQuiz_Model_Quiz extends WpProQuiz_Model_Model
         return $this->_resultText;
     }
 
-    public function setTitleHidden($_titleHidden)
-    {
-        $this->_titleHidden = (bool)$_titleHidden;
-
-        return $this;
-    }
-
-    public function isTitleHidden()
-    {
-        return $this->_titleHidden;
-    }
-
-    public function setQuestionRandom($_questionRandom)
-    {
-        $this->_questionRandom = (bool)$_questionRandom;
-
-        return $this;
-    }
-
-    public function isQuestionRandom()
-    {
-        return $this->_questionRandom;
-    }
-
-    public function setAnswerRandom($_answerRandom)
-    {
-        $this->_answerRandom = (bool)$_answerRandom;
-
-        return $this;
-    }
-
-    public function isAnswerRandom()
-    {
-        return $this->_answerRandom;
-    }
-
     public function setTimeLimit($_timeLimit)
     {
         $this->_timeLimit = (int)$_timeLimit;
@@ -267,30 +220,6 @@ class WpProQuiz_Model_Quiz extends WpProQuiz_Model_Model
         $m = new WpProQuiz_Model_QuizMapper();
 
         return $m->countQuestion($this->_id);
-    }
-
-    public function setBtnRestartQuizHidden($_btnRestartQuizHidden)
-    {
-        $this->_btnRestartQuizHidden = (bool)$_btnRestartQuizHidden;
-
-        return $this;
-    }
-
-    public function isBtnRestartQuizHidden()
-    {
-        return $this->_btnRestartQuizHidden;
-    }
-
-    public function setBtnViewQuestionHidden($_btnViewQuestionHidden)
-    {
-        $this->_btnViewQuestionHidden = (bool)$_btnViewQuestionHidden;
-
-        return $this;
-    }
-
-    public function isBtnViewQuestionHidden()
-    {
-        return $this->_btnViewQuestionHidden;
     }
 
     public function setQuizRunOnce($_quizRunOnce)
@@ -573,18 +502,6 @@ class WpProQuiz_Model_Quiz extends WpProQuiz_Model_Model
     public function isToplistDataAddAutomatic()
     {
         return $this->_toplistDataAddAutomatic;
-    }
-
-    public function setQuizModus($_quizModus)
-    {
-        $this->_quizModus = (int)$_quizModus;
-
-        return $this;
-    }
-
-    public function getQuizModus()
-    {
-        return $this->_quizModus;
     }
 
     public function setShowReviewQuestion($_showReviewQuestion)

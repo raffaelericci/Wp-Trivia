@@ -1,6 +1,6 @@
 <?php
 
-class WpProQuiz_Plugin_BpAchievementsV3 extends DPA_Extension
+class WpProQuiz_Plugin_BpAchievementsV1 extends DPA_Extension
 {
 
     public function __construct()
@@ -45,8 +45,6 @@ class WpProQuiz_Plugin_BpAchievementsV3 extends DPA_Extension
                     wp_insert_term($actionName, $taxId, array('description' => $desc));
                 }
             }
-
         }
-
     }
 }

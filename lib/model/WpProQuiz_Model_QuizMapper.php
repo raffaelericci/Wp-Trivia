@@ -34,7 +34,7 @@ class WpProQuiz_Model_QuizMapper extends WpProQuiz_Model_Mapper
             $this->_wpdb->prepare(
                 "SELECT
 									m.*,
-									c.category_name  
+									c.category_name
 								FROM
 									{$this->_table} AS m
 									LEFT JOIN {$this->_tableCategory} AS c
@@ -61,10 +61,10 @@ class WpProQuiz_Model_QuizMapper extends WpProQuiz_Model_Mapper
 
         $results = $this->_wpdb->get_results(
             "
-				SELECT 
+				SELECT
 					m.*,
-					c.category_name 
-				FROM 
+					c.category_name
+				FROM
 					{$this->_table} AS m
 					LEFT JOIN {$this->_tableCategory} AS c
 						ON c.category_id = m.category_id
@@ -178,11 +178,6 @@ class WpProQuiz_Model_QuizMapper extends WpProQuiz_Model_Mapper
             'name' => $data->getName(),
             'text' => $data->getText(),
             'result_text' => $resultText,
-            'title_hidden' => (int)$data->isTitleHidden(),
-            'btn_restart_quiz_hidden' => (int)$data->isBtnRestartQuizHidden(),
-            'btn_view_question_hidden' => (int)$data->isBtnViewQuestionHidden(),
-            'question_random' => (int)$data->isQuestionRandom(),
-            'answer_random' => (int)$data->isAnswerRandom(),
             'time_limit' => (int)$data->getTimeLimit(),
             'statistics_on' => (int)$data->isStatisticsOn(),
             'statistics_ip_lock' => (int)$data->getStatisticsIpLock(),
@@ -202,7 +197,6 @@ class WpProQuiz_Model_QuizMapper extends WpProQuiz_Model_Mapper
             'toplist_data' => $data->getToplistData(),
             'show_average_result' => (int)$data->isShowAverageResult(),
             'prerequisite' => (int)$data->isPrerequisite(),
-            'quiz_modus' => (int)$data->getQuizModus(),
             'show_review_question' => (int)$data->isShowReviewQuestion(),
             'quiz_summary_hide' => (int)$data->isQuizSummaryHide(),
             'skip_question_disabled' => (int)$data->isSkipQuestionDisabled(),
@@ -399,7 +393,7 @@ class WpProQuiz_Model_QuizMapper extends WpProQuiz_Model_Mapper
 
         return $this->_wpdb->query($this->_wpdb->prepare(
             "UPDATE {$this->_tableMaster}
-			SET `statistics_on` = 1, `statistics_ip_lock` = %d 
+			SET `statistics_on` = 1, `statistics_ip_lock` = %d
 			WHERE `statistics_on` = 0 AND id IN(" . $quizIds . ")"
             , $lockIpTime));
     }
@@ -409,17 +403,17 @@ class WpProQuiz_Model_QuizMapper extends WpProQuiz_Model_Mapper
         return $this->_wpdb->query(
             $this->_wpdb->prepare(
                 "DELETE
-					m, q, l, p, t, f, sr, s 
-				FROM 
-					{$this->_tableMaster} AS m 
-					LEFT JOIN {$this->_tableQuestion} AS q ON(q.quiz_id = m.id) 
-					LEFT JOIN {$this->_tableLock} AS l ON(l.quiz_id = m.id) 
-					LEFT JOIN {$this->_tablePrerequisite} AS p ON(p.prerequisite_quiz_id = m.id) 
-					LEFT JOIN {$this->_tableToplist} AS t ON(t.quiz_id = m.id) 
+					m, q, l, p, t, f, sr, s
+				FROM
+					{$this->_tableMaster} AS m
+					LEFT JOIN {$this->_tableQuestion} AS q ON(q.quiz_id = m.id)
+					LEFT JOIN {$this->_tableLock} AS l ON(l.quiz_id = m.id)
+					LEFT JOIN {$this->_tablePrerequisite} AS p ON(p.prerequisite_quiz_id = m.id)
+					LEFT JOIN {$this->_tableToplist} AS t ON(t.quiz_id = m.id)
 					LEFT JOIN {$this->_tableForm} AS f ON(f.quiz_id = m.id)
-					LEFT JOIN {$this->_tableStatisticRef} AS sr ON(sr.quiz_id = m.id) 
-						LEFT JOIN {$this->_tableStatistic} AS s ON(s.statistic_ref_id = sr.statistic_ref_id) 
-				WHERE 
+					LEFT JOIN {$this->_tableStatisticRef} AS sr ON(sr.quiz_id = m.id)
+						LEFT JOIN {$this->_tableStatistic} AS s ON(s.statistic_ref_id = sr.statistic_ref_id)
+				WHERE
 					m.id = %d"
                 , $quizId)
         );
@@ -432,7 +426,7 @@ class WpProQuiz_Model_QuizMapper extends WpProQuiz_Model_Mapper
         return $this->_wpdb->query($this->_wpdb->prepare(
             "UPDATE
 					{$this->_tableMaster}
-				SET 
+				SET
 					`category_id` = %d
 				WHERE id IN(" . $quizIds . ")"
             , $categoryId));

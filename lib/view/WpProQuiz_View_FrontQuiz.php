@@ -21,7 +21,6 @@ class WpProQuiz_View_FrontQuiz extends WpProQuiz_View_View
 
         $names = array(
             'start_quiz' => __('Start quiz', 'wp-pro-quiz'),
-            'restart_quiz' => __('Restart quiz', 'wp-pro-quiz'),
             'quiz_summary' => __('Quiz-summary', 'wp-pro-quiz'),
             'finish_quiz' => __('Finish quiz', 'wp-pro-quiz'),
             'quiz_is_loading' => __('Quiz is loading...', 'wp-pro-quiz'),
@@ -86,9 +85,7 @@ class WpProQuiz_View_FrontQuiz extends WpProQuiz_View_View
         <div class="wpProQuiz_content" id="wpProQuiz_<?php echo $this->quiz->getId(); ?>">
             <?php
 
-            if (!$this->quiz->isTitleHidden()) {
-                echo '<h2>', $this->quiz->getName(), '</h2>';
-            }
+            echo '<h2>', $this->quiz->getName(), '</h2>';
 
             $this->showTimeLimitBox();
             $this->showCheckPageBox($question_count);
@@ -114,28 +111,6 @@ class WpProQuiz_View_FrontQuiz extends WpProQuiz_View_View
         <?php
 
         $bo = $this->createOption($preview);
-
-        /*
-         * old function
-         *
-        <script type="text/javascript">
-            jQuery(document).ready(function ($) {
-                $('#wpProQuiz_<?php echo $this->quiz->getId(); ?>').wpProQuizFront({
-                    quizId: <?php echo (int)$this->quiz->getId(); ?>,
-                    mode: <?php echo (int)$this->quiz->getQuizModus(); ?>,
-                    globalPoints: <?php echo (int)$quizData['globalPoints']; ?>,
-                    timelimit: <?php echo (int)$this->quiz->getTimeLimit(); ?>,
-                    resultsGrade: <?php echo $resultsProzent; ?>,
-                    bo: <?php echo $bo ?>,
-                    qpp: <?php echo $this->quiz->getQuestionsPerPage(); ?>,
-                    catPoints: <?php echo json_encode($quizData['catPoints']); ?>,
-                    formPos: <?php echo (int)$this->quiz->getFormShowPosition(); ?>,
-                    lbn: <?php echo json_encode(($this->quiz->isShowReviewQuestion() && !$this->quiz->isQuizSummaryHide()) ? $this->_buttonNames['quiz_summary'] : $this->_buttonNames['finish_quiz']); ?>,
-                    json: <?php echo json_encode($quizData['json']); ?>
-                });
-            });
-        </script>
-        */
         ?>
         <script type="text/javascript">
             window.wpProQuizInitList = window.wpProQuizInitList || [];
@@ -144,7 +119,6 @@ class WpProQuiz_View_FrontQuiz extends WpProQuiz_View_View
                 id: '#wpProQuiz_<?php echo $this->quiz->getId(); ?>',
                 init: {
                     quizId: <?php echo (int)$this->quiz->getId(); ?>,
-                    mode: <?php echo (int)$this->quiz->getQuizModus(); ?>,
                     globalPoints: <?php echo (int)$quizData['globalPoints']; ?>,
                     timelimit: <?php echo (int)$this->quiz->getTimeLimit(); ?>,
                     resultsGrade: <?php echo $resultsProzent; ?>,
@@ -164,8 +138,6 @@ class WpProQuiz_View_FrontQuiz extends WpProQuiz_View_View
     {
         $bo = 0;
 
-        $bo |= ((int)$this->quiz->isAnswerRandom()) << 0;
-        $bo |= ((int)$this->quiz->isQuestionRandom()) << 1;
         $bo |= ((int)$this->quiz->isDisabledAnswerMark()) << 2;
         $bo |= ((int)($this->quiz->isQuizRunOnce() || $this->quiz->isPrerequisite() || $this->quiz->isStartOnlyRegisteredUser())) << 3;
         $bo |= ((int)$preview) << 4;
@@ -205,9 +177,7 @@ class WpProQuiz_View_FrontQuiz extends WpProQuiz_View_View
         <div class="wpProQuiz_content" id="wpProQuiz_<?php echo $this->quiz->getId(); ?>">
             <?php
 
-            if (!$this->quiz->isTitleHidden()) {
-                echo '<h2>', $this->quiz->getName(), '</h2>';
-            }
+            echo '<h2>', $this->quiz->getName(), '</h2>';
 
             $this->showTimeLimitBox();
             $this->showCheckPageBox($question_count);
@@ -236,7 +206,6 @@ class WpProQuiz_View_FrontQuiz extends WpProQuiz_View_View
             jQuery(document).ready(function ($) {
                 $('#wpProQuiz_<?php echo $this->quiz->getId(); ?>').wpProQuizFront({
                     quizId: <?php echo (int)$this->quiz->getId(); ?>,
-                    mode: <?php echo (int)$this->quiz->getQuizModus(); ?>,
                     timelimit: <?php echo (int)$this->quiz->getTimeLimit(); ?>,
                     resultsGrade: <?php echo $resultsProzent; ?>,
                     bo: <?php echo $bo ?>,
@@ -672,18 +641,6 @@ class WpProQuiz_View_FrontQuiz extends WpProQuiz_View_View
                 </ol>
                 <div style="clear: both;"></div>
             </div>
-            <div>
-                <?php if ($this->quiz->getQuizModus() != WpProQuiz_Model_Quiz::QUIZ_MODUS_SINGLE) { ?>
-                    <input type="button" name="review" value="<?php _e('Review question', 'wp-pro-quiz'); ?>"
-                           class="wpProQuiz_button2" style="float: left; display: block;">
-                    <?php if (!$this->quiz->isQuizSummaryHide()) { ?>
-                        <input type="button" name="quizSummary"
-                               value="<?php echo $this->_buttonNames['quiz_summary']; ?>" class="wpProQuiz_button2"
-                               style="float: right;">
-                    <?php } ?>
-                    <div style="clear: both;"></div>
-                <?php } ?>
-            </div>
         </div>
         <?php
     }
@@ -774,14 +731,6 @@ class WpProQuiz_View_FrontQuiz extends WpProQuiz_View_View
             }
             ?>
             <div style="margin: 10px 0px;">
-                <?php if (!$this->quiz->isBtnRestartQuizHidden()) { ?>
-                    <input class="wpProQuiz_button" type="button" name="restartQuiz"
-                           value="<?php echo $this->_buttonNames['restart_quiz']; ?>">
-                <?php }
-                if (!$this->quiz->isBtnViewQuestionHidden()) { ?>
-                    <input class="wpProQuiz_button" type="button" name="reShowQuestion"
-                           value="<?php _e('View questions', 'wp-pro-quiz'); ?>">
-                <?php } ?>
                 <?php if ($this->quiz->isToplistActivated() && $this->quiz->getToplistDataShowIn() == WpProQuiz_Model_Quiz::QUIZ_TOPLIST_SHOW_IN_BUTTON) { ?>
                     <input class="wpProQuiz_button" type="button" name="showToplist"
                            value="<?php _e('Show leaderboard', 'wp-pro-quiz'); ?>">
@@ -834,18 +783,16 @@ class WpProQuiz_View_FrontQuiz extends WpProQuiz_View_View
 
                     if (!$question->isAnswerPointsActivated()) {
                         $json[$question->getId()]['points'] = $question->getPoints();
-                        // 					$catPoints[$question->getCategoryId()] += $question->getPoints();
                     }
 
                     if ($question->isAnswerPointsActivated() && $question->isAnswerPointsDiffModusActivated()) {
-                        // 					$catPoints[$question->getCategoryId()] += $question->getPoints();
                         $json[$question->getId()]['diffMode'] = 1;
                     }
 
                     ?>
                     <li class="wpProQuiz_listItem" style="display: none;">
                         <div
-                            class="wpProQuiz_question_page" <?php $this->isDisplayNone($this->quiz->getQuizModus() != WpProQuiz_Model_Quiz::QUIZ_MODUS_SINGLE && !$this->quiz->isHideQuestionPositionOverview()); ?> >
+                            class="wpProQuiz_question_page" <?php $this->isDisplayNone(!$this->quiz->isHideQuestionPositionOverview()); ?> >
                             <?php printf(__('Question %s of %s', 'wp-pro-quiz'), '<span>' . $index . '</span>',
                                 '<span>' . $questionCount . '</span>'); ?>
                         </div>
@@ -917,9 +864,6 @@ class WpProQuiz_View_FrontQuiz extends WpProQuiz_View_View
 
                                     if ($question->isAnswerPointsActivated()) {
                                         $json[$question->getId()]['points'][] = $v->getPoints();
-
-                                        // 								if(!$question->isAnswerPointsDiffModusActivated())
-                                        // 									$catPoints[$question->getCategoryId()] += $question->getPoints();
                                     }
 
                                     ?>
@@ -1088,7 +1032,7 @@ class WpProQuiz_View_FrontQuiz extends WpProQuiz_View_View
                             </div>
                         <?php } ?>
 
-                        <?php if ($this->quiz->getQuizModus() == WpProQuiz_Model_Quiz::QUIZ_MODUS_CHECK && !$this->quiz->isSkipQuestionDisabled() && $this->quiz->isShowReviewQuestion()) { ?>
+                        <?php if (!$this->quiz->isSkipQuestionDisabled() && $this->quiz->isShowReviewQuestion()) { ?>
                             <input type="button" name="skip" value="<?php _e('Skip question', 'wp-pro-quiz'); ?>"
                                    class="wpProQuiz_button wpProQuiz_QuestionButton"
                                    style="float: left; margin-right: 10px !important;">
@@ -1108,37 +1052,9 @@ class WpProQuiz_View_FrontQuiz extends WpProQuiz_View_View
                                class="wpProQuiz_button wpProQuiz_QuestionButton" style="float: right; display: none;">
 
                         <div style="clear: both;"></div>
-
-                        <?php if ($this->quiz->getQuizModus() == WpProQuiz_Model_Quiz::QUIZ_MODUS_SINGLE) { ?>
-                            <div style="margin-bottom: 20px;"></div>
-                        <?php } ?>
-
                     </li>
-
                 <?php } ?>
             </ol>
-            <?php if ($this->quiz->getQuizModus() == WpProQuiz_Model_Quiz::QUIZ_MODUS_SINGLE) { ?>
-                <div>
-                    <input type="button" name="wpProQuiz_pageLeft"
-                           data-text="<?php echo esc_attr(__('Page %d', 'wp-pro-quiz')); ?>"
-                           style="float: left; display: none;" class="wpProQuiz_button wpProQuiz_QuestionButton">
-                    <input type="button" name="wpProQuiz_pageRight"
-                           data-text="<?php echo esc_attr(__('Page %d', 'wp-pro-quiz')); ?>"
-                           style="float: right; display: none;" class="wpProQuiz_button wpProQuiz_QuestionButton">
-
-                    <?php if ($this->quiz->isShowReviewQuestion() && !$this->quiz->isQuizSummaryHide()) { ?>
-                        <input type="button" name="checkSingle"
-                               value="<?php echo $this->_buttonNames['quiz_summary']; ?>"
-                               class="wpProQuiz_button wpProQuiz_QuestionButton" style="float: right;">
-                    <?php } else { ?>
-                        <input type="button" name="checkSingle"
-                               value="<?php echo $this->_buttonNames['finish_quiz']; ?>"
-                               class="wpProQuiz_button wpProQuiz_QuestionButton" style="float: right;">
-                    <?php } ?>
-
-                    <div style="clear: both;"></div>
-                </div>
-            <?php } ?>
         </div>
         <?php
 

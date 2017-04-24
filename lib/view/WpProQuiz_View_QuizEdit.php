@@ -16,11 +16,6 @@ class WpProQuiz_View_QuizEdit extends WpProQuiz_View_View
     {
         ?>
         <style>
-            .wpProQuiz_quizModus th, .wpProQuiz_quizModus td {
-                border-right: 1px solid #A0A0A0;
-                padding: 5px;
-            }
-
             .wpProQuiz_demoBox {
                 position: relative;
             }
@@ -94,7 +89,7 @@ class WpProQuiz_View_QuizEdit extends WpProQuiz_View_View
                             </div>
                             <div id="categoryMsgBox"
                                  style="display:none; padding: 5px; border: 1px solid rgb(160, 160, 160); background-color: rgb(255, 255, 168); font-weight: bold; margin: 5px; ">
-                                Kategorie gespeichert
+                                <?php _e('Category saved', 'wp-pro-quiz'); ?>
                             </div>
                         </div>
                     </div>
@@ -109,105 +104,6 @@ class WpProQuiz_View_QuizEdit extends WpProQuiz_View_View
                                 <tbody>
                                 <tr>
                                     <th scope="row">
-                                        <?php _e('Hide quiz title', 'wp-pro-quiz'); ?>
-                                    </th>
-                                    <td>
-                                        <fieldset>
-                                            <legend class="screen-reader-text">
-                                                <span><?php _e('Hide title', 'wp-pro-quiz'); ?></span>
-                                            </legend>
-                                            <label for="title_hidden">
-                                                <input type="checkbox" id="title_hidden" value="1"
-                                                       name="titleHidden" <?php echo $this->quiz->isTitleHidden() ? 'checked="checked"' : '' ?> >
-                                                <?php _e('Activate', 'wp-pro-quiz'); ?>
-                                            </label>
-
-                                            <p class="description">
-                                                <?php _e('The title serves as quiz heading.', 'wp-pro-quiz'); ?>
-                                            </p>
-                                        </fieldset>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        <?php _e('Hide "Restart quiz" button', 'wp-pro-quiz'); ?>
-                                    </th>
-                                    <td>
-                                        <fieldset>
-                                            <legend class="screen-reader-text">
-                                                <span><?php _e('Hide "Restart quiz" button', 'wp-pro-quiz'); ?></span>
-                                            </legend>
-                                            <label for="btn_restart_quiz_hidden">
-                                                <input type="checkbox" id="btn_restart_quiz_hidden" value="1"
-                                                       name="btnRestartQuizHidden" <?php echo $this->quiz->isBtnRestartQuizHidden() ? 'checked="checked"' : '' ?> >
-                                                <?php _e('Activate', 'wp-pro-quiz'); ?>
-                                            </label>
-
-                                            <p class="description">
-                                                <?php _e('Hide the "Restart quiz" button in the Frontend.',
-                                                    'wp-pro-quiz'); ?>
-                                            </p>
-                                        </fieldset>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        <?php _e('Hide "View question" button', 'wp-pro-quiz'); ?>
-                                    </th>
-                                    <td>
-                                        <fieldset>
-                                            <legend class="screen-reader-text">
-                                                <span><?php _e('Hide "View question" button', 'wp-pro-quiz'); ?></span>
-                                            </legend>
-                                            <label for="btn_view_question_hidden">
-                                                <input type="checkbox" id="btn_view_question_hidden" value="1"
-                                                       name="btnViewQuestionHidden" <?php echo $this->quiz->isBtnViewQuestionHidden() ? 'checked="checked"' : '' ?> >
-                                                <?php _e('Activate', 'wp-pro-quiz'); ?>
-                                            </label>
-
-                                            <p class="description">
-                                                <?php _e('Hide the "View question" button in the Frontend.',
-                                                    'wp-pro-quiz'); ?>
-                                            </p>
-                                        </fieldset>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        <?php _e('Display question randomly', 'wp-pro-quiz'); ?>
-                                    </th>
-                                    <td>
-                                        <fieldset>
-                                            <legend class="screen-reader-text">
-                                                <span><?php _e('Display question randomly', 'wp-pro-quiz'); ?></span>
-                                            </legend>
-                                            <label for="question_random">
-                                                <input type="checkbox" id="question_random" value="1"
-                                                       name="questionRandom" <?php echo $this->quiz->isQuestionRandom() ? 'checked="checked"' : '' ?> >
-                                                <?php _e('Activate', 'wp-pro-quiz'); ?>
-                                            </label>
-                                        </fieldset>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        <?php _e('Display answers randomly', 'wp-pro-quiz'); ?>
-                                    </th>
-                                    <td>
-                                        <fieldset>
-                                            <legend class="screen-reader-text">
-                                                <span><?php _e('Display answers randomly', 'wp-pro-quiz'); ?></span>
-                                            </legend>
-                                            <label for="answer_random">
-                                                <input type="checkbox" id="answer_random" value="1"
-                                                       name="answerRandom" <?php echo $this->quiz->isAnswerRandom() ? 'checked="checked"' : '' ?> >
-                                                <?php _e('Activate', 'wp-pro-quiz'); ?>
-                                            </label>
-                                        </fieldset>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
                                         <?php _e('Sort questions by category', 'wp-pro-quiz'); ?>
                                     </th>
                                     <td>
@@ -220,11 +116,6 @@ class WpProQuiz_View_QuizEdit extends WpProQuiz_View_View
                                                        name="sortCategories" <?php $this->checked($this->quiz->isSortCategories()); ?> >
                                                 <?php _e('Activate', 'wp-pro-quiz'); ?>
                                             </label>
-
-                                            <p class="description">
-                                                <?php _e('Also works in conjunction with the "display randomly question" option.',
-                                                    'wp-pro-quiz'); ?>
-                                            </p>
                                         </fieldset>
                                     </td>
                                 </tr>
@@ -613,7 +504,7 @@ class WpProQuiz_View_QuizEdit extends WpProQuiz_View_View
 									</fieldset>
 								</td>
 							</tr>
-							
+
 							<tr>
 								<th scope="row">
 									<?php _e('User e-mail notification', 'wp-pro-quiz'); ?>
@@ -691,7 +582,6 @@ class WpProQuiz_View_QuizEdit extends WpProQuiz_View_View
                     </div>
                     <?php $this->questionOptions(); ?>
                     <?php $this->resultOptions(); ?>
-                    <?php $this->quizMode(); ?>
                     <?php $this->leaderboardOptions(); ?>
                     <?php $this->form(); ?>
                     <?php $this->adminEmailOption(); ?>
@@ -1452,7 +1342,7 @@ class WpProQuiz_View_QuizEdit extends WpProQuiz_View_View
                                     <?php _e('below the "result text"', 'wp-pro-quiz'); ?>
                                 </label>
 									<span class="wpProQuiz_demoBox" style="margin-right: 5px;">
-										<a href="#"><?php _e('Demo', 'wp-pro-quiz'); ?></a> 
+										<a href="#"><?php _e('Demo', 'wp-pro-quiz'); ?></a>
 										<span
                                             style="z-index: 9999999; position: absolute; background-color: #E9E9E9; padding: 10px; box-shadow: 0px 0px 10px 4px rgb(44, 44, 44); display: none; ">
 											<img alt=""
@@ -1465,7 +1355,7 @@ class WpProQuiz_View_QuizEdit extends WpProQuiz_View_View
                                     <?php _e('in a button', 'wp-pro-quiz'); ?>
                                 </label>
 									<span class="wpProQuiz_demoBox">
-										<a href="#"><?php _e('Demo', 'wp-pro-quiz'); ?></a> 
+										<a href="#"><?php _e('Demo', 'wp-pro-quiz'); ?></a>
 										<span
                                             style="z-index: 9999999; position: absolute; background-color: #E9E9E9; padding: 10px; box-shadow: 0px 0px 10px 4px rgb(44, 44, 44); display: none; ">
 											<img alt=""
@@ -1473,120 +1363,6 @@ class WpProQuiz_View_QuizEdit extends WpProQuiz_View_View
 										</span>
 									</span>
                             </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <?php
-    }
-
-    private function quizMode()
-    {
-        ?>
-        <div class="postbox">
-            <h3 class="hndle"><?php _e('Quiz-Mode', 'wp-pro-quiz'); ?><?php _e('(required)', 'wp-pro-quiz'); ?></h3>
-
-            <div class="inside">
-                <table style="width: 100%; border-collapse: collapse; border: 1px solid #A0A0A0;"
-                       class="wpProQuiz_quizModus">
-                    <thead>
-                    <tr>
-                        <th style="width: 25%;"><?php _e('Normal', 'wp-pro-quiz'); ?></th>
-                        <th style="width: 25%;"><?php _e('Normal + Back-Button', 'wp-pro-quiz'); ?></th>
-                        <th style="width: 25%;"><?php _e('Check -> continue', 'wp-pro-quiz'); ?></th>
-                        <th style="width: 25%;"><?php _e('Questions below each other', 'wp-pro-quiz'); ?></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><label><input type="radio" name="quizModus"
-                                          value="0" <?php $this->checked($this->quiz->getQuizModus(),
-                                    WpProQuiz_Model_Quiz::QUIZ_MODUS_NORMAL); ?>> <?php _e('Activate',
-                                    'wp-pro-quiz'); ?></label></td>
-                        <td><label><input type="radio" name="quizModus"
-                                          value="1" <?php $this->checked($this->quiz->getQuizModus(),
-                                    WpProQuiz_Model_Quiz::QUIZ_MODUS_BACK_BUTTON); ?>> <?php _e('Activate',
-                                    'wp-pro-quiz'); ?></label></td>
-                        <td><label><input type="radio" name="quizModus"
-                                          value="2" <?php $this->checked($this->quiz->getQuizModus(),
-                                    WpProQuiz_Model_Quiz::QUIZ_MODUS_CHECK); ?>> <?php _e('Activate', 'wp-pro-quiz'); ?>
-                            </label></td>
-                        <td><label><input type="radio" name="quizModus"
-                                          value="3" <?php $this->checked($this->quiz->getQuizModus(),
-                                    WpProQuiz_Model_Quiz::QUIZ_MODUS_SINGLE); ?>> <?php _e('Activate',
-                                    'wp-pro-quiz'); ?></label></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <?php _e('Displays all questions sequentially, "right" or "false" will be displayed at the end of the quiz.',
-                                'wp-pro-quiz'); ?>
-                        </td>
-                        <td>
-                            <?php _e('Allows to use the back button in a question.', 'wp-pro-quiz'); ?>
-                        </td>
-                        <td>
-                            <?php _e('Shows "right or wrong" after each question.', 'wp-pro-quiz'); ?>
-                        </td>
-                        <td>
-                            <?php _e('If this option is activated, all answers are displayed below each other, i.e. all questions are on a single page.',
-                                'wp-pro-quiz'); ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="wpProQuiz_demoBox">
-                                <a href="#"><?php _e('Demo', 'wp-pro-quiz'); ?></a>
-
-                                <div
-                                    style="z-index: 9999999; position: absolute; background-color: #E9E9E9; padding: 10px; box-shadow: 0px 0px 10px 4px rgb(44, 44, 44); display: none; ">
-                                    <img alt="" src="<?php echo WPPROQUIZ_URL . '/img/normal.png'; ?> ">
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="wpProQuiz_demoBox">
-                                <a href="#"><?php _e('Demo', 'wp-pro-quiz'); ?></a>
-
-                                <div
-                                    style="z-index: 9999999; position: absolute; background-color: #E9E9E9; padding: 10px; box-shadow: 0px 0px 10px 4px rgb(44, 44, 44); display: none; ">
-                                    <img alt="" src="<?php echo WPPROQUIZ_URL . '/img/backButton.png'; ?> ">
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="wpProQuiz_demoBox" style="position: relative;">
-                                <a href="#"><?php _e('Demo', 'wp-pro-quiz'); ?></a>
-
-                                <div
-                                    style="z-index: 9999; position: absolute; background-color: #E9E9E9; padding: 10px; box-shadow: 0px 0px 10px 4px rgb(44, 44, 44); display: none; ">
-                                    <img alt="" src="<?php echo WPPROQUIZ_URL . '/img/checkCcontinue.png'; ?> ">
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="wpProQuiz_demoBox" style="position: relative;">
-                                <a href="#"><?php _e('Demo', 'wp-pro-quiz'); ?></a>
-
-                                <div
-                                    style="z-index: 9999; position: absolute; background-color: #E9E9E9; padding: 10px; box-shadow: 0px 0px 10px 4px rgb(44, 44, 44); display: none; ">
-                                    <img alt="" src="<?php echo WPPROQUIZ_URL . '/img/singlePage.png'; ?> ">
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <?php _e('How many questions to be displayed on a page:', 'wp-pro-quiz'); ?><br>
-                            <input type="number" name="questionsPerPage"
-                                   value="<?php echo $this->quiz->getQuestionsPerPage(); ?>" min="0">
-									<span class="description">
-										<?php _e('(0 = All on one page)', 'wp-pro-quiz'); ?>
-									</span>
                         </td>
                     </tr>
                     </tbody>

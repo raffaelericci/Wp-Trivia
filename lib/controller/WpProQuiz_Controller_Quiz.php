@@ -77,7 +77,7 @@ class WpProQuiz_Controller_Quiz extends WpProQuiz_Controller_Controller
         $quizMapper = new WpProQuiz_Model_QuizMapper();
         $formMapper = new WpProQuiz_Model_FormMapper();
         $templateMapper = new WpProQuiz_Model_TemplateMapper();
-        $cateoryMapper = new WpProQuiz_Model_CategoryMapper();
+        $categoryMapper = new WpProQuiz_Model_CategoryMapper();
 
         $quiz = new WpProQuiz_Model_Quiz();
         $forms = null;
@@ -85,7 +85,6 @@ class WpProQuiz_Controller_Quiz extends WpProQuiz_Controller_Controller
 
         if ($quizId && $quizMapper->exists($quizId) == 0) {
             WpProQuiz_View_View::admin_notices(__('Quiz not found', 'wp-pro-quiz'), 'error');
-
             return;
         }
 
@@ -172,7 +171,7 @@ class WpProQuiz_Controller_Quiz extends WpProQuiz_Controller_Controller
         $view->templates = $templateMapper->fetchAll(WpProQuiz_Model_Template::TEMPLATE_TYPE_QUIZ, false);
         $view->quizList = $quizMapper->fetchAllAsArray(array('id', 'name'), $quizId ? array($quizId) : array());
         $view->captchaIsInstalled = class_exists('ReallySimpleCaptcha');
-        $view->categories = $cateoryMapper->fetchAll(WpProQuiz_Model_Category::CATEGORY_TYPE_QUIZ);
+        $view->categories = $categoryMapper->fetchAll(WpProQuiz_Model_Category::CATEGORY_TYPE_QUIZ);
 
         $view->header = $quizId ? __('Edit quiz', 'wp-pro-quiz') : __('Create quiz', 'wp-pro-quiz');
 

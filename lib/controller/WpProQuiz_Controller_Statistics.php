@@ -79,7 +79,7 @@ class WpProQuiz_Controller_Statistics extends WpProQuiz_Controller_Controller
             return false;
         }
 
-        $values = $this->makeDataList($quizId, $array, $quiz->getQuizModus());
+        $values = $this->makeDataList($quizId, $array);
         $formValues = $this->makeFormData($quiz, isset($this->_post['forms']) ? $this->_post['forms'] : null);
 
         if ($values === false) {
@@ -165,7 +165,7 @@ class WpProQuiz_Controller_Statistics extends WpProQuiz_Controller_Controller
         return $formArray;
     }
 
-    private function makeDataList($quizId, $array, $modus)
+    private function makeDataList($quizId, $array)
     {
         $questionMapper = new WpProQuiz_Model_QuestionMapper();
 
@@ -187,10 +187,6 @@ class WpProQuiz_Controller_Statistics extends WpProQuiz_Controller_Controller
         }
 
         $avgTime = null;
-
-        if ($modus == WpProQuiz_Model_Quiz::QUIZ_MODUS_SINGLE) {
-            $avgTime = ceil($array['comp']['quizTime'] / count($question));
-        }
 
         unset($array['comp']);
 
