@@ -64,11 +64,11 @@ class WpTrivia_Controller_Quiz extends WpTrivia_Controller_Controller
         $quizId = isset($_GET['quizId']) ? (int)$_GET['quizId'] : 0;
 
         if ($quizId) {
-            if (!current_user_can('wpProQuiz_edit_quiz')) {
+            if (!current_user_can('wpTrivia_edit_quiz')) {
                 wp_die(__('You do not have sufficient permissions to access this page.'));
             }
         } else {
-            if (!current_user_can('wpProQuiz_add_quiz')) {
+            if (!current_user_can('wpTrivia_add_quiz')) {
                 wp_die(__('You do not have sufficient permissions to access this page.'));
             }
         }
@@ -200,8 +200,8 @@ class WpTrivia_Controller_Quiz extends WpTrivia_Controller_Controller
             $lockCookie = false;
             $cookieTime = $quiz->getQuizRunOnceTime();
 
-            if (isset($this->_cookie['wpProQuiz_lock']) && $userId == 0 && $quiz->isQuizRunOnceCookie()) {
-                $cookieJson = json_decode($this->_cookie['wpProQuiz_lock'], true);
+            if (isset($this->_cookie['wpTrivia_lock']) && $userId == 0 && $quiz->isQuizRunOnceCookie()) {
+                $cookieJson = json_decode($this->_cookie['wpTrivia_lock'], true);
 
                 if ($cookieJson !== false) {
                     if (isset($cookieJson[$this->_post['quizId']]) && $cookieJson[$this->_post['quizId']] == $cookieTime) {
@@ -224,8 +224,8 @@ class WpTrivia_Controller_Quiz extends WpTrivia_Controller_Controller
             } else {
                 $checkIds = $prerequisiteMapper->fetchQuizIds($quizId);
 
-                if (isset($this->_cookie['wpProQuiz_result'])) {
-                    $r = json_decode($this->_cookie['wpProQuiz_result'], true);
+                if (isset($this->_cookie['wpTrivia_result'])) {
+                    $r = json_decode($this->_cookie['wpTrivia_result'], true);
 
                     if ($r !== null && is_array($r)) {
                         foreach ($checkIds as $id) {
@@ -265,7 +265,7 @@ class WpTrivia_Controller_Quiz extends WpTrivia_Controller_Controller
 
     private function showAction()
     {
-        if (!current_user_can('wpProQuiz_show')) {
+        if (!current_user_can('wpTrivia_show')) {
             wp_die(__('You do not have sufficient permissions to access this page.'));
         }
 
@@ -452,7 +452,7 @@ class WpTrivia_Controller_Quiz extends WpTrivia_Controller_Controller
 
     private function deleteAction($id)
     {
-        if (!current_user_can('wpProQuiz_delete_quiz')) {
+        if (!current_user_can('wpTrivia_delete_quiz')) {
             wp_die(__('You do not have sufficient permissions to access this page.'));
         }
 
@@ -467,7 +467,7 @@ class WpTrivia_Controller_Quiz extends WpTrivia_Controller_Controller
 
     private function deleteMultiAction()
     {
-        if (!current_user_can('wpProQuiz_delete_quiz')) {
+        if (!current_user_can('wpTrivia_delete_quiz')) {
             wp_die(__('You do not have sufficient permissions to access this page.'));
         }
 
@@ -509,8 +509,8 @@ class WpTrivia_Controller_Quiz extends WpTrivia_Controller_Controller
         if (get_current_user_id() == 0 && $prerequisite->isQuizId($quiz->getId())) {
             $cookieData = array();
 
-            if (isset($this->_cookie['wpProQuiz_result'])) {
-                $d = json_decode($this->_cookie['wpProQuiz_result'], true);
+            if (isset($this->_cookie['wpTrivia_result'])) {
+                $d = json_decode($this->_cookie['wpTrivia_result'], true);
 
                 if ($d !== null && is_array($d)) {
                     $cookieData = $d;
@@ -521,7 +521,7 @@ class WpTrivia_Controller_Quiz extends WpTrivia_Controller_Controller
 
             $url = parse_url(get_bloginfo('url'));
 
-            setcookie('wpProQuiz_result', json_encode($cookieData), time() + 60 * 60 * 24 * 300,
+            setcookie('wpTrivia_result', json_encode($cookieData), time() + 60 * 60 * 24 * 300,
                 empty($url['path']) ? '/' : $url['path']);
         }
     }
@@ -699,7 +699,7 @@ class WpTrivia_Controller_Quiz extends WpTrivia_Controller_Controller
 
     public static function ajaxSetQuizMultipleCategories($data)
     {
-        if (!current_user_can('wpProQuiz_edit_quiz')) {
+        if (!current_user_can('wpTrivia_edit_quiz')) {
             return json_encode(array());
         }
 
@@ -743,7 +743,7 @@ class WpTrivia_Controller_Quiz extends WpTrivia_Controller_Controller
 
     public static function ajaxResetLock($data)
     {
-        if (!current_user_can('wpProQuiz_edit_quiz')) {
+        if (!current_user_can('wpTrivia_edit_quiz')) {
             return json_encode(array());
         }
 
@@ -815,8 +815,8 @@ class WpTrivia_Controller_Quiz extends WpTrivia_Controller_Controller
         $cookieTime = $quiz->getQuizRunOnceTime();
         $cookieJson = null;
 
-        if (isset($ctr->_cookie['wpProQuiz_lock']) && get_current_user_id() == 0 && $quiz->isQuizRunOnceCookie()) {
-            $cookieJson = json_decode($ctr->_cookie['wpProQuiz_lock'], true);
+        if (isset($ctr->_cookie['wpTrivia_lock']) && get_current_user_id() == 0 && $quiz->isQuizRunOnceCookie()) {
+            $cookieJson = json_decode($ctr->_cookie['wpTrivia_lock'], true);
 
             if ($cookieJson !== false) {
                 if (isset($cookieJson[$data['quizId']]) && $cookieJson[$data['quizId']] == $cookieTime) {
@@ -845,7 +845,7 @@ class WpTrivia_Controller_Quiz extends WpTrivia_Controller_Controller
                 $cookieData[$data['quizId']] = $quiz->getQuizRunOnceTime();
                 $url = parse_url(get_bloginfo('url'));
 
-                setcookie('wpProQuiz_lock', json_encode($cookieData), time() + 60 * 60 * 24 * 60,
+                setcookie('wpTrivia_lock', json_encode($cookieData), time() + 60 * 60 * 24 * 60,
                     empty($url['path']) ? '/' : $url['path']);
             }
 

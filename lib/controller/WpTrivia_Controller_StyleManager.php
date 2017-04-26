@@ -12,8 +12,8 @@ class WpTrivia_Controller_StyleManager extends WpTrivia_Controller_Controller
     {
 
         wp_enqueue_style(
-            'wpProQuiz_front_style',
-            plugins_url('css/wpProQuiz_front.min.css', WPPROQUIZ_FILE),
+            'wpTrivia_front_style',
+            plugins_url('css/wpTrivia_front.min.css', WPPROQUIZ_FILE),
             array(),
             WPPROQUIZ_VERSION
         );

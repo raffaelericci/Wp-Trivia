@@ -7,10 +7,10 @@ class WpTrivia_Model_GlobalSettingsMapper extends WpTrivia_Model_Mapper
     {
         $s = new WpTrivia_Model_GlobalSettings();
 
-        $s->setAddRawShortcode(get_option('wpProQuiz_addRawShortcode'))
-            ->setJsLoadInHead(get_option('wpProQuiz_jsLoadInHead'))
-            ->setTouchLibraryDeactivate(get_option('wpProQuiz_touchLibraryDeactivate'))
-            ->setCorsActivated(get_option('wpProQuiz_corsActivated'));
+        $s->setAddRawShortcode(get_option('wpTrivia_addRawShortcode'))
+            ->setJsLoadInHead(get_option('wpTrivia_jsLoadInHead'))
+            ->setTouchLibraryDeactivate(get_option('wpTrivia_touchLibraryDeactivate'))
+            ->setCorsActivated(get_option('wpTrivia_corsActivated'));
 
         return $s;
     }
@@ -18,29 +18,29 @@ class WpTrivia_Model_GlobalSettingsMapper extends WpTrivia_Model_Mapper
     public function save(WpTrivia_Model_GlobalSettings $settings)
     {
 
-        if (add_option('wpProQuiz_addRawShortcode', $settings->isAddRawShortcode()) === false) {
-            update_option('wpProQuiz_addRawShortcode', $settings->isAddRawShortcode());
+        if (add_option('wpTrivia_addRawShortcode', $settings->isAddRawShortcode()) === false) {
+            update_option('wpTrivia_addRawShortcode', $settings->isAddRawShortcode());
         }
 
-        if (add_option('wpProQuiz_jsLoadInHead', $settings->isJsLoadInHead()) === false) {
-            update_option('wpProQuiz_jsLoadInHead', $settings->isJsLoadInHead());
+        if (add_option('wpTrivia_jsLoadInHead', $settings->isJsLoadInHead()) === false) {
+            update_option('wpTrivia_jsLoadInHead', $settings->isJsLoadInHead());
         }
 
-        if (add_option('wpProQuiz_touchLibraryDeactivate', $settings->isTouchLibraryDeactivate()) === false) {
-            update_option('wpProQuiz_touchLibraryDeactivate', $settings->isTouchLibraryDeactivate());
+        if (add_option('wpTrivia_touchLibraryDeactivate', $settings->isTouchLibraryDeactivate()) === false) {
+            update_option('wpTrivia_touchLibraryDeactivate', $settings->isTouchLibraryDeactivate());
         }
 
-        if (add_option('wpProQuiz_corsActivated', $settings->isCorsActivated()) === false) {
-            update_option('wpProQuiz_corsActivated', $settings->isCorsActivated());
+        if (add_option('wpTrivia_corsActivated', $settings->isCorsActivated()) === false) {
+            update_option('wpTrivia_corsActivated', $settings->isCorsActivated());
         }
     }
 
     public function delete()
     {
-        delete_option('wpProQuiz_addRawShortcode');
-        delete_option('wpProQuiz_jsLoadInHead');
-        delete_option('wpProQuiz_touchLibraryDeactivate');
-        delete_option('wpProQuiz_corsActivated');
+        delete_option('wpTrivia_addRawShortcode');
+        delete_option('wpTrivia_jsLoadInHead');
+        delete_option('wpTrivia_touchLibraryDeactivate');
+        delete_option('wpTrivia_corsActivated');
     }
 
     /**
@@ -48,7 +48,7 @@ class WpTrivia_Model_GlobalSettingsMapper extends WpTrivia_Model_Mapper
      */
     public function getEmailSettings()
     {
-        $e = get_option('wpProQuiz_emailSettings', null);
+        $e = get_option('wpTrivia_emailSettings', null);
 
         if ($e === null) {
             $e['to'] = '';
@@ -77,8 +77,8 @@ Result: $result
             $data['html'] = false;
         }
 
-        if (add_option('wpProQuiz_emailSettings', $data, '', 'no') === false) {
-            update_option('wpProQuiz_emailSettings', $data);
+        if (add_option('wpTrivia_emailSettings', $data, '', 'no') === false) {
+            update_option('wpTrivia_emailSettings', $data);
         }
     }
 
@@ -87,7 +87,7 @@ Result: $result
      */
     public function getUserEmailSettings()
     {
-        $e = get_option('wpProQuiz_userEmailSettings', null);
+        $e = get_option('wpTrivia_userEmailSettings', null);
 
         if ($e === null) {
             $e['from'] = '';
@@ -116,8 +116,8 @@ Result: $result
             $data['html'] = false;
         }
 
-        if (add_option('wpProQuiz_userEmailSettings', $data, '', 'no') === false) {
-            update_option('wpProQuiz_userEmailSettings', $data);
+        if (add_option('wpTrivia_userEmailSettings', $data, '', 'no') === false) {
+            update_option('wpTrivia_userEmailSettings', $data);
         }
     }
 }

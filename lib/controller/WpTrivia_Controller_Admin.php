@@ -64,14 +64,14 @@ class WpTrivia_Controller_Admin
             'isRTL' => $isRtl
         );
 
-        wp_localize_script('wpProQuiz_admin_javascript', 'wpProQuizLocalize', $translation_array);
+        wp_localize_script('wpTrivia_admin_javascript', 'wpTriviaLocalize', $translation_array);
     }
 
     public function enqueueScript()
     {
         wp_enqueue_script(
-            'wpProQuiz_admin_javascript',
-            plugins_url('js/wpProQuiz_admin' . (WPPROQUIZ_DEV ? '' : '.min') . '.js', WPPROQUIZ_FILE),
+            'wpTrivia_admin_javascript',
+            plugins_url('js/wpTrivia_admin' . (WPPROQUIZ_DEV ? '' : '.min') . '.js', WPPROQUIZ_FILE),
             array('jquery', 'jquery-ui-sortable', 'jquery-ui-datepicker'),
             WPPROQUIZ_VERSION
         );
@@ -89,24 +89,24 @@ class WpTrivia_Controller_Admin
         $pages[] = add_menu_page(
             'Wp-Trivia',
             'Wp-Trivia',
-            'wpProQuiz_show',
-            'wpProQuiz',
+            'wpTrivia_show',
+            'wpTrivia',
             array($this, 'route'));
 
         $pages[] = add_submenu_page(
-            'wpProQuiz',
+            'wpTrivia',
             __('Global settings', 'wp-trivia'),
             __('Global settings', 'wp-trivia'),
-            'wpProQuiz_change_settings',
-            'wpProQuiz_glSettings',
+            'wpTrivia_change_settings',
+            'wpTrivia_glSettings',
             array($this, 'route'));
 
         $pages[] = add_submenu_page(
-            'wpProQuiz',
+            'wpTrivia',
             __('Support & More', 'wp-trivia'),
             __('Support & More', 'wp-trivia'),
-            'wpProQuiz_show',
-            'wpProQuiz_wpq_support',
+            'wpTrivia_show',
+            'wpTrivia_wpq_support',
             array($this, 'route'));
 
         foreach ($pages as $p) {
@@ -150,7 +150,7 @@ class WpTrivia_Controller_Admin
         $module = isset($_GET['module']) ? $_GET['module'] : 'overallView';
 
         if (isset($_GET['page'])) {
-            if (preg_match('#wpProQuiz_(.+)#', trim($_GET['page']), $matches)) {
+            if (preg_match('#wpTrivia_(.+)#', trim($_GET['page']), $matches)) {
                 $module = $matches[1];
             }
         }

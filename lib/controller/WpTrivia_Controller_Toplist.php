@@ -17,7 +17,7 @@ class WpTrivia_Controller_Toplist extends WpTrivia_Controller_Controller
 
     private function showAdminToplist($quizId)
     {
-        if (!current_user_can('wpProQuiz_toplist_edit')) {
+        if (!current_user_can('wpTrivia_toplist_edit')) {
             wp_die(__('You do not have sufficient permissions to access this page.'));
         }
 
@@ -40,7 +40,7 @@ class WpTrivia_Controller_Toplist extends WpTrivia_Controller_Controller
 
         $data = array(
             'userId' => $userId,
-            'token' => wp_create_nonce('wpProQuiz_toplist'),
+            'token' => wp_create_nonce('wpTrivia_toplist'),
             'canAdd' => $this->preCheck($quiz->getToplistDataAddPermissions(), $userId),
         );
 
@@ -58,7 +58,7 @@ class WpTrivia_Controller_Toplist extends WpTrivia_Controller_Controller
 
     private function handleAddInToplist(WpTrivia_Model_Quiz $quiz)
     {
-        if (!wp_verify_nonce($this->_post['token'], 'wpProQuiz_toplist')) {
+        if (!wp_verify_nonce($this->_post['token'], 'wpTrivia_toplist')) {
             return array('text' => __('An error has occurred.', 'wp-trivia'), 'clear' => true);
         }
 
@@ -163,7 +163,7 @@ class WpTrivia_Controller_Toplist extends WpTrivia_Controller_Controller
 
     public static function ajaxAdminToplist($data)
     {
-        if (!current_user_can('wpProQuiz_toplist_edit')) {
+        if (!current_user_can('wpTrivia_toplist_edit')) {
             return json_encode(array());
         }
 
@@ -200,7 +200,7 @@ class WpTrivia_Controller_Toplist extends WpTrivia_Controller_Controller
                 'email' => $tp->getEmail(),
                 'type' => $tp->getUserId() ? 'R' : 'UR',
                 'date' => WpTrivia_Helper_Until::convertTime($tp->getDate(),
-                    get_option('wpProQuiz_toplistDataFormat', 'Y/m/d g:i A')),
+                    get_option('wpTrivia_toplistDataFormat', 'Y/m/d g:i A')),
                 'points' => $tp->getPoints(),
                 'result' => $tp->getResult()
             );
@@ -277,7 +277,7 @@ class WpTrivia_Controller_Toplist extends WpTrivia_Controller_Controller
                 $j[$quizId][] = array(
                     'name' => $tp->getName(),
                     'date' => WpTrivia_Helper_Until::convertTime($tp->getDate(),
-                        get_option('wpProQuiz_toplistDataFormat', 'Y/m/d g:i A')),
+                        get_option('wpTrivia_toplistDataFormat', 'Y/m/d g:i A')),
                     'points' => $tp->getPoints(),
                     'result' => $tp->getResult()
                 );

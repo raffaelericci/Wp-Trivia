@@ -25,11 +25,11 @@ $uploadDir = wp_upload_dir();
 define('WPPROQUIZ_CAPTCHA_DIR', $uploadDir['basedir'] . '/wp_pro_quiz_captcha');
 define('WPPROQUIZ_CAPTCHA_URL', $uploadDir['baseurl'] . '/wp_pro_quiz_captcha');
 
-spl_autoload_register('wpProQuiz_autoload');
+spl_autoload_register('wpTrivia_autoload');
 
 register_activation_hook(__FILE__, array('WpTrivia_Helper_Upgrade', 'upgrade'));
 
-add_action('plugins_loaded', 'wpProQuiz_pluginLoaded');
+add_action('plugins_loaded', 'wpTrivia_pluginLoaded');
 
 if (is_admin()) {
     new WpTrivia_Controller_Admin();
@@ -37,7 +37,7 @@ if (is_admin()) {
     new WpTrivia_Controller_Front();
 }
 
-function wpProQuiz_autoload($class)
+function wpTrivia_autoload($class)
 {
     $c = explode('_', $class);
 
@@ -73,22 +73,22 @@ function wpProQuiz_autoload($class)
     }
 }
 
-function wpProQuiz_pluginLoaded()
+function wpTrivia_pluginLoaded()
 {
     load_plugin_textdomain('wp-trivia', false, WPPROQUIZ_PPATH . '/languages');
 
-    if (get_option('wpProQuiz_version') !== WPPROQUIZ_VERSION) {
+    if (get_option('wpTrivia_version') !== WPPROQUIZ_VERSION) {
         WpTrivia_Helper_Upgrade::upgrade();
     }
 }
 
-function wpProQuiz_achievementsV1()
+function wpTrivia_achievementsV1()
 {
     if (function_exists('achievements')) {
         achievements()->extensions->wp_pro_quiz = new WpTrivia_Plugin_BpAchievementsV1();
 
-        do_action('wpProQuiz_achievementsV1');
+        do_action('wpTrivia_achievementsV1');
     }
 }
 
-add_action('dpa_ready', 'wpProQuiz_achievementsV1');
+add_action('dpa_ready', 'wpTrivia_achievementsV1');

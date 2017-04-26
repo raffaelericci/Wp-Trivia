@@ -22,14 +22,14 @@ class WpTrivia_Controller_Front
         wp_enqueue_script('jquery');
 
         $data = array(
-            'src' => plugins_url('css/wpProQuiz_front' . (WPPROQUIZ_DEV ? '' : '.min') . '.css', WPPROQUIZ_FILE),
+            'src' => plugins_url('css/wpTrivia_front' . (WPPROQUIZ_DEV ? '' : '.min') . '.css', WPPROQUIZ_FILE),
             'deps' => array(),
             'ver' => WPPROQUIZ_VERSION,
         );
 
-        $data = apply_filters('wpProQuiz_front_style', $data);
+        $data = apply_filters('wpTrivia_front_style', $data);
 
-        wp_enqueue_style('wpProQuiz_front_style', $data['src'], $data['deps'], $data['ver']);
+        wp_enqueue_style('wpTrivia_front_style', $data['src'], $data['deps'], $data['ver']);
 
         if ($this->_settings->isJsLoadInHead()) {
             $this->loadJsScripts(false, true, true);
@@ -40,14 +40,14 @@ class WpTrivia_Controller_Front
     {
         if ($quiz) {
             wp_enqueue_script(
-                'wpProQuiz_front_javascript',
-                plugins_url('js/wpProQuiz_front' . (WPPROQUIZ_DEV ? '' : '.min') . '.js', WPPROQUIZ_FILE),
+                'wpTrivia_front_javascript',
+                plugins_url('js/wpTrivia_front' . (WPPROQUIZ_DEV ? '' : '.min') . '.js', WPPROQUIZ_FILE),
                 array('jquery-ui-sortable'),
                 WPPROQUIZ_VERSION,
                 $footer
             );
 
-            wp_localize_script('wpProQuiz_front_javascript', 'WpTriviaGlobal', array(
+            wp_localize_script('wpTrivia_front_javascript', 'WpTriviaGlobal', array(
                 'ajaxurl' => admin_url('admin-ajax.php'),
                 'loadData' => __('Loading', 'wp-trivia'),
                 'questionNotSolved' => __('You must answer this question.', 'wp-trivia'),
@@ -59,15 +59,15 @@ class WpTrivia_Controller_Front
 
         if ($toplist) {
             wp_enqueue_script(
-                'wpProQuiz_front_javascript_toplist',
-                plugins_url('js/wpProQuiz_toplist' . (WPPROQUIZ_DEV ? '' : '.min') . '.js', WPPROQUIZ_FILE),
+                'wpTrivia_front_javascript_toplist',
+                plugins_url('js/wpTrivia_toplist' . (WPPROQUIZ_DEV ? '' : '.min') . '.js', WPPROQUIZ_FILE),
                 array('jquery-ui-sortable'),
                 WPPROQUIZ_VERSION,
                 $footer
             );
 
-            if (!wp_script_is('wpProQuiz_front_javascript')) {
-                wp_localize_script('wpProQuiz_front_javascript_toplist', 'WpTriviaGlobal', array(
+            if (!wp_script_is('wpTrivia_front_javascript')) {
+                wp_localize_script('wpTrivia_front_javascript_toplist', 'WpTriviaGlobal', array(
                     'ajaxurl' => admin_url('admin-ajax.php'),
                     'loadData' => __('Loading', 'wp-trivia'),
                     'questionNotSolved' => __('You must answer this question.', 'wp-trivia'),

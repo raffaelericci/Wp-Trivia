@@ -18,13 +18,13 @@ class WpTrivia_View_GobalSettings extends WpTrivia_View_View
     public function show()
     {
         ?>
-        <div class="wrap wpProQuiz_globalSettings">
+        <div class="wrap wpTrivia_globalSettings">
             <h2 style="margin-bottom: 10px;"><?php _e('Global settings', 'wp-trivia'); ?></h2>
 
-            <a class="button-secondary" href="admin.php?page=wpProQuiz"><?php _e('back to overview',
+            <a class="button-secondary" href="admin.php?page=wpTrivia"><?php _e('back to overview',
                     'wp-trivia'); ?></a>
 
-            <div class="wpProQuiz_tab_wrapper" style="padding: 10px 0px;">
+            <div class="wpTrivia_tab_wrapper" style="padding: 10px 0px;">
                 <a class="button-primary" href="#" data-tab="#globalContent"><?php _e('Global settings',
                         'wp-trivia'); ?></a>
                 <!-- <a class="button-secondary" href="#" data-tab="#emailSettingsTab"><?php //_e('E-Mail settings', 'wp-trivia');
@@ -47,7 +47,7 @@ class WpTrivia_View_GobalSettings extends WpTrivia_View_View
                     <div class="postbox" id="problemContent" style="display: none;">
                         <?php $this->problemSettings(); ?>
                     </div>
-                    <input type="submit" name="submit" class="button-primary" id="wpProQuiz_save"
+                    <input type="submit" name="submit" class="button-primary" id="wpTrivia_save"
                            value="<?php _e('Save', 'wp-trivia'); ?>">
                 </div>
             </form>
@@ -641,7 +641,7 @@ class WpTrivia_View_GobalSettings extends WpTrivia_View_View
     {
         ?>
 
-        <div class="wpProQuiz_tab_wrapper" style="padding-bottom: 10px;">
+        <div class="wpTrivia_tab_wrapper" style="padding-bottom: 10px;">
             <a class="button-primary" href="#" data-tab="#adminEmailSettings"><?php _e('Admin e-mail settings',
                     'wp-trivia'); ?></a>
             <a class="button-secondary" href="#" data-tab="#userEmailSettings"><?php _e('User e-mail settings',

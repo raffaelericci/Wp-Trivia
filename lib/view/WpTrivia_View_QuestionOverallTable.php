@@ -67,20 +67,20 @@ class WpTrivia_View_QuestionOverallTable extends WP_List_Table
     {
         $actions = array();
 
-        if (current_user_can('wpProQuiz_edit_quiz')) {
-            $actions['wpProQuiz_edit'] = sprintf('<a href="?page=wpProQuiz&module=question&action=addEdit&quiz_id=%1$s&questionId=%2$s">' . __('Edit',
+        if (current_user_can('wpTrivia_edit_quiz')) {
+            $actions['wpTrivia_edit'] = sprintf('<a href="?page=wpTrivia&module=question&action=addEdit&quiz_id=%1$s&questionId=%2$s">' . __('Edit',
                     'wp-trivia') . '</a>',
                 $item['quizId'], $item['ID']);
         }
 
-        if (current_user_can('wpProQuiz_delete_quiz')) {
-            $actions['wpProQuiz_delete'] = sprintf('<a style="color: red;" href="?page=wpProQuiz&module=question&action=delete&quiz_id=%1$s&id=%2$s">' . __('Delete',
+        if (current_user_can('wpTrivia_delete_quiz')) {
+            $actions['wpTrivia_delete'] = sprintf('<a style="color: red;" href="?page=wpTrivia&module=question&action=delete&quiz_id=%1$s&id=%2$s">' . __('Delete',
                     'wp-trivia') . '</a>',
                 $item['quizId'], $item['ID']);
         }
 
-        if (current_user_can('wpProQuiz_edit_quiz')) {
-            return sprintf('<a class="row-title" href="?page=wpProQuiz&module=question&action=addEdit&quiz_id=%1$s&questionId=%2$s">%3$s</a> %4$s',
+        if (current_user_can('wpTrivia_edit_quiz')) {
+            return sprintf('<a class="row-title" href="?page=wpTrivia&module=question&action=addEdit&quiz_id=%1$s&questionId=%2$s">%3$s</a> %4$s',
                 $item['quizId'], $item['ID'], $item['name'], $this->row_actions($actions));
         } else {
             return sprintf('<a class="row-title" href="#">%2$s</a> %3$s', $item['ID'], $item['name'],
@@ -92,11 +92,11 @@ class WpTrivia_View_QuestionOverallTable extends WP_List_Table
     {
         $actions = array();
 
-        if (current_user_can('wpProQuiz_delete_quiz')) {
+        if (current_user_can('wpTrivia_delete_quiz')) {
             $actions['delete'] = __('Delete', 'wp-trivia');
         }
 
-        if (current_user_can('wpProQuiz_edit_quiz')) {
+        if (current_user_can('wpTrivia_edit_quiz')) {
             $actions['set_category'] = __('Set Category', 'wp-trivia');
         }
 

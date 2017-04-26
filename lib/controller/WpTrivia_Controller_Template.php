@@ -4,7 +4,7 @@ class WpTrivia_Controller_Template
 {
     public static function ajaxEditTemplate($data)
     {
-        if (!current_user_can('wpProQuiz_edit_quiz')) {
+        if (!current_user_can('wpTrivia_edit_quiz')) {
             return json_encode(array());
         }
 
@@ -19,7 +19,7 @@ class WpTrivia_Controller_Template
 
     public static function ajaxDeleteTemplate($data)
     {
-        if (!current_user_can('wpProQuiz_edit_quiz')) {
+        if (!current_user_can('wpTrivia_edit_quiz')) {
             return json_encode(array());
         }
 

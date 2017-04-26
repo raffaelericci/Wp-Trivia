@@ -1,31 +1,31 @@
-.wpProQuiz_answerCorrect {
+.wpTrivia_answerCorrect {
     background: #6DB46D !important;
     font-weight: bold !important;
 }
 
-.wpProQuiz_answerCorrect label {
+.wpTrivia_answerCorrect label {
     font-weight: bold !important;
 }
 
-.wpProQuiz_answerIncorrect {
+.wpTrivia_answerIncorrect {
     background: #FF9191 !important;
     font-weight: bold !important;
 }
 
-.wpProQuiz_content {
+.wpTrivia_content {
     margin-top: 10px !important;
     margin-bottom: 10px !important;
 }
 
-.wpProQuiz_content h2 {
+.wpTrivia_content h2 {
     margin-bottom: 10px !important;
 }
 
-* + html .wpProQuiz_button, * + html .wpProQuiz_button:hover {
+* + html .wpTrivia_button, * + html .wpTrivia_button:hover {
     padding: 3px 0 !important;
 }
 
-.wpProQuiz_button, .wpProQuiz_button:hover {
+.wpTrivia_button, .wpTrivia_button:hover {
     margin: 0 !important;
     padding: 5px 10px !important;
     background: #13455B !important;
@@ -39,20 +39,20 @@
     float: none;
 }
 
-.wpProQuiz_question_page {
+.wpTrivia_question_page {
     margin-bottom: 10px !important;
 }
 
-.wpProQuiz_question_page span {
+.wpTrivia_question_page span {
     font-weight: bold !important;
 }
 
-.wpProQuiz_questionListItem:last-child, .wpProQuiz_questionListItemLastChildIE {
+.wpTrivia_questionListItem:last-child, .wpTrivia_questionListItemLastChildIE {
     padding: 3px !important;
     margin-bottom: 0 !important;
 }
 
-.wpProQuiz_questionListItem {
+.wpTrivia_questionListItem {
     padding: 3px !important;
     margin-bottom: 5px !important;
     background-image: none !important;
@@ -61,7 +61,7 @@
     border: 0 !important;
 }
 
-.wpProQuiz_questionListItem > table {
+.wpTrivia_questionListItem > table {
     border-collapse: collapse !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -70,25 +70,25 @@
     text-align: left !important;
 }
 
-.wpProQuiz_questionListItem > table .alt {
+.wpTrivia_questionListItem > table .alt {
     background: inherit !important;
 }
 
-.wpProQuiz_questionListItem > table td {
+.wpTrivia_questionListItem > table td {
     text-align: left !important;
 }
 
-.wpProQuiz_list, .wpProQuiz_listItem, .wpProQuiz_questionList, .wpProQuiz_sortStringList, .wpProQuiz_sortStringList, .wpProQuiz_maxtrixSortCriterion, .wpProQuiz_resultsList, .wpProQuiz_catOverview ol {
+.wpTrivia_list, .wpTrivia_listItem, .wpTrivia_questionList, .wpTrivia_sortStringList, .wpTrivia_sortStringList, .wpTrivia_maxtrixSortCriterion, .wpTrivia_resultsList, .wpTrivia_catOverview ol {
     list-style: none !important;
     padding: 0 !important;
     margin: 0 !important;
 }
 
-.wpProQuiz_list {
+.wpTrivia_list {
     border: 0 !important;
 }
 
-.wpProQuiz_questionList {
+.wpTrivia_questionList {
     margin-bottom: 10px !important;
     background: #F8FAF5 !important;
     border: 1px solid #C3D1A3 !important;
@@ -96,13 +96,13 @@
     list-style: none !important;
 }
 
-.wpProQuiz_listItem {
+.wpTrivia_listItem {
     position: relative !important;
     border: 0 !important;
     background-image: none !important;
 }
 
-.wpProQuiz_response {
+.wpTrivia_response {
     background: #F8FAF5 !important;
     border: 1px solid #C4C4C4 !important;
     padding: 5px !important;
@@ -110,25 +110,25 @@
     box-shadow: 1px 1px 2px #AAA !important;
 }
 
-.wpProQuiz_response span {
+.wpTrivia_response span {
     font-weight: bold !important;
 }
 
-.wpProQuiz_sort {
+.wpTrivia_sort {
     width: 25px !important;
 }
 
-.wpProQuiz_results h3 {
+.wpTrivia_results h3 {
     margin-bottom: 10px !important;
 }
 
-.wpProQuiz_sort_correct_answer {
+.wpTrivia_sort_correct_answer {
     font-weight: bold !important;
     margin-right: 5px !important;
     display: none !important;
 }
 
-.wpProQuiz_sortable, .wpProQuiz_sortStringItem {
+.wpTrivia_sortable, .wpTrivia_sortStringItem {
     padding: 5px !important;
     border: 1px solid lightGrey !important;
     box-shadow: 2px 2px 1px #EEE;
@@ -136,29 +136,29 @@
     cursor: move;
 }
 
-.wpProQuiz_time_limit .time {
+.wpTrivia_time_limit .time {
     font-weight: bold !important;
     margin-top: 5px !important;
     margin-bottom: 5px !important;
 }
 
-.wpProQuiz_time_limit .wpProQuiz_progress {
+.wpTrivia_time_limit .wpTrivia_progress {
     height: 10px !important;
     background-color: blue !important;
     margin-bottom: 5px !important;
 }
 
-.wpProQuiz_time_limit_expired {
+.wpTrivia_time_limit_expired {
     font-weight: bold !important;
     font-size: 15px !important;
     text-align: center !important;
 }
 
-.wpProQuiz_question_text {
+.wpTrivia_question_text {
     margin-bottom: 10px !important;
 }
 
-.wpProQuiz_tipp > div {
+.wpTrivia_tipp > div {
     padding: 10px !important;
     background-color: #DDECFF !important;
     border: 1px dotted #363636 !important;
@@ -171,40 +171,40 @@
     z-index: 99999 !important;
 }
 
-.wpProQuiz_matrixSortString, .wpProQuiz_matrixSortString > h3 {
+.wpTrivia_matrixSortString, .wpTrivia_matrixSortString > h3 {
     margin-bottom: 10px !important;
     margin-top: 0 !important;
 }
 
-.wpProQuiz_matrixSortString {
+.wpTrivia_matrixSortString {
     background: #F8FAF5 !important;
     border: 1px solid #C3D1A3 !important;
     padding: 5px !important;
 }
 
-.wpProQuiz_sortStringList {
+.wpTrivia_sortStringList {
     padding: 10px !important;
     border: 0 !important;
 }
 
-.wpProQuiz_sortStringList > li {
+.wpTrivia_sortStringList > li {
     float: left !important;
     margin-left: 5px !important;
     margin-right: 5px !important;
     margin-bottom: 5px !important;
 }
 
-.wpProQuiz_sortStringItem {
+.wpTrivia_sortStringItem {
     margin: 0 !important;
     background-image: none !important;
     list-style: none !important;
 }
 
-.wpProQuiz_maxtrixSortCriterion {
+.wpTrivia_maxtrixSortCriterion {
     padding: 5px !important;
 }
 
-.wpProQuiz_placehold {
+.wpTrivia_placehold {
     background-color: #FFFFC2 !important;
     list-style: none !important;
     background-image: none !important;
@@ -214,23 +214,23 @@
     margin: 0 !important;
 }
 
-.wpProQuiz_maxtrixSortText {
+.wpTrivia_maxtrixSortText {
     padding: 5px !important;
 }
 
-.wpProQuiz_mextrixTr > td {
+.wpTrivia_mextrixTr > td {
     border: 1px solid #D1D1D1 !important;
     padding: 5px !important;
     vertical-align: middle !important;
 }
 
-.wpProQuiz_points {
+.wpTrivia_points {
     font-weight: bold !important;
     text-align: center !important;
     margin-bottom: 20px !important;
 }
 
-.wpProQuiz_cloze input[type="text"] {
+.wpTrivia_cloze input[type="text"] {
     background: transparent;
     border: 0 !important;
     border-bottom: 1px solid !important;
@@ -242,30 +242,30 @@
     box-shadow: 0 0 !important;
 }
 
-.wpProQuiz_cloze input:focus {
+.wpTrivia_cloze input:focus {
     outline: none !important;
 }
 
-.wpProQuiz_questionListItem input, .wpProQuiz_questionListItem label {
+.wpTrivia_questionListItem input, .wpTrivia_questionListItem label {
     margin: 0 !important;
     font-weight: normal;
     display: inline;
 }
 
-.wpProQuiz_questionListItem label {
+.wpTrivia_questionListItem label {
     float: none;
 }
 
-.wpProQuiz_questionListItem input {
+.wpTrivia_questionListItem input {
     float: none !important;
     display: inline !important;
 }
 
-.wpProQuiz_resultsList {
+.wpTrivia_resultsList {
     border: 0 !important;
 }
 
-.wpProQuiz_resultsList > li {
+.wpTrivia_resultsList > li {
     background-image: none !important;
     padding: 0 !important;
     margin: 0 !important;
@@ -273,24 +273,24 @@
     border: 0 !important;
 }
 
-.wpProQuiz_lock, .wpProQuiz_prerequisite, .wpProQuiz_startOnlyRegisteredUser, .wpProQuiz_loadQuiz {
+.wpTrivia_lock, .wpTrivia_prerequisite, .wpTrivia_startOnlyRegisteredUser, .wpTrivia_loadQuiz {
     border: 1px dotted #FFC3C3 !important;
     background-color: #FFF7F7 !important;
 }
 
-.wpProQuiz_lock p, .wpProQuiz_prerequisite p, .wpProQuiz_startOnlyRegisteredUser p, .wpProQuiz_loadQuiz p {
+.wpTrivia_lock p, .wpTrivia_prerequisite p, .wpTrivia_startOnlyRegisteredUser p, .wpTrivia_loadQuiz p {
     margin: 20px !important;
     font-weight: bold !important;
 }
 
-.wpProQuiz_toplistTable {
+.wpTrivia_toplistTable {
     width: 100% !important;
     border: 1px solid #C3D1A3 !important;
     border-collapse: collapse !important;
     margin: 0 !important;
 }
 
-.wpProQuiz_toplistTable caption {
+.wpTrivia_toplistTable caption {
     caption-side: top !important;
     text-align: right !important;
     padding-bottom: 2px !important;
@@ -299,39 +299,39 @@
     font-size: 11px !important;
 }
 
-.wpProQuiz_toplistTable thead tr {
+.wpTrivia_toplistTable thead tr {
     background: rgb(155, 187, 89) !important;
     padding: 5px !important;
     color: white !important;
     font-weight: bold !important;
 }
 
-.wpProQuiz_toplistTable tbody td:FIRST-CHILD {
+.wpTrivia_toplistTable tbody td:FIRST-CHILD {
     font-weight: bold !important;
 }
 
-.wpProQuiz_toplistTable td, .wpProQuiz_toplistTable th {
+.wpTrivia_toplistTable td, .wpTrivia_toplistTable th {
     padding: 5px !important;
     text-align: center !important;
     border: 0 !important;
 }
 
-.wpProQuiz_toplistTable th {
+.wpTrivia_toplistTable th {
     background: #9BBB59 !important;
 }
 
-.wpProQuiz_toplistTrOdd {
+.wpTrivia_toplistTrOdd {
     background-color: #EBF1DE !important;
 }
 
-.wpProQuiz_addToplist {
+.wpTrivia_addToplist {
     margin-top: 10px !important;
     background-color: #F5FAEA !important;
     padding: 10px !important;
     border: 1px solid #C3D1A3 !important;
 }
 
-.wpProQuiz_addToplistMessage {
+.wpTrivia_addToplistMessage {
     border: 1px solid rgb(160, 160, 160) !important;
     background-color: #FCFFB3 !important;
     margin-bottom: 5px !important;
@@ -341,7 +341,7 @@
     color: dimGray !important;
 }
 
-.wpProQuiz_resultTable {
+.wpTrivia_resultTable {
     margin: 15px auto !important;
     width: 400px !important;
     border: 1px solid #C4C4C4 !important;
@@ -349,7 +349,7 @@
     font-weight: bold !important;
 }
 
-.wpProQuiz_resultTable table {
+.wpTrivia_resultTable table {
     width: 100% !important;
     border-collapse: collapse !important;
     margin: 0 !important;
@@ -357,15 +357,15 @@
     text-align: left !important;
 }
 
-.wpProQuiz_resultTable table td {
+.wpTrivia_resultTable table td {
     text-align: left !important;
 }
 
-.wpProQuiz_resultTable .alt {
+.wpTrivia_resultTable .alt {
     background: inherit !important;
 }
 
-.wpProQuiz_resultName {
+.wpTrivia_resultName {
     width: 100px !important;
     border-right: 1px solid rgb(134, 134, 134) !important;
     padding: 10px 0 !important;
@@ -374,12 +374,12 @@
     border-left: 0 !important;
 }
 
-.wpProQuiz_resultValue {
+.wpTrivia_resultValue {
     padding: 0 !important;
     border: 0 !important;
 }
 
-.wpProQuiz_resultValue div {
+.wpTrivia_resultValue div {
     color: black !important;
     text-align: right !important;
     box-shadow: 1px 1px 3px 1px #C4C4C4 !important;
@@ -391,15 +391,15 @@
     vertical-align: middle !important;
 }
 
-.wpProQuiz_addBox label {
+.wpTrivia_addBox label {
     display: inline !important;
 }
 
-.wpProQuiz_addBox input[type="text"] {
+.wpTrivia_addBox input[type="text"] {
     margin: 0 !important;
 }
 
-.wpProQuiz_reviewQuestion {
+.wpTrivia_reviewQuestion {
     max-height: 100px;
     overflow: hidden;
     border: 1px solid #C3D1A3;
@@ -407,16 +407,16 @@
     position: relative;
 }
 
-.wpProQuiz_box {
+.wpTrivia_box {
     border: 1px solid #C3D1A3;
     background-color: #F8FAF5;
 }
 
-.wpProQuiz_checkPage h3 {
+.wpTrivia_checkPage h3 {
     margin: 10px 0 10px 0;
 }
 
-.wpProQuiz_reviewQuestion ol, .wpProQuiz_checkPage ol {
+.wpTrivia_reviewQuestion ol, .wpTrivia_checkPage ol {
     list-style-type: none !important;
     margin: 0 !important;
     padding: 5px 12px 0 5px !important;
@@ -425,7 +425,7 @@
     border: 0 !important;
 }
 
-.wpProQuiz_reviewQuestion ol:after {
+.wpTrivia_reviewQuestion ol:after {
     content: ".";
     display: block;
     height: 0;
@@ -433,13 +433,13 @@
     visibility: hidden;
 }
 
-.wpProQuiz_reviewQuestionTarget {
+.wpTrivia_reviewQuestionTarget {
     font-weight: bold;
     border-color: #7DB1D3 !important;
     box-shadow: 0 0 2px 1px #C4C4C4;
 }
 
-.wpProQuiz_reviewQuestion li, .wpProQuiz_checkPage li {
+.wpTrivia_reviewQuestion li, .wpTrivia_checkPage li {
     float: left !important;
     margin: 0 5px 5px 0 !important;
     border: 1px solid #CFCFCF;
@@ -452,7 +452,7 @@
     background-image: none !important;
 }
 
-.wpProQuiz_reviewQuestion div {
+.wpTrivia_reviewQuestion div {
     position: absolute;
     right: 0;
     background-color: #B8B8B8;
@@ -464,19 +464,19 @@
     cursor: move;
 }
 
-.wpProQuiz_reviewLegend {
+.wpTrivia_reviewLegend {
     padding: 5px !important;
     margin-bottom: 8px !important;
 }
 
-.wpProQuiz_reviewLegend ol {
+.wpTrivia_reviewLegend ol {
     list-style-type: none !important;
     padding: 0 !important;
     margin: 0 !important;
     border: 0 !important;
 }
 
-.wpProQuiz_reviewLegend li {
+.wpTrivia_reviewLegend li {
     float: left !important;
     padding-right: 5px !important;
     list-style-type: none !important;
@@ -485,14 +485,14 @@
     background-image: none !important;
 }
 
-.wpProQuiz_reviewColor {
+.wpTrivia_reviewColor {
     height: 10px !important;
     width: 10px !important;
     display: inline-block !important;
     margin-right: 2px !important;
 }
 
-.wpProQuiz_button2 {
+.wpTrivia_button2 {
     border: 1px solid #DADADA !important;
     background: whiteSmoke !important;
     color: #303030 !important;
@@ -505,24 +505,24 @@
     font-weight: normal !important;
 }
 
-.wpProQuiz_button2:hover {
+.wpTrivia_button2:hover {
     background: #EBEBEB !important;
 }
 
-.wpProQuiz_reviewDiv {
+.wpTrivia_reviewDiv {
     margin: 20px 0 20px 0 !important;
 }
 
-.wpProQuiz_header {
+.wpTrivia_header {
     margin: 0 !important;
 }
 
-.wpProQuiz_catOverview {
+.wpTrivia_catOverview {
     margin-top: 10px;
     margin-bottom: 20px;
 }
 
-.wpProQuiz_catOverview li {
+.wpTrivia_catOverview li {
     list-style: none !important;
     padding: 0 !important;
     clear: left !important;
@@ -532,7 +532,7 @@
     position: relative !important;
 }
 
-.wpProQuiz_catOverview span {
+.wpTrivia_catOverview span {
     background: #fff !important;
     padding: 0 3px 0 0 !important;
     float: left !important;
@@ -540,23 +540,23 @@
     text-decoration: none !important;
 }
 
-span.wpProQuiz_catPercent {
+span.wpTrivia_catPercent {
     font-weight: bold !important;
     padding-left: 5px !important;
     color: #000 !important;
     right: 0 !important;
 }
 
-.wpProQuiz_forms {
+.wpTrivia_forms {
     margin: 20px 0 20px 0 !important;
 }
 
-.wpProQuiz_required {
+.wpTrivia_required {
     color: #F00 !important;
     font-weight: bold !important;
 }
 
-.wpProQuiz_invalidate {
+.wpTrivia_invalidate {
     border: 1px solid #FFCFCF !important;
     background: #FFEBE8 !important;
     padding: 4px !important;
@@ -564,7 +564,7 @@ span.wpProQuiz_catPercent {
     display: none;
 }
 
-.wpProQuiz_forms table {
+.wpTrivia_forms table {
     width: auto !important;
     border-collapse: separate !important;
     border-spacing: 2px !important;
@@ -572,15 +572,15 @@ span.wpProQuiz_catPercent {
     text-align: left !important;
 }
 
-.wpProQuiz_forms table .alt {
+.wpTrivia_forms table .alt {
     background: inherit !important;
 }
 
-.wpProQuiz_forms table td {
+.wpTrivia_forms table td {
     text-align: left !important;
 }
 
-.wpProQuiz_forms td {
+.wpTrivia_forms td {
     vertical-align: top !important;
     padding: 0 0 8px 0 !important;
     margin: 0 !important;
@@ -588,24 +588,24 @@ span.wpProQuiz_catPercent {
     background: none !important;
 }
 
-.wpProQuiz_forms input, .wpProQuiz_forms textarea, .wpProQuiz_forms label, .wpProQuiz_forms select {
+.wpTrivia_forms input, .wpTrivia_forms textarea, .wpTrivia_forms label, .wpTrivia_forms select {
     margin: 0 !important;
     float: none !important;
     display: inline !important;
 }
 
-.wpProQuiz_forms select {
+.wpTrivia_forms select {
     width: auto !important;
 }
 
-.wpProQuiz_resultForm {
+.wpTrivia_resultForm {
     display: none;
 }
 
-.wpProQuiz_quiz input[type="checkbox"] {
+.wpTrivia_quiz input[type="checkbox"] {
     -webkit-appearance: checkbox;
 }
 
-.wpProQuiz_quiz input[type="radio"] {
+.wpTrivia_quiz input[type="radio"] {
     -webkit-appearance: radio;
 }

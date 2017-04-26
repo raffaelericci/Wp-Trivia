@@ -88,11 +88,11 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
         $questionId = isset($_GET['questionId']) ? (int)$_GET['questionId'] : 0;
 
         if ($questionId) {
-            if (!current_user_can('wpProQuiz_edit_quiz')) {
+            if (!current_user_can('wpTrivia_edit_quiz')) {
                 wp_die(__('You do not have sufficient permissions to access this page.'));
             }
         } else {
-            if (!current_user_can('wpProQuiz_add_quiz')) {
+            if (!current_user_can('wpTrivia_add_quiz')) {
                 wp_die(__('You do not have sufficient permissions to access this page.'));
             }
         }
@@ -221,7 +221,7 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
     public function copyQuestion($quizId)
     {
 
-        if (!current_user_can('wpProQuiz_edit_quiz')) {
+        if (!current_user_can('wpTrivia_edit_quiz')) {
             wp_die(__('You do not have sufficient permissions to access this page.'));
         }
 
@@ -244,7 +244,7 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
     public function loadQuestion($quizId)
     {
 
-        if (!current_user_can('wpProQuiz_edit_quiz')) {
+        if (!current_user_can('wpTrivia_edit_quiz')) {
             echo json_encode(array());
             exit;
         }
@@ -286,7 +286,7 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
     public function saveSort()
     {
 
-        if (!current_user_can('wpProQuiz_edit_quiz')) {
+        if (!current_user_can('wpTrivia_edit_quiz')) {
             exit;
         }
 
@@ -303,7 +303,7 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
     public function deleteAction($id)
     {
 
-        if (!current_user_can('wpProQuiz_delete_quiz')) {
+        if (!current_user_can('wpTrivia_delete_quiz')) {
             wp_die(__('You do not have sufficient permissions to access this page.'));
         }
 
@@ -315,7 +315,7 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
 
     public function deleteMultiAction()
     {
-        if (!current_user_can('wpProQuiz_delete_quiz')) {
+        if (!current_user_can('wpTrivia_delete_quiz')) {
             wp_die(__('You do not have sufficient permissions to access this page.'));
         }
 
@@ -465,7 +465,7 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
 
     public function showAction()
     {
-        if (!current_user_can('wpProQuiz_show')) {
+        if (!current_user_can('wpTrivia_show')) {
             wp_die(__('You do not have sufficient permissions to access this page.'));
         }
 
@@ -505,7 +505,7 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
 
     public static function ajaxSetQuestionMultipleCategories($data)
     {
-        if (!current_user_can('wpProQuiz_edit_quiz')) {
+        if (!current_user_can('wpTrivia_edit_quiz')) {
             return json_encode(array());
         }
 
@@ -518,7 +518,7 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
 
     public static function ajaxLoadQuestionsSort($data)
     {
-        if (!current_user_can('wpProQuiz_edit_quiz')) {
+        if (!current_user_can('wpTrivia_edit_quiz')) {
             return json_encode(array());
         }
 
@@ -531,7 +531,7 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
 
     public static function ajaxSaveSort($data)
     {
-        if (!current_user_can('wpProQuiz_edit_quiz')) {
+        if (!current_user_can('wpTrivia_edit_quiz')) {
             return json_encode(array());
         }
 
@@ -546,7 +546,7 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
 
     public static function ajaxLoadCopyQuestion($data)
     {
-        if (!current_user_can('wpProQuiz_edit_quiz')) {
+        if (!current_user_can('wpTrivia_edit_quiz')) {
             echo json_encode(array());
             exit;
         }

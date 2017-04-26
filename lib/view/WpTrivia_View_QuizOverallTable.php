@@ -67,34 +67,34 @@ class WpTrivia_View_QuizOverallTable extends WP_List_Table
     function column_name($item)
     {
         $actions = array(
-            'wpProQuiz_questions' => sprintf('<a href="?page=wpProQuiz&module=question&quiz_id=%s">' . __('Questions',
+            'wpTrivia_questions' => sprintf('<a href="?page=wpTrivia&module=question&quiz_id=%s">' . __('Questions',
                     'wp-trivia') . '</a>', $item['ID']),
         );
 
-        if (current_user_can('wpProQuiz_edit_quiz')) {
-            $actions['wpProQuiz_edit'] = sprintf('<a href="?page=wpProQuiz&action=addEdit&quizId=%s">' . __('Edit',
+        if (current_user_can('wpTrivia_edit_quiz')) {
+            $actions['wpTrivia_edit'] = sprintf('<a href="?page=wpTrivia&action=addEdit&quizId=%s">' . __('Edit',
                     'wp-trivia') . '</a>', $item['ID']);
         }
 
-        if (current_user_can('wpProQuiz_delete_quiz')) {
-            $actions['wpProQuiz_delete'] = sprintf('<a style="color: red;" href="?page=wpProQuiz&action=delete&id=%s">' . __('Delete',
+        if (current_user_can('wpTrivia_delete_quiz')) {
+            $actions['wpTrivia_delete'] = sprintf('<a style="color: red;" href="?page=wpTrivia&action=delete&id=%s">' . __('Delete',
                     'wp-trivia') . '</a>', $item['ID']);
         }
 
-        $actions['wpProQuiz_preview'] = sprintf('<a href="?page=wpProQuiz&module=preview&id=%s">' . __('Preview',
+        $actions['wpTrivia_preview'] = sprintf('<a href="?page=wpTrivia&module=preview&id=%s">' . __('Preview',
                 'wp-trivia') . '</a>', $item['ID']);
 
-        if (current_user_can('wpProQuiz_show_statistics')) {
-            $actions['wpProQuiz_statistics'] = sprintf('<a href="?page=wpProQuiz&module=statistics&id=%s">' . __('Statistics',
+        if (current_user_can('wpTrivia_show_statistics')) {
+            $actions['wpTrivia_statistics'] = sprintf('<a href="?page=wpTrivia&module=statistics&id=%s">' . __('Statistics',
                     'wp-trivia') . '</a>', $item['ID']);
         }
 
-        if (current_user_can('wpProQuiz_toplist_edit')) {
-            $actions['wpProQuiz_leaderboard'] = sprintf('<a href="?page=wpProQuiz&module=toplist&id=%s">' . __('Leaderboard',
+        if (current_user_can('wpTrivia_toplist_edit')) {
+            $actions['wpTrivia_leaderboard'] = sprintf('<a href="?page=wpTrivia&module=toplist&id=%s">' . __('Leaderboard',
                     'wp-trivia') . '</a>', $item['ID']);
         }
 
-        return sprintf('<a class="row-title" href="?page=wpProQuiz&module=question&quiz_id=%1$s">%2$s</a> %3$s',
+        return sprintf('<a class="row-title" href="?page=wpTrivia&module=question&quiz_id=%1$s">%2$s</a> %3$s',
             $item['ID'], $item['name'], $this->row_actions($actions));
     }
 
@@ -102,15 +102,15 @@ class WpTrivia_View_QuizOverallTable extends WP_List_Table
     {
         $actions = array();
 
-        if (current_user_can('wpProQuiz_delete_quiz')) {
+        if (current_user_can('wpTrivia_delete_quiz')) {
             $actions['delete'] = __('Delete', 'wp-trivia');
         }
 
-        if (current_user_can('wpProQuiz_export')) {
+        if (current_user_can('wpTrivia_export')) {
             $actions['export'] = __('Export', 'wp-trivia');
         }
 
-        if (current_user_can('wpProQuiz_edit_quiz')) {
+        if (current_user_can('wpTrivia_edit_quiz')) {
             $actions['set_category'] = __('Set Category', 'wp-trivia');
         }
 

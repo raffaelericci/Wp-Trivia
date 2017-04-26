@@ -11,12 +11,12 @@ class WpTrivia_View_FrontToplist extends WpTrivia_View_View
     public function show()
     {
         ?>
-        <div style="margin-bottom: 30px; margin-top: 10px;" class="wpProQuiz_toplist"
+        <div style="margin-bottom: 30px; margin-top: 10px;" class="wpTrivia_toplist"
              data-quiz_id="<?php echo $this->quiz->getId(); ?>">
             <?php if (!$this->inQuiz) { ?>
                 <h2><?php _e('Leaderboard', 'wp-trivia'); ?>: <?php echo $this->quiz->getName(); ?></h2>
             <?php } ?>
-            <table class="wpProQuiz_toplistTable">
+            <table class="wpTrivia_toplistTable">
                 <caption><?php printf(__('maximum of %s points', 'wp-trivia'), $this->points); ?></caption>
                 <thead>
                 <tr>

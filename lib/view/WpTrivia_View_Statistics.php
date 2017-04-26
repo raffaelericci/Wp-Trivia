@@ -14,7 +14,7 @@ class WpTrivia_View_Statistics extends WpTrivia_View_View
         ?>
 
         <style>
-            .wpProQuiz_blueBox {
+            .wpTrivia_blueBox {
                 padding: 20px;
                 background-color: rgb(223, 238, 255);
                 border: 1px dotted;
@@ -27,12 +27,12 @@ class WpTrivia_View_Statistics extends WpTrivia_View_View
         </style>
 
 
-        <div class="wrap wpProQuiz_statistics">
+        <div class="wrap wpTrivia_statistics">
             <input type="hidden" id="quizId" value="<?php echo $this->quiz->getId(); ?>" name="quizId">
 
             <h2><?php printf(__('Quiz: %s - Statistics', 'wp-trivia'), $this->quiz->getName()); ?></h2>
 
-            <p><a class="button-secondary" href="admin.php?page=wpProQuiz"><?php _e('back to overview',
+            <p><a class="button-secondary" href="admin.php?page=wpTrivia"><?php _e('back to overview',
                         'wp-trivia'); ?></a></p>
 
             <?php if (!$this->quiz->isStatisticsOn()) { ?>
@@ -40,28 +40,28 @@ class WpTrivia_View_Statistics extends WpTrivia_View_View
                     <span style="font-weight: bold; padding-right: 10px;"><?php _e('Stats not enabled',
                             'wp-trivia'); ?></span>
                     <a class="button-secondary"
-                       href="admin.php?page=wpProQuiz&action=addEdit&quizId=<?php echo $this->quiz->getId(); ?>"><?php _e('Activate statistics',
+                       href="admin.php?page=wpTrivia&action=addEdit&quizId=<?php echo $this->quiz->getId(); ?>"><?php _e('Activate statistics',
                             'wp-trivia'); ?></a>
                 </p>
                 <?php return;
             } ?>
 
             <div style="padding: 10px 0px;">
-                <a class="button-primary wpProQuiz_tab" id="wpProQuiz_typeUser" href="#"><?php _e('Users',
+                <a class="button-primary wpTrivia_tab" id="wpTrivia_typeUser" href="#"><?php _e('Users',
                         'wp-trivia'); ?></a>
-                <a class="button-secondary wpProQuiz_tab" id="wpProQuiz_typeOverview" href="#"><?php _e('Overview',
+                <a class="button-secondary wpTrivia_tab" id="wpTrivia_typeOverview" href="#"><?php _e('Overview',
                         'wp-trivia'); ?></a>
-                <a class="button-secondary wpProQuiz_tab" id="wpProQuiz_typeForm" href="#"><?php _e('Custom fields',
+                <a class="button-secondary wpTrivia_tab" id="wpTrivia_typeForm" href="#"><?php _e('Custom fields',
                         'wp-trivia'); ?></a>
             </div>
 
-            <div id="wpProQuiz_loadData" class="wpProQuiz_blueBox" style="background-color: #F8F5A8; display: none;">
+            <div id="wpTrivia_loadData" class="wpTrivia_blueBox" style="background-color: #F8F5A8; display: none;">
                 <img alt="load"
                      src="data:image/gif;base64,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">
                 <?php _e('Loading', 'wp-trivia'); ?>
             </div>
 
-            <div id="wpProQuiz_content" style="display: none;">
+            <div id="wpTrivia_content" style="display: none;">
 
                 <?php $this->tabUser(); ?>
                 <?php $this->tabOverview(); ?>
@@ -77,8 +77,8 @@ class WpTrivia_View_Statistics extends WpTrivia_View_View
     private function tabUser()
     {
         ?>
-        <div id="wpProQuiz_tabUsers" class="wpProQuiz_tabContent">
-            <div class="wpProQuiz_blueBox" id="wpProQuiz_userBox" style="margin-bottom: 20px;">
+        <div id="wpTrivia_tabUsers" class="wpTrivia_tabContent">
+            <div class="wpTrivia_blueBox" id="wpTrivia_userBox" style="margin-bottom: 20px;">
                 <div style="float: left;">
                     <div style="padding-top: 6px;">
                         <?php _e('Please select user name:', 'wp-trivia'); ?>
@@ -149,30 +149,30 @@ class WpTrivia_View_Statistics extends WpTrivia_View_View
                         $gPoints += $q->getPoints();
                         $cPoints += $q->getPoints();
                         ?>
-                        <tr id="wpProQuiz_tr_<?php echo $q->getId(); ?>">
+                        <tr id="wpTrivia_tr_<?php echo $q->getId(); ?>">
                             <th><?php echo $index++; ?></th>
                             <th><?php echo $q->getTitle(); ?></th>
-                            <th class="wpProQuiz_points"><?php echo $q->getPoints(); ?></th>
-                            <th class="wpProQuiz_cCorrect" style="color: green;"></th>
-                            <th class="wpProQuiz_cIncorrect" style="color: red;"></th>
-                            <th class="wpProQuiz_cTip"></th>
-                            <th class="wpProQuiz_cTime"></th>
-                            <th class="wpProQuiz_cPoints"></th>
+                            <th class="wpTrivia_points"><?php echo $q->getPoints(); ?></th>
+                            <th class="wpTrivia_cCorrect" style="color: green;"></th>
+                            <th class="wpTrivia_cIncorrect" style="color: red;"></th>
+                            <th class="wpTrivia_cTip"></th>
+                            <th class="wpTrivia_cTime"></th>
+                            <th class="wpTrivia_cPoints"></th>
                             <th></th>
                         </tr>
                     <?php } ?>
 
-                    <tr class="categoryTr" id="wpProQuiz_ctr_<?php echo $k; ?>">
+                    <tr class="categoryTr" id="wpTrivia_ctr_<?php echo $k; ?>">
                         <th colspan="2">
                             <span><?php _e('Sub-Total: ', 'wp-trivia'); ?></span>
                         </th>
-                        <th class="wpProQuiz_points"><?php echo $cPoints; ?></th>
-                        <th class="wpProQuiz_cCorrect" style="color: green;"></th>
-                        <th class="wpProQuiz_cIncorrect" style="color: red;"></th>
-                        <th class="wpProQuiz_cTip"></th>
-                        <th class="wpProQuiz_cTime"></th>
-                        <th class="wpProQuiz_cPoints"></th>
-                        <th class="wpProQuiz_cResult" style="font-weight: bold;"></th>
+                        <th class="wpTrivia_points"><?php echo $cPoints; ?></th>
+                        <th class="wpTrivia_cCorrect" style="color: green;"></th>
+                        <th class="wpTrivia_cIncorrect" style="color: red;"></th>
+                        <th class="wpTrivia_cTip"></th>
+                        <th class="wpTrivia_cTime"></th>
+                        <th class="wpTrivia_cPoints"></th>
+                        <th class="wpTrivia_cResult" style="font-weight: bold;"></th>
                     </tr>
 
                     <tr>
@@ -183,31 +183,31 @@ class WpTrivia_View_Statistics extends WpTrivia_View_View
                 </tbody>
 
                 <tfoot>
-                <tr id="wpProQuiz_tr_0">
+                <tr id="wpTrivia_tr_0">
                     <th></th>
                     <th><?php _e('Total', 'wp-trivia'); ?></th>
-                    <th class="wpProQuiz_points"><?php echo $gPoints; ?></th>
-                    <th class="wpProQuiz_cCorrect" style="color: green;"></th>
-                    <th class="wpProQuiz_cIncorrect" style="color: red;"></th>
-                    <th class="wpProQuiz_cTip"></th>
-                    <th class="wpProQuiz_cTime"></th>
-                    <th class="wpProQuiz_cPoints"></th>
-                    <th class="wpProQuiz_cResult" style="font-weight: bold;"></th>
+                    <th class="wpTrivia_points"><?php echo $gPoints; ?></th>
+                    <th class="wpTrivia_cCorrect" style="color: green;"></th>
+                    <th class="wpTrivia_cIncorrect" style="color: red;"></th>
+                    <th class="wpTrivia_cTip"></th>
+                    <th class="wpTrivia_cTime"></th>
+                    <th class="wpTrivia_cPoints"></th>
+                    <th class="wpTrivia_cResult" style="font-weight: bold;"></th>
                 </tr>
                 </tfoot>
             </table>
 
             <div style="margin-top: 10px;">
                 <div style="float: left;">
-                    <a class="button-secondary wpProQuiz_update" href="#"><?php _e('Refresh', 'wp-trivia'); ?></a>
+                    <a class="button-secondary wpTrivia_update" href="#"><?php _e('Refresh', 'wp-trivia'); ?></a>
                 </div>
                 <div style="float: right;">
-                    <?php if (current_user_can('wpProQuiz_reset_statistics')) { ?>
-                        <a class="button-secondary" href="#" id="wpProQuiz_reset"><?php _e('Reset statistics',
+                    <?php if (current_user_can('wpTrivia_reset_statistics')) { ?>
+                        <a class="button-secondary" href="#" id="wpTrivia_reset"><?php _e('Reset statistics',
                                 'wp-trivia'); ?></a>
-                        <a class="button-secondary" href="#" id="wpProQuiz_resetUser"><?php _e('Reset user statistics',
+                        <a class="button-secondary" href="#" id="wpTrivia_resetUser"><?php _e('Reset user statistics',
                                 'wp-trivia'); ?></a>
-                        <a class="button-secondary wpProQuiz_resetComplete" href="#"><?php _e('Reset entire statistic',
+                        <a class="button-secondary wpTrivia_resetComplete" href="#"><?php _e('Reset entire statistic',
                                 'wp-trivia'); ?></a>
                     <?php } ?>
                 </div>
@@ -223,9 +223,9 @@ class WpTrivia_View_Statistics extends WpTrivia_View_View
 
         ?>
 
-        <div id="wpProQuiz_tabOverview" class="wpProQuiz_tabContent" style="display: none;">
+        <div id="wpTrivia_tabOverview" class="wpTrivia_tabContent" style="display: none;">
 
-            <input type="hidden" value="<?php echo 0; ?>" name="gPoints" id="wpProQuiz_gPoints">
+            <input type="hidden" value="<?php echo 0; ?>" name="gPoints" id="wpTrivia_gPoints">
 
             <div id="poststuff">
                 <div class="postbox">
@@ -236,13 +236,13 @@ class WpTrivia_View_Statistics extends WpTrivia_View_View
                             <li>
                                 <label>
                                     <?php _e('Show only users, who solved the quiz:', 'wp-trivia'); ?>
-                                    <input type="checkbox" value="1" id="wpProQuiz_onlyCompleted">
+                                    <input type="checkbox" value="1" id="wpTrivia_onlyCompleted">
                                 </label>
                             </li>
                             <li>
                                 <label>
                                     <?php _e('How many entries should be shown on one page:', 'wp-trivia'); ?>
-                                    <select id="wpProQuiz_pageLimit">
+                                    <select id="wpTrivia_pageLimit">
                                         <option>1</option>
                                         <option>10</option>
                                         <option>50</option>
@@ -270,15 +270,15 @@ class WpTrivia_View_Statistics extends WpTrivia_View_View
                     <th scope="col" style="width: 60px;"><?php _e('Results', 'wp-trivia'); ?></th>
                 </tr>
                 </thead>
-                <tbody id="wpProQuiz_statistics_overview_data">
+                <tbody id="wpTrivia_statistics_overview_data">
                 <tr style="display: none;">
                     <th><a href="#"></a></th>
-                    <th class="wpProQuiz_cPoints"></th>
-                    <th class="wpProQuiz_cCorrect" style="color: green;"></th>
-                    <th class="wpProQuiz_cIncorrect" style="color: red;"></th>
-                    <th class="wpProQuiz_cTip"></th>
-                    <th class="wpProQuiz_cTime"></th>
-                    <th class="wpProQuiz_cResult" style="font-weight: bold;"></th>
+                    <th class="wpTrivia_cPoints"></th>
+                    <th class="wpTrivia_cCorrect" style="color: green;"></th>
+                    <th class="wpTrivia_cIncorrect" style="color: red;"></th>
+                    <th class="wpTrivia_cTip"></th>
+                    <th class="wpTrivia_cTime"></th>
+                    <th class="wpTrivia_cResult" style="font-weight: bold;"></th>
                 </tr>
                 </tbody>
             </table>
@@ -286,17 +286,17 @@ class WpTrivia_View_Statistics extends WpTrivia_View_View
             <div style="margin-top: 10px;">
                 <div style="float: left;">
                     <input style="font-weight: bold;" class="button-secondary" value="&lt;" type="button"
-                           id="wpProQuiz_pageLeft">
-                    <select id="wpProQuiz_currentPage">
+                           id="wpTrivia_pageLeft">
+                    <select id="wpTrivia_currentPage">
                         <option value="1">1</option>
                     </select>
                     <input style="font-weight: bold;" class="button-secondary" value="&gt;" type="button"
-                           id="wpProQuiz_pageRight">
+                           id="wpTrivia_pageRight">
                 </div>
                 <div style="float: right;">
-                    <a class="button-secondary wpProQuiz_update" href="#"><?php _e('Refresh', 'wp-trivia'); ?></a>
-                    <?php if (current_user_can('wpProQuiz_reset_statistics')) { ?>
-                        <a class="button-secondary wpProQuiz_resetComplete" href="#"><?php _e('Reset entire statistic',
+                    <a class="button-secondary wpTrivia_update" href="#"><?php _e('Refresh', 'wp-trivia'); ?></a>
+                    <?php if (current_user_can('wpTrivia_reset_statistics')) { ?>
+                        <a class="button-secondary wpTrivia_resetComplete" href="#"><?php _e('Reset entire statistic',
                                 'wp-trivia'); ?></a>
                     <?php } ?>
                 </div>
@@ -312,7 +312,7 @@ class WpTrivia_View_Statistics extends WpTrivia_View_View
     {
         ?>
 
-        <div id="wpProQuiz_tabFormOverview" class="wpProQuiz_tabContent" style="display: none;">
+        <div id="wpTrivia_tabFormOverview" class="wpTrivia_tabContent" style="display: none;">
 
             <div id="poststuff">
                 <div class="postbox">
@@ -323,7 +323,7 @@ class WpTrivia_View_Statistics extends WpTrivia_View_View
                             <li>
                                 <label>
                                     <?php _e('Which users should be displayed:', 'wp-trivia'); ?>
-                                    <select id="wpProQuiz_formUser">
+                                    <select id="wpTrivia_formUser">
                                         <option value="0"><?php _e('all', 'wp-trivia'); ?></option>
                                         <option value="1"><?php _e('only registered users', 'wp-trivia'); ?></option>
                                         <option value="2"><?php _e('only anonymous users', 'wp-trivia'); ?></option>
@@ -333,7 +333,7 @@ class WpTrivia_View_Statistics extends WpTrivia_View_View
                             <li>
                                 <label>
                                     <?php _e('How many entries should be shown on one page:', 'wp-trivia'); ?>
-                                    <select id="wpProQuiz_fromPageLimit">
+                                    <select id="wpTrivia_fromPageLimit">
                                         <option>1</option>
                                         <option>10</option>
                                         <option>50</option>
@@ -356,11 +356,11 @@ class WpTrivia_View_Statistics extends WpTrivia_View_View
                     <th scope="col" style="width: 60px;"><?php _e('Results', 'wp-trivia'); ?></th>
                 </tr>
                 </thead>
-                <tbody id="wpProQuiz_statistics_form_data">
+                <tbody id="wpTrivia_statistics_form_data">
                 <tr style="display: none;">
-                    <th><a href="#" class="wpProQuiz_cUsername"></a></th>
-                    <th class="wpProQuiz_cCreateTime"></th>
-                    <th class="wpProQuiz_cResult" style="font-weight: bold;"></th>
+                    <th><a href="#" class="wpTrivia_cUsername"></a></th>
+                    <th class="wpTrivia_cCreateTime"></th>
+                    <th class="wpTrivia_cResult" style="font-weight: bold;"></th>
                 </tr>
                 </tbody>
             </table>
@@ -368,17 +368,17 @@ class WpTrivia_View_Statistics extends WpTrivia_View_View
             <div style="margin-top: 10px;">
                 <div style="float: left;">
                     <input style="font-weight: bold;" class="button-secondary" value="&lt;" type="button"
-                           id="wpProQuiz_formPageLeft">
-                    <select id="wpProQuiz_formCurrentPage">
+                           id="wpTrivia_formPageLeft">
+                    <select id="wpTrivia_formCurrentPage">
                         <option value="1">1</option>
                     </select>
                     <input style="font-weight: bold;" class="button-secondary" value="&gt;" type="button"
-                           id="wpProQuiz_formPageRight">
+                           id="wpTrivia_formPageRight">
                 </div>
                 <div style="float: right;">
-                    <a class="button-secondary wpProQuiz_update" href="#"><?php _e('Refresh', 'wp-trivia'); ?></a>
-                    <?php if (current_user_can('wpProQuiz_reset_statistics')) { ?>
-                        <a class="button-secondary wpProQuiz_resetComplete" href="#"><?php _e('Reset entire statistic',
+                    <a class="button-secondary wpTrivia_update" href="#"><?php _e('Refresh', 'wp-trivia'); ?></a>
+                    <?php if (current_user_can('wpTrivia_reset_statistics')) { ?>
+                        <a class="button-secondary wpTrivia_resetComplete" href="#"><?php _e('Reset entire statistic',
                                 'wp-trivia'); ?></a>
                     <?php } ?>
                 </div>
@@ -397,7 +397,7 @@ class WpTrivia_View_Statistics extends WpTrivia_View_View
             return;
         }
         ?>
-        <div id="wpProQuiz_form_box">
+        <div id="wpTrivia_form_box">
             <div id="poststuff">
                 <div class="postbox">
                     <h3 class="hndle"><?php _e('Custom fields', 'wp-trivia'); ?></h3>

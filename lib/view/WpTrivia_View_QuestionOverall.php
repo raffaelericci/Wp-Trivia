@@ -12,18 +12,18 @@ class WpTrivia_View_QuestionOverall extends WpTrivia_View_View {
 	public function show() {
 ?>
 <style>
-.wpProQuiz_questionCopy, .wpProQuiz_setQuestionCategoryList {
+.wpTrivia_questionCopy, .wpTrivia_setQuestionCategoryList {
 	padding: 20px; 
 	background-color: rgb(223, 238, 255); 
 	border: 1px dotted;
 	margin-top: 10px;
 }
-.wpProQuiz_setQuestionCategoryList ul {
+.wpTrivia_setQuestionCategoryList ul {
 	list-style: none;
 	margin: 0;
 	padding: 0;
 }
-.wpProQuiz_setQuestionCategoryList li {
+.wpTrivia_setQuestionCategoryList li {
 	float: left;
 	padding: 3px;
 	border: 1px solid #B3B3B3;
@@ -53,7 +53,7 @@ class WpTrivia_View_QuestionOverall extends WpTrivia_View_View {
 		};
 
 		function initGlobal() {
-			var $setCategoryBox = $('#wpProQuiz_setQuestionCategoryList_box > div');
+			var $setCategoryBox = $('#wpTrivia_setQuestionCategoryList_box > div');
 			var $categorySelect = $setCategoryBox.find('[name="category"]');
 
 			$categorySelect.change(function() {
@@ -92,7 +92,7 @@ class WpTrivia_View_QuestionOverall extends WpTrivia_View_View {
 				var items = getCheckedItems();
 
 				if(!items || !items.length) {
-					alert(wpProQuizLocalize.no_selected_quiz);
+					alert(wpTriviaLocalize.no_selected_quiz);
 
 					return false;
 				}
@@ -115,7 +115,7 @@ class WpTrivia_View_QuestionOverall extends WpTrivia_View_View {
 		initGlobal();
 
 		function showWpTriviaModalBox(title, id, height) {
-			var width = Math.min($('.wpProQuiz_questionOverall').width() - 50, 600);
+			var width = Math.min($('.wpTrivia_questionOverall').width() - 50, 600);
 			var a = '#TB_inline?width='+ width +'&inlineId=' + id;
 
 			if(height === true) {
@@ -147,7 +147,7 @@ class WpTrivia_View_QuestionOverall extends WpTrivia_View_View {
 			if(!items || !items.length)
 				return false;
 
-			var $setCategoryBox = $('.wpProQuiz_setQuestionCategoryList');
+			var $setCategoryBox = $('.wpTrivia_setQuestionCategoryList');
 			var $hiddenBox = $setCategoryBox.find('#setCategoryHidden').empty();
 			var $ulBox = $setCategoryBox.find('ul').empty();
 
@@ -161,7 +161,7 @@ class WpTrivia_View_QuestionOverall extends WpTrivia_View_View {
 				);
 			});
 
-			showWpTriviaModalBox('', 'wpProQuiz_setQuestionCategoryList_box');
+			showWpTriviaModalBox('', 'wpTrivia_setQuestionCategoryList_box');
 
 			return true;
 		}
@@ -205,7 +205,7 @@ class WpTrivia_View_QuestionOverall extends WpTrivia_View_View {
 		});
 
 		$('#sortQuestionBtn').click(function () {
-			var tbody = $('#wpProQuiz_sortQuestion table tbody').empty().sortable();
+			var tbody = $('#wpTrivia_sortQuestion table tbody').empty().sortable();
 			var data = {
 				quizId: $('[name="quiz_id"]').val()
 			};
@@ -222,11 +222,11 @@ class WpTrivia_View_QuestionOverall extends WpTrivia_View_View {
 				});
 			});
 
-			showWpTriviaModalBox('', 'wpProQuiz_sortQuestion_box', true);
+			showWpTriviaModalBox('', 'wpTrivia_sortQuestion_box', true);
 		});
 
 		$('.saveQuestionSort').click(function () {
-			var questionData = $('#wpProQuiz_sortQuestion table tbody tr > td').map(function (i, v) {
+			var questionData = $('#wpTrivia_sortQuestion table tbody tr > td').map(function (i, v) {
 				return  $(v).data('questionId');
 			}).get();
 
@@ -235,11 +235,11 @@ class WpTrivia_View_QuestionOverall extends WpTrivia_View_View {
 			};
 
 			ajaxPost('questionSaveSort', data, function (json) {
-				location.href='?page=wpProQuiz&module=question&quiz_id=' + $('[name="quiz_id"]').val();
+				location.href='?page=wpTrivia&module=question&quiz_id=' + $('[name="quiz_id"]').val();
 			});
 		});
 
-		$('#wpProQuiz_questionCopyBtn').click(function () {
+		$('#wpTrivia_questionCopyBtn').click(function () {
 
 			var list = $('#questionCopySelect').hide().empty();
 
@@ -269,11 +269,11 @@ class WpTrivia_View_QuestionOverall extends WpTrivia_View_View {
 					list.show();
 			});
 
-			showWpTriviaModalBox('', 'wpProQuiz_questionCopy_box', true);
+			showWpTriviaModalBox('', 'wpTrivia_questionCopy_box', true);
 		});
 
-		$('.wpProQuiz_delete').click(function(e) {
-			var b = confirm(wpProQuizLocalize.delete_msg);
+		$('.wpTrivia_delete').click(function(e) {
+			var b = confirm(wpTriviaLocalize.delete_msg);
 
 			if(!b) {
 				e.preventDefault();
@@ -296,34 +296,34 @@ class WpTrivia_View_QuestionOverall extends WpTrivia_View_View {
 		?>
 
 
-<div class="wrap wpProQuiz_questionOverall">
+<div class="wrap wpTrivia_questionOverall">
 	<h2>
 		<?php printf(__('Quiz: %s', 'wp-trivia'), $this->quiz->getName()); ?>
 
-		<?php if(current_user_can('wpProQuiz_edit_quiz')) { ?>
-			<a class="add-new-h2" href="?page=wpProQuiz&module=question&action=addEdit&quiz_id=<?php echo $this->quiz->getId(); ?>"><?php _e('Add question', 'wp-trivia'); ?></a>
+		<?php if(current_user_can('wpTrivia_edit_quiz')) { ?>
+			<a class="add-new-h2" href="?page=wpTrivia&module=question&action=addEdit&quiz_id=<?php echo $this->quiz->getId(); ?>"><?php _e('Add question', 'wp-trivia'); ?></a>
 		<?php } ?>
 	</h2>
 
 	<p>
-		<a class="" href="admin.php?page=wpProQuiz"><?php _e('back to overview', 'wp-trivia'); ?></a>
+		<a class="" href="admin.php?page=wpTrivia"><?php _e('back to overview', 'wp-trivia'); ?></a>
 	</p>
 
 	<p>
-		<?php if(current_user_can('wpProQuiz_edit_quiz')) { ?>
-			<a class="button-secondary" href="admin.php?page=wpProQuiz&action=addEdit&quizId=<?php echo $this->quiz->getId(); ?>"><?php _e('Edit quiz', 'wp-trivia'); ?></a>
+		<?php if(current_user_can('wpTrivia_edit_quiz')) { ?>
+			<a class="button-secondary" href="admin.php?page=wpTrivia&action=addEdit&quizId=<?php echo $this->quiz->getId(); ?>"><?php _e('Edit quiz', 'wp-trivia'); ?></a>
 			<a class="button-secondary" id="sortQuestionBtn" href="#"><?php _e('Sort Question', 'wp-trivia'); ?></a>
-			<a class="button-secondary" href="#" id="wpProQuiz_questionCopyBtn"><?php _e('Copy questions from another Quiz', 'wp-trivia'); ?></a>
+			<a class="button-secondary" href="#" id="wpTrivia_questionCopyBtn"><?php _e('Copy questions from another Quiz', 'wp-trivia'); ?></a>
 		<?php } ?>
 
 	</p>
 
-	<form action="?page=wpProQuiz&module=question&action=delete_multi&quiz_id=<?php echo $this->quiz->getId(); ?>" method="post" style="display: none;" id="deleteForm">
+	<form action="?page=wpTrivia&module=question&action=delete_multi&quiz_id=<?php echo $this->quiz->getId(); ?>" method="post" style="display: none;" id="deleteForm">
 
 	</form>
 
 	<form method="get">
-		<input type="hidden" name="page" value="wpProQuiz">
+		<input type="hidden" name="page" value="wpTrivia">
 		<input type="hidden" name="module" value="question">
 		<input type="hidden" name="quiz_id" value="<?php echo $this->quiz->getId(); ?>">
 	<?php
@@ -351,9 +351,9 @@ class WpTrivia_View_QuestionOverall extends WpTrivia_View_View {
 	protected function showCopyQuestionBox() {
 		?>
 
-		<div id="wpProQuiz_questionCopy_box" style="display: none;">
-			<div class="wpProQuiz_questionCopy">
-				<form action="admin.php?page=wpProQuiz&module=question&quiz_id=<?php echo $this->quiz->getId(); ?>&action=copy_question" method="POST">
+		<div id="wpTrivia_questionCopy_box" style="display: none;">
+			<div class="wpTrivia_questionCopy">
+				<form action="admin.php?page=wpTrivia&module=question&quiz_id=<?php echo $this->quiz->getId(); ?>&action=copy_question" method="POST">
 					<h3 style="margin-top: 0;"><?php _e('Copy questions from another Quiz', 'wp-trivia'); ?></h3>
 					<p><?php echo __('Here you can copy questions from another quiz into this quiz. (Multiple selection enabled)', 'wp-trivia'); ?></p>
 
@@ -378,8 +378,8 @@ class WpTrivia_View_QuestionOverall extends WpTrivia_View_View {
 	protected function showSetQuestionCategoryListBox() {
 		?>
 
-		<div id="wpProQuiz_setQuestionCategoryList_box" style="display: none;">
-			<div class="wpProQuiz_setQuestionCategoryList">
+		<div id="wpTrivia_setQuestionCategoryList_box" style="display: none;">
+			<div class="wpTrivia_setQuestionCategoryList">
 				<form action="#" method="POST">
 					<h3 style="margin-top: 0;"><?php _e('Set Question Categories', 'wp-trivia'); ?></h3>
 					<p><?php _e('Sets multiple question categories', 'wp-trivia'); ?></p>
@@ -429,8 +429,8 @@ class WpTrivia_View_QuestionOverall extends WpTrivia_View_View {
 	protected function showSortQuestionBox() {
 		?>
 
-		<div id="wpProQuiz_sortQuestion_box" style="display: none;">
-			<div id="wpProQuiz_sortQuestion">
+		<div id="wpTrivia_sortQuestion_box" style="display: none;">
+			<div id="wpTrivia_sortQuestion">
 				<h4>Sort questions</h4>
 				<p>
 					<a href="#" class="button-secondary saveQuestionSort"><?php _e( 'Save' ); ?></a>

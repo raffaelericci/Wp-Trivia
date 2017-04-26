@@ -5,12 +5,12 @@ var uglify = require('gulp-uglify');
 
 var paths = {
     css: [
-        'css/wpProQuiz_front.css'
+        'css/wpTrivia_front.css'
     ],
     js: [
-        'js/wpProQuiz_admin.js',
-        'js/wpProQuiz_front.js',
-        'js/wpProQuiz_toplist.js'
+        'js/wpTrivia_admin.js',
+        'js/wpTrivia_front.js',
+        'js/wpTrivia_toplist.js'
     ]
 };
 

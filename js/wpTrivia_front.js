@@ -2,10 +2,10 @@
  * Source: https://github.com/jfriend00/docReady
  */
 (function(funcName, baseObj) {
-    // The public function name defaults to window.wpProQuizReady
+    // The public function name defaults to window.wpTriviaReady
     // but you can pass in your own object and own function name and those will be used
     // if you want to put them in a different namespace
-    funcName = funcName || "wpProQuizReady";
+    funcName = funcName || "wpTriviaReady";
     baseObj = baseObj || window;
     var readyList = [];
     var readyFired = false;
@@ -19,7 +19,7 @@
             readyFired = true;
             for (var i = 0; i < readyList.length; i++) {
                 // if a callback here happens to add new ready handlers,
-                // the wpProQuizReady() function will see that it already fired
+                // the wpTriviaReady() function will see that it already fired
                 // and will schedule the callback to run right after
                 // this event loop finishes so all handlers will still execute
                 // in order and no new ones will be added to the readyList
@@ -38,7 +38,7 @@
     }
 
     // This is the one public interface
-    // wpProQuizReady(fn, context);
+    // wpTriviaReady(fn, context);
     // the context argument is optional - if present, it will be passed
     // as an argument to the callback
     baseObj[funcName] = function(callback, context) {
@@ -69,13 +69,13 @@
             readyEventHandlersInstalled = true;
         }
     }
-})("wpProQuizReady", window);
+})("wpTriviaReady", window);
 
-wpProQuizReady(function () {
-    var r = window.wpProQuizInitList || [];
+wpTriviaReady(function () {
+    var r = window.wpTriviaInitList || [];
 
     for(var i = 0; i < r.length; i++) {
-        jQuery(r[i].id).wpProQuizFront(r[i].init);
+        jQuery(r[i].id).wpTriviaFront(r[i].init);
     }
 });
 
@@ -83,7 +83,7 @@ wpProQuizReady(function () {
     /**
      * @memberOf $
      */
-    $.wpProQuizFront = function (element, options) {
+    $.wpTriviaFront = function (element, options) {
 
         var $e = $(element);
         var config = options;
@@ -125,21 +125,21 @@ wpProQuizReady(function () {
         var globalNames = {
             check: 'input[name="check"]',
             next: 'input[name="next"]',
-            questionList: '.wpProQuiz_questionList',
+            questionList: '.wpTrivia_questionList',
             skip: 'input[name="skip"]',
-            singlePageLeft: 'input[name="wpProQuiz_pageLeft"]',
-            singlePageRight: 'input[name="wpProQuiz_pageRight"]'
+            singlePageLeft: 'input[name="wpTrivia_pageLeft"]',
+            singlePageRight: 'input[name="wpTrivia_pageRight"]'
         };
 
         var globalElements = {
             back: $e.find('input[name="back"]'),
             next: $e.find(globalNames.next),
-            quiz: $e.find('.wpProQuiz_quiz'),
-            questionList: $e.find('.wpProQuiz_list'),
-            results: $e.find('.wpProQuiz_results'),
-            quizStartPage: $e.find('.wpProQuiz_text'),
-            timelimit: $e.find('.wpProQuiz_time_limit'),
-            toplistShowInButton: $e.find('.wpProQuiz_toplistShowInButton'),
+            quiz: $e.find('.wpTrivia_quiz'),
+            questionList: $e.find('.wpTrivia_list'),
+            results: $e.find('.wpTrivia_results'),
+            quizStartPage: $e.find('.wpTrivia_text'),
+            timelimit: $e.find('.wpTrivia_time_limit'),
+            toplistShowInButton: $e.find('.wpTrivia_toplistShowInButton'),
             listItems: $()
         };
 
@@ -175,7 +175,7 @@ wpProQuizReady(function () {
                 var x = _counter * 1000;
 
                 var $timeText = globalElements.timelimit.find('span').text(plugin.methode.parseTime(_counter));
-                var $timeDiv = globalElements.timelimit.find('.wpProQuiz_progress');
+                var $timeDiv = globalElements.timelimit.find('.wpTrivia_progress');
 
                 globalElements.timelimit.show();
 
@@ -214,7 +214,7 @@ wpProQuizReady(function () {
             var itemsStatus = [];
 
             this.init = function () {
-                $contain = $e.find('.wpProQuiz_reviewQuestion');
+                $contain = $e.find('.wpTrivia_reviewQuestion');
                 $cursor = $contain.find('div');
                 $list = $contain.find('ol');
                 $items = $list.children();
@@ -240,9 +240,9 @@ wpProQuizReady(function () {
                 });
 
                 $e.bind('changeQuestion', function (e) {
-                    $items.removeClass('wpProQuiz_reviewQuestionTarget');
+                    $items.removeClass('wpTrivia_reviewQuestionTarget');
 
-                    $items.eq(e.values.index).addClass('wpProQuiz_reviewQuestionTarget');
+                    $items.eq(e.values.index).addClass('wpTrivia_reviewQuestionTarget');
 
                     scroll(e.values.index);
                 });
@@ -280,7 +280,7 @@ wpProQuizReady(function () {
                 if (bitOptions.reviewQustion)
                     $contain.parent().show();
 
-                $e.find('.wpProQuiz_reviewDiv .wpProQuiz_button2').show();
+                $e.find('.wpTrivia_reviewDiv .wpTrivia_button2').show();
 
                 if (save)
                     return;
@@ -311,8 +311,8 @@ wpProQuizReady(function () {
             this.toggle = function () {
                 if (bitOptions.reviewQustion) {
                     $contain.parent().toggle();
-                    $items.removeClass('wpProQuiz_reviewQuestionTarget');
-                    $e.find('.wpProQuiz_reviewDiv .wpProQuiz_button2').hide();
+                    $items.removeClass('wpTrivia_reviewQuestionTarget');
+                    $e.find('.wpTrivia_reviewDiv .wpTrivia_button2').hide();
 
                     $list.attr('style', 'margin-top: 0px !important');
                     $cursor.css({top: 0});
@@ -337,7 +337,7 @@ wpProQuizReady(function () {
                     itemsStatus[i] = {};
                 }
 
-                $items.removeClass('wpProQuiz_reviewQuestionTarget').css('background-color', '');
+                $items.removeClass('wpTrivia_reviewQuestionTarget').css('background-color', '');
             };
 
             function scroll(index) {
@@ -456,7 +456,7 @@ wpProQuizReady(function () {
 
             var func = {
                 singleMulti: function () {
-                    var input = $questionList.find('.wpProQuiz_questionInput').attr('disabled', 'disabled');
+                    var input = $questionList.find('.wpTrivia_questionInput').attr('disabled', 'disabled');
                     var isDiffMode = data.diffMode;
 
                     $questionList.children().each(function (i) {
@@ -544,7 +544,7 @@ wpProQuizReady(function () {
                     $items.each(function () {
                         var $this = $(this);
                         var i = $this.data('pos');
-                        var $stringUl = $this.find('.wpProQuiz_maxtrixSortCriterion');
+                        var $stringUl = $this.find('.wpTrivia_maxtrixSortCriterion');
                         var $stringItem = $stringUl.children();
 
                         if ($stringItem.length)
@@ -567,7 +567,7 @@ wpProQuizReady(function () {
 
                     plugin.methode.resetMatrix($question);
 
-                    $question.find('.wpProQuiz_sortStringItem').each(function () {
+                    $question.find('.wpTrivia_sortStringItem').each(function () {
                         var x = matrix[$(this).data('pos')];
                         if (x != undefined)
                             x.append(this);
@@ -576,12 +576,12 @@ wpProQuizReady(function () {
                         'cursor': 'auto'
                     });
 
-                    $question.find('.wpProQuiz_sortStringList, .wpProQuiz_maxtrixSortCriterion').sortable("destroy");
+                    $question.find('.wpTrivia_sortStringList, .wpTrivia_maxtrixSortCriterion').sortable("destroy");
                 },
 
                 free_answer: function () {
                     var $li = $questionList.children();
-                    var value = $li.find('.wpProQuiz_questionInput').attr('disabled', 'disabled').val();
+                    var value = $li.find('.wpTrivia_questionInput').attr('disabled', 'disabled').val();
 
                     if ($.inArray($.trim(value).toLowerCase(), data.correct) >= 0) {
                         plugin.methode.marker($li, true);
@@ -592,7 +592,7 @@ wpProQuizReady(function () {
                 },
 
                 cloze_answer: function () {
-                    $questionList.find('.wpProQuiz_cloze').each(function (i, v) {
+                    $questionList.find('.wpTrivia_cloze').each(function (i, v) {
                         var $this = $(this);
                         var cloze = $this.children();
                         var input = cloze.eq(0);
@@ -623,7 +623,7 @@ wpProQuizReady(function () {
 
                 assessment_answer: function () {
                     correct = true;
-                    var $input = $questionList.find('.wpProQuiz_questionInput').attr('disabled', 'disabled');
+                    var $input = $questionList.find('.wpTrivia_questionInput').attr('disabled', 'disabled');
                     var val = 0;
 
                     $input.filter(':checked').each(function () {
@@ -687,7 +687,7 @@ wpProQuizReady(function () {
             this.checkForm = function () {
                 var check = true;
 
-                $e.find('.wpProQuiz_forms input, .wpProQuiz_forms textarea, .wpProQuiz_forms .wpProQuiz_formFields, .wpProQuiz_forms select').each(function () {
+                $e.find('.wpTrivia_forms input, .wpTrivia_forms textarea, .wpTrivia_forms .wpTrivia_formFields, .wpTrivia_forms select').each(function () {
                     var $this = $(this);
                     var isRequired = $this.data('required') == 1;
                     var type = $this.data('type');
@@ -738,20 +738,20 @@ wpProQuizReady(function () {
                     }
 
                     if (test) {
-                        $this.siblings('.wpProQuiz_invalidate').hide();
+                        $this.siblings('.wpTrivia_invalidate').hide();
                     } else {
                         check = false;
-                        $this.siblings('.wpProQuiz_invalidate').show();
+                        $this.siblings('.wpTrivia_invalidate').show();
                     }
 
                 });
 
-//				$('.wpProQuiz_forms input, .wpProQuiz_forms textarea').each(function() {
+//				$('.wpTrivia_forms input, .wpTrivia_forms textarea').each(function() {
 //					var $this = $(this);
 //					var isRequired = $this.data('required') == 1;
 //					var validate = $this.data('validate') & 0xFF;
 //					var test = false;
-//					var $infos = $this.parents('div:eq(0)').find('.wpProQuiz_invalidate');
+//					var $infos = $this.parents('div:eq(0)').find('.wpTrivia_invalidate');
 //
 //					if(isRequired) {
 //						if($this.attr('type') == 'checkbox') {
@@ -789,7 +789,7 @@ wpProQuizReady(function () {
             this.getFormData = function () {
                 var data = {};
 
-                $e.find('.wpProQuiz_forms input, .wpProQuiz_forms textarea, .wpProQuiz_forms .wpProQuiz_formFields, .wpProQuiz_forms select').each(function () {
+                $e.find('.wpTrivia_forms input, .wpTrivia_forms textarea, .wpTrivia_forms .wpTrivia_formFields, .wpTrivia_forms select').each(function () {
                     var $this = $(this);
                     var id = $this.data('form_id');
                     var type = $this.data('type');
@@ -811,9 +811,9 @@ wpProQuizReady(function () {
                             break;
                         case typeConst.DATE:
                             data[id] = {
-                                day: $this.find('select[name="wpProQuiz_field_' + id + '_day"]').val(),
-                                month: $this.find('select[name="wpProQuiz_field_' + id + '_month"]').val(),
-                                year: $this.find('select[name="wpProQuiz_field_' + id + '_year"]').val()
+                                day: $this.find('select[name="wpTrivia_field_' + id + '_day"]').val(),
+                                month: $this.find('select[name="wpTrivia_field_' + id + '_month"]').val(),
+                                year: $this.find('select[name="wpTrivia_field_' + id + '_year"]').val()
                             };
                             break;
                     }
@@ -824,37 +824,37 @@ wpProQuizReady(function () {
         };
 
         var fetchAllAnswerData = function (resultData) {
-            $e.find('.wpProQuiz_questionList').each(function () {
+            $e.find('.wpTrivia_questionList').each(function () {
                 var $this = $(this);
                 var questionId = $this.data('question_id');
                 var type = $this.data('type');
                 var data = {};
 
                 if (type == 'single' || type == 'multiple') {
-                    $this.find('.wpProQuiz_questionListItem').each(function () {
-                        data[$(this).data('pos')] = +$(this).find('.wpProQuiz_questionInput').is(':checked');
+                    $this.find('.wpTrivia_questionListItem').each(function () {
+                        data[$(this).data('pos')] = +$(this).find('.wpTrivia_questionInput').is(':checked');
                     });
                 } else if (type == 'free_answer') {
-                    data[0] = $this.find('.wpProQuiz_questionInput').val();
+                    data[0] = $this.find('.wpTrivia_questionInput').val();
                 } else if (type == 'sort_answer') {
                     return true;
-//					$this.find('.wpProQuiz_questionListItem').each(function() {
+//					$this.find('.wpTrivia_questionListItem').each(function() {
 //						data[$(this).index()] = $(this).data('pos');
 //					});
                 } else if (type == 'matrix_sort_answer') {
                     return true;
-//					$this.find('.wpProQuiz_questionListItem').each(function() {
-//						data[$(this).data('pos')] = $(this).find('.wpProQuiz_answerCorrect').length;
+//					$this.find('.wpTrivia_questionListItem').each(function() {
+//						data[$(this).data('pos')] = $(this).find('.wpTrivia_answerCorrect').length;
 //					});
                 } else if (type == 'cloze_answer') {
                     var i = 0;
-                    $this.find('.wpProQuiz_cloze input').each(function () {
+                    $this.find('.wpTrivia_cloze input').each(function () {
                         data[i++] = $(this).val();
                     });
                 } else if (type == 'assessment_answer') {
                     data[0] = '';
 
-                    $this.find('.wpProQuiz_questionInput:checked').each(function () {
+                    $this.find('.wpTrivia_questionInput:checked').each(function () {
                         data[$(this).data('index')] = $(this).val();
                     });
                 }
@@ -894,7 +894,7 @@ wpProQuizReady(function () {
             },
 
             setClozeStyle: function () {
-                $e.find('.wpProQuiz_cloze input').each(function () {
+                $e.find('.wpTrivia_cloze input').each(function () {
                     var $this = $(this);
                     var word = "";
                     var wordLen = $this.data('wordlen');
@@ -940,9 +940,9 @@ wpProQuizReady(function () {
             resetMatrix: function (selector) {
                 selector.each(function () {
                     var $this = $(this);
-                    var $list = $this.find('.wpProQuiz_sortStringList');
+                    var $list = $this.find('.wpTrivia_sortStringList');
 
-                    $this.find('.wpProQuiz_sortStringItem').each(function () {
+                    $this.find('.wpTrivia_sortStringItem').each(function () {
                         $list.append($(this));
                     });
                 });
@@ -951,9 +951,9 @@ wpProQuizReady(function () {
             marker: function (e, correct) {
                 if (!bitOptions.disabledAnswerMark) {
                     if (correct) {
-                        e.addClass('wpProQuiz_answerCorrect');
+                        e.addClass('wpTrivia_answerCorrect');
                     } else {
-                        e.addClass('wpProQuiz_answerIncorrect');
+                        e.addClass('wpTrivia_answerIncorrect');
                     }
                 }
 
@@ -970,28 +970,28 @@ wpProQuizReady(function () {
 
                 if (quizStatus.isLocked) {
                     globalElements.quizStartPage.hide();
-                    $e.find('.wpProQuiz_lock').show();
+                    $e.find('.wpTrivia_lock').show();
 
                     return;
                 }
 
                 if (quizStatus.isPrerequisite) {
                     globalElements.quizStartPage.hide();
-                    $e.find('.wpProQuiz_prerequisite').show();
+                    $e.find('.wpTrivia_prerequisite').show();
 
                     return;
                 }
 
                 if (quizStatus.isUserStartLocked) {
                     globalElements.quizStartPage.hide();
-                    $e.find('.wpProQuiz_startOnlyRegisteredUser').show();
+                    $e.find('.wpTrivia_startOnlyRegisteredUser').show();
 
                     return;
                 }
 
                 if (bitOptions.maxShowQuestion && !loadData) {
                     globalElements.quizStartPage.hide();
-                    $e.find('.wpProQuiz_loadQuiz').show();
+                    $e.find('.wpTrivia_loadQuiz').show();
 
                     plugin.methode.loadQuizDataAjax(true);
 
@@ -1009,16 +1009,16 @@ wpProQuizReady(function () {
                     plugin.methode.sortCategories();
                 }
 
-                plugin.methode.random($e.find('.wpProQuiz_sortStringList'));
+                plugin.methode.random($e.find('.wpTrivia_sortStringList'));
                 plugin.methode.random($e.find('[data-type="sort_answer"]'));
 
-                $e.find('.wpProQuiz_listItem').each(function (i, v) {
+                $e.find('.wpTrivia_listItem').each(function (i, v) {
                     var $this = $(this);
-                    $this.find('.wpProQuiz_question_page span:eq(0)').text(i + 1);
+                    $this.find('.wpTrivia_question_page span:eq(0)').text(i + 1);
                     $this.find('> h5 span').text(i + 1);
 
-                    $this.find('.wpProQuiz_questionListItem').each(function (i, v) {
-                        $(this).find('> span:not(.wpProQuiz_cloze)').text(i + 1 + '. ');
+                    $this.find('.wpTrivia_questionListItem').each(function (i, v) {
+                        $(this).find('> span:not(.wpTrivia_cloze)').text(i + 1 + '. ');
                     });
                 });
 
@@ -1028,7 +1028,7 @@ wpProQuizReady(function () {
                 if (!bitOptions.skipButton && bitOptions.reviewQustion) $e.find(globalNames.skip).show();
 
                 if (bitOptions.hideQuestionPositionOverview)
-                    $e.find('.wpProQuiz_question_page').hide();
+                    $e.find('.wpTrivia_question_page').hide();
 
                 //Change last name
                 var $lastButton = globalElements.next.last();
@@ -1037,7 +1037,7 @@ wpProQuizReady(function () {
 
                 var $listItem = globalElements.questionList.children();
 
-                globalElements.listItems = $e.find('.wpProQuiz_list > li');
+                globalElements.listItems = $e.find('.wpTrivia_list > li');
 
                 currentQuestion = $listItem.eq(0).show();
                 var questionId = currentQuestion.find(globalNames.questionList).data('question_id');
@@ -1045,9 +1045,9 @@ wpProQuizReady(function () {
 
                 questionTimer.startQuiz();
 
-                $e.find('.wpProQuiz_sortable').parents('ul').sortable({
+                $e.find('.wpTrivia_sortable').parents('ul').sortable({
                     update: function (event, ui) {
-                        var $p = $(this).parents('.wpProQuiz_listItem');
+                        var $p = $(this).parents('.wpTrivia_listItem');
 
                         $e.trigger({
                             type: 'questionSolved',
@@ -1060,11 +1060,11 @@ wpProQuizReady(function () {
                     }
                 }).disableSelection();
 
-                $e.find('.wpProQuiz_sortStringList, .wpProQuiz_maxtrixSortCriterion').sortable({
-                    connectWith: '.wpProQuiz_maxtrixSortCriterion:not(:has(li)), .wpProQuiz_sortStringList',
-                    placeholder: 'wpProQuiz_placehold',
+                $e.find('.wpTrivia_sortStringList, .wpTrivia_maxtrixSortCriterion').sortable({
+                    connectWith: '.wpTrivia_maxtrixSortCriterion:not(:has(li)), .wpTrivia_sortStringList',
+                    placeholder: 'wpTrivia_placehold',
                     update: function (event, ui) {
-                        var $p = $(this).parents('.wpProQuiz_listItem');
+                        var $p = $(this).parents('.wpTrivia_listItem');
 
                         $e.trigger({
                             type: 'questionSolved',
@@ -1091,7 +1091,7 @@ wpProQuizReady(function () {
                     }
                 };
 
-                $e.find('.wpProQuiz_questionList').each(function () {
+                $e.find('.wpTrivia_questionList').each(function () {
                     var questionId = $(this).data('question_id');
 
                     results[questionId] = {
@@ -1107,7 +1107,7 @@ wpProQuizReady(function () {
                 });
 
                 globalElements.quizStartPage.hide();
-                $e.find('.wpProQuiz_loadQuiz').hide();
+                $e.find('.wpTrivia_loadQuiz').hide();
                 globalElements.quiz.show();
                 reviewBox.show();
 
@@ -1139,7 +1139,7 @@ wpProQuizReady(function () {
 
                 page = page ? +page : 1;
 
-                var maxPage = Math.ceil($e.find('.wpProQuiz_list > li').length / config.qpp);
+                var maxPage = Math.ceil($e.find('.wpTrivia_list > li').length / config.qpp);
 
                 if (page > maxPage)
                     return;
@@ -1201,7 +1201,7 @@ wpProQuizReady(function () {
 
             showQuestionObject: function (obj) {
                 if (!obj.length && bitOptions.forcingQuestionSolve && bitOptions.quizSummeryHide && bitOptions.reviewQustion) {
-                    for (var i = 0, c = $e.find('.wpProQuiz_listItem').length; i < c; i++) {
+                    for (var i = 0, c = $e.find('.wpTrivia_listItem').length; i < c; i++) {
                         if (!quizSolved[i]) {
                             alert(WpTriviaGlobal.questionsNotSolved);
                             return false;
@@ -1261,7 +1261,7 @@ wpProQuizReady(function () {
                     if (bitOptions.formActivated && config.formPos == formPosConst.END) {
                         reviewBox.hide();
                         globalElements.quiz.hide();
-                        plugin.methode.scrollTo($e.find('.wpProQuiz_infopage').show());
+                        plugin.methode.scrollTo($e.find('.wpTrivia_infopage').show());
                     } else {
                         plugin.methode.finishQuiz();
                     }
@@ -1269,10 +1269,10 @@ wpProQuizReady(function () {
                     return;
                 }
 
-                var quizSummary = $e.find('.wpProQuiz_checkPage');
+                var quizSummary = $e.find('.wpTrivia_checkPage');
 
                 quizSummary.find('ol:eq(0)').empty()
-                    .append($e.find('.wpProQuiz_reviewQuestion ol li').clone().removeClass('wpProQuiz_reviewQuestionTarget'))
+                    .append($e.find('.wpTrivia_reviewQuestion ol li').clone().removeClass('wpTrivia_reviewQuestionTarget'))
                     .children().click(function (e) {
                         quizSummary.hide();
                         globalElements.quiz.show();
@@ -1307,15 +1307,15 @@ wpProQuizReady(function () {
                 var time = (+new Date() - startTime) / 1000;
                 time = (config.timelimit && time > config.timelimit) ? config.timelimit : time;
 
-                $e.find('.wpProQuiz_quiz_time span').text(plugin.methode.parseTime(time));
+                $e.find('.wpTrivia_quiz_time span').text(plugin.methode.parseTime(time));
 
                 if (timeover) {
-                    globalElements.results.find('.wpProQuiz_time_limit_expired').show();
+                    globalElements.results.find('.wpTrivia_time_limit_expired').show();
                 }
 
                 plugin.methode.checkQuestion(globalElements.questionList.children(), true);
 
-                $e.find('.wpProQuiz_correct_answer').text(results.comp.correctQuestions);
+                $e.find('.wpTrivia_correct_answer').text(results.comp.correctQuestions);
 
                 results.comp.result = Math.round(results.comp.points / config.globalPoints * 100 * 100) / 100;
                 results.comp.solved = 0;
@@ -1323,18 +1323,18 @@ wpProQuizReady(function () {
                 //for(var i = 0; i < quizSolved.length; i++)
                 //	results.comp.solved += quizSolved[i] ? 1 : 0;
 
-                var $pointFields = $e.find('.wpProQuiz_points span');
+                var $pointFields = $e.find('.wpTrivia_points span');
 
                 $pointFields.eq(0).text(results.comp.points);
                 $pointFields.eq(1).text(config.globalPoints);
                 $pointFields.eq(2).text(results.comp.result + '%');
 
                 //Result-Text START
-                var $resultText = $e.find('.wpProQuiz_resultsList > li').eq(plugin.methode.findResultIndex(results.comp.result));
+                var $resultText = $e.find('.wpTrivia_resultsList > li').eq(plugin.methode.findResultIndex(results.comp.result));
 
                 var formData = formClass.getFormData();
 
-                $resultText.find('.wpProQuiz_resultForm').each(function () {
+                $resultText.find('.wpTrivia_resultForm').each(function () {
                     var $this = $(this);
                     var formId = $this.data('form_id');
                     var data = formData[formId];
@@ -1362,7 +1362,7 @@ wpProQuizReady(function () {
 
                 reviewBox.hide();
 
-                $e.find('.wpProQuiz_checkPage, .wpProQuiz_infopage').hide();
+                $e.find('.wpTrivia_checkPage, .wpTrivia_infopage').hide();
                 globalElements.quiz.hide();
                 globalElements.results.show();
 
@@ -1372,7 +1372,7 @@ wpProQuizReady(function () {
             setCategoryOverview: function () {
                 results.comp.cats = {};
 
-                $e.find('.wpProQuiz_catOverview li').each(function () {
+                $e.find('.wpTrivia_catOverview li').each(function () {
                     var $this = $(this);
                     var catId = $this.data('category_id');
 
@@ -1385,7 +1385,7 @@ wpProQuizReady(function () {
 
                     results.comp.cats[catId] = r;
 
-                    $this.find('.wpProQuiz_catPercent').text(r + '%');
+                    $this.find('.wpTrivia_catPercent').text(r + '%');
 
                     $this.show();
                 });
@@ -1446,11 +1446,11 @@ wpProQuizReady(function () {
                 inViewQuestions = !inViewQuestions;
                 globalElements.toplistShowInButton.hide();
                 globalElements.quiz.toggle();
-                $e.find('.wpProQuiz_QuestionButton').hide();
+                $e.find('.wpTrivia_QuestionButton').hide();
                 globalElements.questionList.children().show();
                 reviewBox.toggle();
 
-                $e.find('.wpProQuiz_question_page').hide();
+                $e.find('.wpTrivia_question_page').hide();
             },
 
             random: function (group) {
@@ -1464,9 +1464,9 @@ wpProQuizReady(function () {
             },
 
             sortCategories: function () {
-                var e = $('.wpProQuiz_list').children().get().sort(function (a, b) {
-                    var aQuestionId = $(a).find('.wpProQuiz_questionList').data('question_id');
-                    var bQuestionId = $(b).find('.wpProQuiz_questionList').data('question_id');
+                var e = $('.wpTrivia_list').children().get().sort(function (a, b) {
+                    var aQuestionId = $(a).find('.wpTrivia_questionList').data('question_id');
+                    var bQuestionId = $(b).find('.wpTrivia_questionList').data('question_id');
 
                     return config.json[aQuestionId].catId - config.json[bQuestionId].catId;
                 });
@@ -1495,7 +1495,7 @@ wpProQuizReady(function () {
 
                     var result = checker(name, data, $this, $questionList);
 
-                    $this.find('.wpProQuiz_response').show();
+                    $this.find('.wpTrivia_response').show();
                     $this.find(globalNames.check).hide();
                     $this.find(globalNames.skip).hide();
                     $this.find(globalNames.next).show();
@@ -1509,13 +1509,13 @@ wpProQuizReady(function () {
                     catResults[data.catId] += result.p;
 
                     if (result.c) {
-                        $this.find('.wpProQuiz_correct').show();
+                        $this.find('.wpTrivia_correct').show();
                         results['comp'].correctQuestions += 1;
                     } else {
-                        $this.find('.wpProQuiz_incorrect').show();
+                        $this.find('.wpTrivia_incorrect').show();
                     }
 
-                    $this.find('.wpProQuiz_responsePoints').text(result.p);
+                    $this.find('.wpTrivia_responsePoints').text(result.p);
 
                     $this.data('check', true);
 
@@ -1534,15 +1534,15 @@ wpProQuizReady(function () {
 
             showTip: function () {
                 var $this = $(this);
-                var id = $this.siblings('.wpProQuiz_question').find(globalNames.questionList).data('question_id');
+                var id = $this.siblings('.wpTrivia_question').find(globalNames.questionList).data('question_id');
 
-                $this.siblings('.wpProQuiz_tipp').toggle('fast');
+                $this.siblings('.wpTrivia_tipp').toggle('fast');
 
                 results[id].tip = 1;
 
                 $(document).bind('mouseup.tipEvent', function (e) {
 
-                    var $tip = $e.find('.wpProQuiz_tipp');
+                    var $tip = $e.find('.wpTrivia_tipp');
                     var $btn = $e.find('input[name="tip"]');
 
                     if (!$tip.is(e.target) && $tip.has(e.target).length == 0 && !$btn.is(e.target)) {
@@ -1587,7 +1587,7 @@ wpProQuizReady(function () {
 
                     if (json.prerequisite != undefined) {
                         quizStatus.isPrerequisite = 1;
-                        $e.find('.wpProQuiz_prerequisite span').text(json.prerequisite);
+                        $e.find('.wpTrivia_prerequisite span').text(json.prerequisite);
                     }
 
                     if (json.startUserLock != undefined) {
@@ -1634,20 +1634,20 @@ wpProQuizReady(function () {
             },
 
             setAverageResult: function (p, g) {
-                var v = $e.find('.wpProQuiz_resultValue:eq(' + (g ? 0 : 1) + ') > * ');
+                var v = $e.find('.wpTrivia_resultValue:eq(' + (g ? 0 : 1) + ') > * ');
 
                 v.eq(1).text(p + '%');
                 v.eq(0).css('width', (240 * p / 100) + 'px');
             },
 
             handleToplistData: function (json) {
-                var $tp = $e.find('.wpProQuiz_addToplist');
-                var $addBox = $tp.find('.wpProQuiz_addBox').show().children('div');
+                var $tp = $e.find('.wpTrivia_addToplist');
+                var $addBox = $tp.find('.wpTrivia_addBox').show().children('div');
 
                 if (json.canAdd) {
                     $tp.show();
-                    $tp.find('.wpProQuiz_addToplistMessage').hide();
-                    $tp.find('.wpProQuiz_toplistButton').show();
+                    $tp.find('.wpTrivia_addToplistMessage').hide();
+                    $tp.find('.wpTrivia_toplistButton').show();
 
                     toplistData.token = json.token;
                     toplistData.isUser = 0;
@@ -1666,9 +1666,9 @@ wpProQuizReady(function () {
 
                         if (json.captcha) {
 
-                            $captcha.find('input[name="wpProQuiz_captchaPrefix"]').val(json.captcha.code);
-                            $captcha.find('.wpProQuiz_captchaImg').attr('src', json.captcha.img);
-                            $captcha.find('input[name="wpProQuiz_captcha"]').val('');
+                            $captcha.find('input[name="wpTrivia_captchaPrefix"]').val(json.captcha.code);
+                            $captcha.find('.wpTrivia_captchaImg').attr('src', json.captcha.img);
+                            $captcha.find('input[name="wpTrivia_captcha"]').val('');
 
                             $captcha.show();
                         } else {
@@ -1692,17 +1692,17 @@ wpProQuizReady(function () {
                 if (bitOptions.preview)
                     return;
 
-                var $addToplistMessage = $e.find('.wpProQuiz_addToplistMessage').text(WpTriviaGlobal.loadData).show();
-                var $addBox = $e.find('.wpProQuiz_addBox').hide();
+                var $addToplistMessage = $e.find('.wpTrivia_addToplistMessage').text(WpTriviaGlobal.loadData).show();
+                var $addBox = $e.find('.wpTrivia_addBox').hide();
 
                 plugin.methode.ajax({
                     //action: 'wp_pro_quiz_add_toplist',
                     //quizId: config.quizId,
                     //token: toplistData.token,
-                    //name: $addBox.find('input[name="wpProQuiz_toplistName"]').val(),
-                    //email: $addBox.find('input[name="wpProQuiz_toplistEmail"]').val(),
-                    //captcha: $addBox.find('input[name="wpProQuiz_captcha"]').val(),
-                    //prefix: $addBox.find('input[name="wpProQuiz_captchaPrefix"]').val(),
+                    //name: $addBox.find('input[name="wpTrivia_toplistName"]').val(),
+                    //email: $addBox.find('input[name="wpTrivia_toplistEmail"]').val(),
+                    //captcha: $addBox.find('input[name="wpTrivia_captcha"]').val(),
+                    //prefix: $addBox.find('input[name="wpTrivia_captchaPrefix"]').val(),
                     //points: results.comp.points,
                     //totalPoints: config.globalPoints
 
@@ -1711,10 +1711,10 @@ wpProQuizReady(function () {
                     data: {
                         quizId: config.quizId,
                         token: toplistData.token,
-                        name: $addBox.find('input[name="wpProQuiz_toplistName"]').val(),
-                        email: $addBox.find('input[name="wpProQuiz_toplistEmail"]').val(),
-                        captcha: $addBox.find('input[name="wpProQuiz_captcha"]').val(),
-                        prefix: $addBox.find('input[name="wpProQuiz_captchaPrefix"]').val(),
+                        name: $addBox.find('input[name="wpTrivia_toplistName"]').val(),
+                        email: $addBox.find('input[name="wpTrivia_toplistEmail"]').val(),
+                        captcha: $addBox.find('input[name="wpTrivia_captcha"]').val(),
+                        prefix: $addBox.find('input[name="wpTrivia_captchaPrefix"]').val(),
                         points: results.comp.points,
                         totalPoints: config.globalPoints
                     }
@@ -1729,23 +1729,23 @@ wpProQuizReady(function () {
                     }
 
                     if (json.captcha) {
-                        $addBox.find('.wpProQuiz_captchaImg').attr('src', json.captcha.img);
-                        $addBox.find('input[name="wpProQuiz_captchaPrefix"]').val(json.captcha.code);
-                        $addBox.find('input[name="wpProQuiz_captcha"]').val('');
+                        $addBox.find('.wpTrivia_captchaImg').attr('src', json.captcha.img);
+                        $addBox.find('input[name="wpTrivia_captchaPrefix"]').val(json.captcha.code);
+                        $addBox.find('input[name="wpTrivia_captcha"]').val('');
                     }
                 });
             },
 
             updateToplist: function () {
-                if (typeof(wpProQuiz_fetchToplist) == "function") {
-                    wpProQuiz_fetchToplist();
+                if (typeof(wpTrivia_fetchToplist) == "function") {
+                    wpTrivia_fetchToplist();
                 }
             },
 
             registerSolved: function () {
-                $e.find('.wpProQuiz_questionInput[type="text"]').change(function (e) {
+                $e.find('.wpTrivia_questionInput[type="text"]').change(function (e) {
                     var $this = $(this);
-                    var $p = $this.parents('.wpProQuiz_listItem');
+                    var $p = $this.parents('.wpTrivia_listItem');
                     var s = false;
 
                     if ($this.val() != '') {
@@ -1762,9 +1762,9 @@ wpProQuizReady(function () {
                     });
                 });
 
-                $e.find('.wpProQuiz_questionList[data-type="single"] .wpProQuiz_questionInput, .wpProQuiz_questionList[data-type="assessment_answer"] .wpProQuiz_questionInput').change(function (e) {
+                $e.find('.wpTrivia_questionList[data-type="single"] .wpTrivia_questionInput, .wpTrivia_questionList[data-type="assessment_answer"] .wpTrivia_questionInput').change(function (e) {
                     var $this = $(this);
-                    var $p = $this.parents('.wpProQuiz_listItem');
+                    var $p = $this.parents('.wpTrivia_listItem');
                     var s = this.checked;
 
                     $e.trigger({
@@ -1777,12 +1777,12 @@ wpProQuizReady(function () {
                     });
                 });
 
-                $e.find('.wpProQuiz_cloze input').change(function () {
+                $e.find('.wpTrivia_cloze input').change(function () {
                     var $this = $(this);
-                    var $p = $this.parents('.wpProQuiz_listItem');
+                    var $p = $this.parents('.wpTrivia_listItem');
                     var s = true;
 
-                    $p.find('.wpProQuiz_cloze input').each(function () {
+                    $p.find('.wpTrivia_cloze input').each(function () {
                         if ($(this).val() == '') {
                             s = false;
                             return false;
@@ -1799,12 +1799,12 @@ wpProQuizReady(function () {
                     });
                 });
 
-                $e.find('.wpProQuiz_questionList[data-type="multiple"] .wpProQuiz_questionInput').change(function (e) {
+                $e.find('.wpTrivia_questionList[data-type="multiple"] .wpTrivia_questionInput').change(function (e) {
                     var $this = $(this);
-                    var $p = $this.parents('.wpProQuiz_listItem');
+                    var $p = $this.parents('.wpTrivia_listItem');
                     var c = 0;
 
-                    $p.find('.wpProQuiz_questionList[data-type="multiple"] .wpProQuiz_questionInput').each(function (e) {
+                    $p.find('.wpTrivia_questionList[data-type="multiple"] .wpTrivia_questionInput').each(function (e) {
                         if (this.checked)
                             c++;
                     });
@@ -1836,18 +1836,18 @@ wpProQuizReady(function () {
 
                     globalElements.quiz.remove();
 
-                    $e.find('.wpProQuiz_quizAnker').after(json.content);
+                    $e.find('.wpTrivia_quizAnker').after(json.content);
 
                     //Reinit globalElements
                     globalElements = {
                         back: $e.find('input[name="back"]'),
                         next: $e.find(globalNames.next),
-                        quiz: $e.find('.wpProQuiz_quiz'),
-                        questionList: $e.find('.wpProQuiz_list'),
-                        results: $e.find('.wpProQuiz_results'),
-                        quizStartPage: $e.find('.wpProQuiz_text'),
-                        timelimit: $e.find('.wpProQuiz_time_limit'),
-                        toplistShowInButton: $e.find('.wpProQuiz_toplistShowInButton'),
+                        quiz: $e.find('.wpTrivia_quiz'),
+                        questionList: $e.find('.wpTrivia_list'),
+                        results: $e.find('.wpTrivia_results'),
+                        quizStartPage: $e.find('.wpTrivia_text'),
+                        timelimit: $e.find('.wpTrivia_time_limit'),
+                        toplistShowInButton: $e.find('.wpTrivia_toplistShowInButton'),
                         listItems: $()
                     };
 
@@ -1891,7 +1891,7 @@ wpProQuizReady(function () {
 
                 $e.find('input[name="checkSingle"]').click(function () {
                     if (bitOptions.forcingQuestionSolve && (bitOptions.quizSummeryHide || !bitOptions.reviewQustion)) {
-                        for (var i = 0, c = $e.find('.wpProQuiz_listItem').length; i < c; i++) {
+                        for (var i = 0, c = $e.find('.wpTrivia_listItem').length; i < c; i++) {
                             if (!quizSolved[i]) {
                                 alert(WpTriviaGlobal.questionsNotSolved);
                                 return false;
@@ -1905,11 +1905,11 @@ wpProQuizReady(function () {
                 $e.find('input[name="tip"]').click(plugin.methode.showTip);
                 $e.find('input[name="skip"]').click(plugin.methode.skipQuestion);
 
-                $e.find('input[name="wpProQuiz_pageLeft"]').click(function () {
+                $e.find('input[name="wpTrivia_pageLeft"]').click(function () {
                     plugin.methode.showSinglePage(currentPage - 1);
                 });
 
-                $e.find('input[name="wpProQuiz_pageRight"]').click(function () {
+                $e.find('input[name="wpTrivia_pageRight"]').click(function () {
                     plugin.methode.showSinglePage(currentPage + 1);
                 });
             }
@@ -1937,13 +1937,13 @@ wpProQuizReady(function () {
 
             $e.find('input[name="review"]').click(plugin.methode.reviewQuestion);
 
-            $e.find('input[name="wpProQuiz_toplistAdd"]').click(plugin.methode.addToplist);
+            $e.find('input[name="wpTrivia_toplistAdd"]').click(plugin.methode.addToplist);
 
             $e.find('input[name="quizSummary"]').click(plugin.methode.showQuizSummary);
 
             $e.find('input[name="endQuizSummary"]').click(function () {
                 if (bitOptions.forcingQuestionSolve) {
-                    for (var i = 0, c = $e.find('.wpProQuiz_listItem').length; i < c; i++) {
+                    for (var i = 0, c = $e.find('.wpTrivia_listItem').length; i < c; i++) {
                         if (!quizSolved[i]) {
                             alert(WpTriviaGlobal.questionsNotSolved);
                             return false;
@@ -1977,10 +1977,10 @@ wpProQuizReady(function () {
         plugin.preInit();
     };
 
-    $.fn.wpProQuizFront = function (options) {
+    $.fn.wpTriviaFront = function (options) {
         return this.each(function () {
-            if (undefined == $(this).data('wpProQuizFront')) {
-                $(this).data('wpProQuizFront', new $.wpProQuizFront(this, options));
+            if (undefined == $(this).data('wpTriviaFront')) {
+                $(this).data('wpTriviaFront', new $.wpTriviaFront(this, options));
             }
         });
     };

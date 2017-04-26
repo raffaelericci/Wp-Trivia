@@ -57,7 +57,7 @@ class WpTrivia_View_GlobalHelperTabs
             <strong><?php _e('For more information:'); ?></strong>
         </p>
         <p>
-            <a href="admin.php?page=wpProQuiz_wpq_support"><?php _e('Support', 'wp-trivia'); ?></a>
+            <a href="admin.php?page=wpTrivia_wpq_support"><?php _e('Support', 'wp-trivia'); ?></a>
         </p>
         <p>
             <a href="https://github.com/ps1dr3x/Wp-Trivia" target="_blank">Github</a>

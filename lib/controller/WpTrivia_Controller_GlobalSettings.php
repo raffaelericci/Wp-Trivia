@@ -11,7 +11,7 @@ class WpTrivia_Controller_GlobalSettings extends WpTrivia_Controller_Controller
     private function edit()
     {
 
-        if (!current_user_can('wpProQuiz_change_settings')) {
+        if (!current_user_can('wpTrivia_change_settings')) {
             wp_die(__('You do not have sufficient permissions to access this page.'));
         }
 
@@ -33,12 +33,12 @@ class WpTrivia_Controller_GlobalSettings extends WpTrivia_Controller_Controller
 
             $statisticTimeFormat = $this->_post['statisticTimeFormat'];
 
-            if (add_option('wpProQuiz_toplistDataFormat', $toplistDateFormat) === false) {
-                update_option('wpProQuiz_toplistDataFormat', $toplistDateFormat);
+            if (add_option('wpTrivia_toplistDataFormat', $toplistDateFormat) === false) {
+                update_option('wpTrivia_toplistDataFormat', $toplistDateFormat);
             }
 
-            if (add_option('wpProQuiz_statisticTimeFormat', $statisticTimeFormat, '', 'no') === false) {
-                update_option('wpProQuiz_statisticTimeFormat', $statisticTimeFormat);
+            if (add_option('wpTrivia_statisticTimeFormat', $statisticTimeFormat, '', 'no') === false) {
+                update_option('wpTrivia_statisticTimeFormat', $statisticTimeFormat);
             }
         } else {
             if (isset($this->_post['databaseFix'])) {
@@ -58,8 +58,8 @@ class WpTrivia_Controller_GlobalSettings extends WpTrivia_Controller_Controller
         $view->templateQuiz = $templateMapper->fetchAll(WpTrivia_Model_Template::TEMPLATE_TYPE_QUIZ, false);
         $view->templateQuestion = $templateMapper->fetchAll(WpTrivia_Model_Template::TEMPLATE_TYPE_QUESTION, false);
 
-        $view->toplistDataFormat = get_option('wpProQuiz_toplistDataFormat', 'Y/m/d g:i A');
-        $view->statisticTimeFormat = get_option('wpProQuiz_statisticTimeFormat', 'Y/m/d g:i A');
+        $view->toplistDataFormat = get_option('wpTrivia_toplistDataFormat', 'Y/m/d g:i A');
+        $view->statisticTimeFormat = get_option('wpTrivia_statisticTimeFormat', 'Y/m/d g:i A');
 
         $view->show();
     }

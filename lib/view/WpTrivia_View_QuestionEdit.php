@@ -17,14 +17,14 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
         wp_enqueue_script('thickbox');
 
         ?>
-        <div class="wrap wpProQuiz_questionEdit">
+        <div class="wrap wpTrivia_questionEdit">
             <h2 style="margin-bottom: 10px;"><?php echo $this->header; ?></h2>
-            <!-- <form action="admin.php?page=wpProQuiz&module=question&action=show&quiz_id=<?php echo $this->quiz->getId(); ?>" method="POST"> -->
+            <!-- <form action="admin.php?page=wpTrivia&module=question&action=show&quiz_id=<?php echo $this->quiz->getId(); ?>" method="POST"> -->
             <form
-                action="admin.php?page=wpProQuiz&module=question&action=addEdit&quiz_id=<?php echo $this->quiz->getId(); ?>&questionId=<?php echo $this->question->getId(); ?>"
+                action="admin.php?page=wpTrivia&module=question&action=addEdit&quiz_id=<?php echo $this->quiz->getId(); ?>&questionId=<?php echo $this->question->getId(); ?>"
                 method="POST">
                 <a style="float: left;" class="button-secondary"
-                   href="admin.php?page=wpProQuiz&module=question&action=show&quiz_id=<?php echo $this->quiz->getId(); ?>"><?php _e('back to overview',
+                   href="admin.php?page=wpTrivia&module=question&action=show&quiz_id=<?php echo $this->quiz->getId(); ?>"><?php _e('back to overview',
                         'wp-trivia'); ?></a>
 
                 <div style="float: right;">
@@ -87,7 +87,7 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
                                         'wp-trivia'); ?>
                                 </p>
                             </div>
-                            <div style="margin-top: 10px; display: none;" id="wpProQuiz_showPointsBox">
+                            <div style="margin-top: 10px; display: none;" id="wpTrivia_showPointsBox">
                                 <label>
                                     <input name="showPointsInBox" value="1"
                                            type="checkbox" <?php echo $this->question->isShowPointsInBox() ? 'checked="checked"' : '' ?>>
@@ -169,9 +169,9 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
                                 </p>
 
                                 <div style="padding-top: 10px; padding-bottom: 10px;">
-                                    <label for="wpProQuiz_correctSameText">
+                                    <label for="wpTrivia_correctSameText">
                                         <?php _e('Same text for correct- and incorrect-message?', 'wp-trivia'); ?>
-                                        <input type="checkbox" name="correctSameText" id="wpProQuiz_correctSameText"
+                                        <input type="checkbox" name="correctSameText" id="wpTrivia_correctSameText"
                                                value="1" <?php echo $this->question->isCorrectSameText() ? 'checked="checked"' : '' ?>>
                                     </label>
                                 </div>
@@ -180,7 +180,7 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
                                 ?>
                             </div>
                         </div>
-                        <div class="postbox" id="wpProQuiz_incorrectMassageBox">
+                        <div class="postbox" id="wpTrivia_incorrectMassageBox">
                             <h3 class="hndle"><?php _e('Message with the incorrect answer',
                                     'wp-trivia'); ?><?php _e('(optional)', 'wp-trivia'); ?></h3>
 
@@ -206,13 +206,13 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
                             </p>
 
                             <div style="padding-top: 10px; padding-bottom: 10px;">
-                                <label for="wpProQuiz_tip">
+                                <label for="wpTrivia_tip">
                                     <?php _e('Activate hint for this question?', 'wp-trivia'); ?>
-                                    <input type="checkbox" name="tipEnabled" id="wpProQuiz_tip"
+                                    <input type="checkbox" name="tipEnabled" id="wpTrivia_tip"
                                            value="1" <?php echo $this->question->isTipEnabled() ? 'checked="checked"' : '' ?>>
                                 </label>
                             </div>
-                            <div id="wpProQuiz_tipBox">
+                            <div id="wpTrivia_tipBox">
                                 <?php
                                 wp_editor($this->question->getTipMsg(), 'tipMsg', array('textarea_rows' => 3));
                                 ?>
@@ -345,7 +345,7 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
                             ?>
                         </select>
 
-                        <input type="submit" name="template" class="button-primary" id="wpProQuiz_saveTemplate"
+                        <input type="submit" name="template" class="button-primary" id="wpTrivia_saveTemplate"
                                value="<?php _e('Save as template', 'wp-trivia'); ?>">
                     </div>
                     <div style="clear: both;"></div>
@@ -379,7 +379,7 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
                         <td style="border-right: 1px solid #9E9E9E; padding: 5px; vertical-align: top;">
                             <div>
                                 <label>
-                                    <input type="checkbox" class="wpProQuiz_classCorrect wpProQuiz_checkbox"
+                                    <input type="checkbox" class="wpTrivia_classCorrect wpTrivia_checkbox"
                                            name="answerData[][correct]"
                                            value="1" <?php $this->checked($d->isCorrect()); ?>>
                                     <?php _e('Correct', 'wp-trivia'); ?>
@@ -387,21 +387,21 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
                             </div>
                             <div style="padding-top: 5px;">
                                 <label>
-                                    <input type="checkbox" class="wpProQuiz_checkbox" name="answerData[][html]"
+                                    <input type="checkbox" class="wpTrivia_checkbox" name="answerData[][html]"
                                            value="1" <?php $this->checked($d->isHtml()); ?>>
                                     <?php _e('Allow HTML', 'wp-trivia'); ?>
                                 </label>
                             </div>
-                            <div style="padding-top: 5px;" class="wpProQuiz_answerPoints">
+                            <div style="padding-top: 5px;" class="wpTrivia_answerPoints">
                                 <label>
-                                    <input type="number" min="0" class="small-text wpProQuiz_points"
+                                    <input type="number" min="0" class="small-text wpTrivia_points"
                                            name="answerData[][points]" value="<?php echo $d->getPoints(); ?>">
                                     <?php _e('Points', 'wp-trivia'); ?>
                                 </label>
                             </div>
                         </td>
                         <td style="padding: 5px; vertical-align: top;">
-                            <textarea rows="2" cols="50" class="large-text wpProQuiz_text" name="answerData[][answer]"
+                            <textarea rows="2" cols="50" class="large-text wpTrivia_text" name="answerData[][answer]"
                                       style="resize:vertical;"><?php echo $d->getAnswer(); ?></textarea>
                         </td>
                     </tr>
@@ -411,7 +411,7 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
                 <input type="button" name="submit" class="button-primary deleteAnswer"
                        value="<?php _e('Delete answer', 'wp-trivia'); ?>">
                 <input type="button" class="button-secondary addMedia" value="<?php _e('Add Media'); ?>">
-                <a href="#" class="button-secondary wpProQuiz_move" style="cursor: move;"><?php _e('Move',
+                <a href="#" class="button-secondary wpTrivia_move" style="cursor: move;"><?php _e('Move',
                         'wp-trivia'); ?></a>
 
             </li>
@@ -441,18 +441,18 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
                     <tbody>
                     <tr>
                         <td style="border-right: 1px solid #9E9E9E; padding: 5px; vertical-align: top;">
-                            <label class="wpProQuiz_answerPoints">
-                                <input type="number" min="0" class="small-text wpProQuiz_points"
+                            <label class="wpTrivia_answerPoints">
+                                <input type="number" min="0" class="small-text wpTrivia_points"
                                        name="answerData[][points]" value="<?php echo $d->getPoints(); ?>">
                                 <?php _e('Points', 'wp-trivia'); ?>
                             </label>
                         </td>
                         <td style="border-right: 1px solid #9E9E9E; padding: 5px; vertical-align: top;">
-                            <textarea rows="4" name="answerData[][answer]" class="wpProQuiz_text"
+                            <textarea rows="4" name="answerData[][answer]" class="wpTrivia_text"
                                       style="width: 100%; resize:vertical;"><?php echo $d->getAnswer(); ?></textarea>
                         </td>
                         <td style="padding: 5px; vertical-align: top;">
-                            <textarea rows="4" name="answerData[][sort_string]" class="wpProQuiz_text"
+                            <textarea rows="4" name="answerData[][sort_string]" class="wpTrivia_text"
                                       style="width: 100%; resize:vertical;"><?php echo $d->getSortString(); ?></textarea>
                         </td>
                     </tr>
@@ -460,14 +460,14 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
                         <td style="border-right: 1px solid #9E9E9E; padding: 5px; vertical-align: top;"></td>
                         <td style="border-right: 1px solid #9E9E9E; padding: 5px; vertical-align: top;">
                             <label>
-                                <input type="checkbox" class="wpProQuiz_checkbox" name="answerData[][html]"
+                                <input type="checkbox" class="wpTrivia_checkbox" name="answerData[][html]"
                                        value="1" <?php $this->checked($d->isHtml()); ?>>
                                 <?php _e('Allow HTML', 'wp-trivia'); ?>
                             </label>
                         </td>
                         <td style="padding: 5px; vertical-align: top;">
                             <label>
-                                <input type="checkbox" class="wpProQuiz_checkbox" name="answerData[][sort_string_html]"
+                                <input type="checkbox" class="wpTrivia_checkbox" name="answerData[][sort_string_html]"
                                        value="1" <?php $this->checked($d->isSortStringHtml()); ?>>
                                 <?php _e('Allow HTML', 'wp-trivia'); ?>
                             </label>
@@ -479,7 +479,7 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
                 <input type="button" name="submit" class="button-primary deleteAnswer"
                        value="<?php _e('Delete answer', 'wp-trivia'); ?>">
                 <input type="button" class="button-secondary addMedia" value="<?php _e('Add Media'); ?>">
-                <a href="#" class="button-secondary wpProQuiz_move" style="cursor: move;"><?php _e('Move',
+                <a href="#" class="button-secondary wpTrivia_move" style="cursor: move;"><?php _e('Move',
                         'wp-trivia'); ?></a>
             </li>
             <?php
@@ -507,21 +507,21 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
                         <td style="border-right: 1px solid #9E9E9E; padding: 5px; vertical-align: top;">
                             <div>
                                 <label>
-                                    <input type="checkbox" class="wpProQuiz_checkbox" name="answerData[][html]"
+                                    <input type="checkbox" class="wpTrivia_checkbox" name="answerData[][html]"
                                            value="1" <?php $this->checked($d->isHtml()); ?>>
                                     <?php _e('Allow HTML', 'wp-trivia'); ?>
                                 </label>
                             </div>
-                            <div style="padding-top: 5px;" class="wpProQuiz_answerPoints">
+                            <div style="padding-top: 5px;" class="wpTrivia_answerPoints">
                                 <label>
-                                    <input type="number" min="0" class="small-text wpProQuiz_points"
+                                    <input type="number" min="0" class="small-text wpTrivia_points"
                                            name="answerData[][points]" value="<?php echo $d->getPoints(); ?>">
                                     <?php _e('Points', 'wp-trivia'); ?>
                                 </label>
                             </div>
                         </td>
                         <td style="padding: 5px; vertical-align: top;">
-                            <textarea rows="2" cols="100" class="large-text wpProQuiz_text" name="answerData[][answer]"
+                            <textarea rows="2" cols="100" class="large-text wpTrivia_text" name="answerData[][answer]"
                                       style="resize:vertical;"><?php echo $d->getAnswer(); ?></textarea>
                         </td>
                     </tr>
@@ -531,7 +531,7 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
                 <input type="button" name="submit" class="button-primary deleteAnswer"
                        value="<?php _e('Delete answer', 'wp-trivia'); ?>">
                 <input type="button" class="button-secondary addMedia" value="<?php _e('Add Media'); ?>">
-                <a href="#" class="button-secondary wpProQuiz_move" style="cursor: move;"><?php _e('Move',
+                <a href="#" class="button-secondary wpTrivia_move" style="cursor: move;"><?php _e('Move',
                         'wp-trivia'); ?></a>
             </li>
             <?php
@@ -608,7 +608,7 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
             <br>
             * <?php _e('less true { [1] [2] [3] [4] [5] } more true', 'wp-trivia'); ?>
         </p>
-        <div class="wpProQuiz_demoImgBox">
+        <div class="wpTrivia_demoImgBox">
             <a href="#"><?php _e('Demo', 'wp-trivia'); ?></a>
 
             <div
@@ -619,7 +619,7 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
         <p>
             * <?php _e('less true { [a] [b] [c] } more true', 'wp-trivia'); ?>
         </p>
-        <div class="wpProQuiz_demoImgBox">
+        <div class="wpTrivia_demoImgBox">
             <a href="#"><?php _e('Demo', 'wp-trivia'); ?></a>
 
             <div

@@ -8,7 +8,7 @@ class WpTrivia_Helper_ExportXml
 
         $dom = new DOMDocument('1.0', 'utf-8');
 
-        $root = $dom->createElement('wpProQuiz');
+        $root = $dom->createElement('wpTrivia');
 
         $dom->appendChild($root);
 

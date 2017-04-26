@@ -23,7 +23,7 @@ class WpTrivia_Controller_ImportExport extends WpTrivia_Controller_Controller
     private function handleExport()
     {
 
-        if (!current_user_can('wpProQuiz_export')) {
+        if (!current_user_can('wpTrivia_export')) {
             wp_die(__('You do not have sufficient permissions to access this page.'));
         }
 
@@ -48,7 +48,7 @@ class WpTrivia_Controller_ImportExport extends WpTrivia_Controller_Controller
     private function handleImport()
     {
 
-        if (!current_user_can('wpProQuiz_import')) {
+        if (!current_user_can('wpTrivia_import')) {
             wp_die(__('You do not have sufficient permissions to access this page.'));
         }
 

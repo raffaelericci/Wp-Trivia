@@ -16,20 +16,20 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
     {
         ?>
         <style>
-            .wpProQuiz_demoBox {
+            .wpTrivia_demoBox {
                 position: relative;
             }
         </style>
-        <div class="wrap wpProQuiz_quizEdit">
+        <div class="wrap wpTrivia_quizEdit">
             <h2 style="margin-bottom: 10px;"><?php echo $this->header; ?></h2>
 
             <form method="post"
-                  action="admin.php?page=wpProQuiz&action=addEdit&quizId=<?php echo $this->quiz->getId(); ?>">
+                  action="admin.php?page=wpTrivia&action=addEdit&quizId=<?php echo $this->quiz->getId(); ?>">
 
                 <input type="hidden" name="ajax_quiz_id" value="<?php echo $this->quiz->getId(); ?>">
 
                 <a style="float: left;" class="button-secondary"
-                   href="admin.php?page=wpProQuiz"><?php _e('back to overview', 'wp-trivia'); ?></a>
+                   href="admin.php?page=wpTrivia"><?php _e('back to overview', 'wp-trivia'); ?></a>
 
                 <div style="float: right;">
                     <select name="templateLoadId">
@@ -49,7 +49,7 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                                 'wp-trivia'); ?></h3>
 
                         <div class="inside">
-                            <input name="name" id="wpProQuiz_title" type="text" class="regular-text"
+                            <input name="name" id="wpTrivia_title" type="text" class="regular-text"
                                    value="<?php echo htmlspecialchars($this->quiz->getName(), ENT_QUOTES); ?>">
                         </div>
                     </div>
@@ -94,7 +94,7 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                         </div>
                     </div>
 
-                    <?php do_action('wpProQuiz_action_plugin_quizEdit', $this); ?>
+                    <?php do_action('wpTrivia_action_plugin_quizEdit', $this); ?>
 
                     <div class="postbox">
                         <h3 class="hndle"><?php _e('Options', 'wp-trivia'); ?></h3>
@@ -208,7 +208,7 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                                                     'wp-trivia'); ?>
                                             </p>
 
-                                            <div id="wpProQuiz_quiz_run_once_type"
+                                            <div id="wpTrivia_quiz_run_once_type"
                                                  style="margin-bottom: 5px; display: none;">
                                                 <?php _e('This option applies to:', 'wp-trivia');
 
@@ -232,7 +232,7 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                                                     <?php _e('anonymous users only', 'wp-trivia'); ?>
                                                 </label>
 
-                                                <div id="wpProQuiz_quiz_run_once_cookie" style="margin-top: 10px;">
+                                                <div id="wpTrivia_quiz_run_once_cookie" style="margin-top: 10px;">
                                                     <label>
                                                         <input type="checkbox" value="1"
                                                                name="quizRunOnceCookie" <?php echo $this->quiz->isQuizRunOnceCookie() ? 'checked="checked"' : '' ?>>
@@ -282,7 +282,7 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                                                     'wp-trivia'); ?>
                                             </p>
 
-                                            <div id="wpProQuiz_showMaxBox" style="display: none;">
+                                            <div id="wpTrivia_showMaxBox" style="display: none;">
                                                 <label>
                                                     <?php _e('How many questions should be displayed simultaneously:',
                                                         'wp-trivia'); ?>
@@ -401,7 +401,7 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                                                     'wp-trivia'); ?>
                                             </p>
 
-                                            <div class="wpProQuiz_demoBox">
+                                            <div class="wpTrivia_demoBox">
                                                 <?php _e('Question overview', 'wp-trivia'); ?>: <a
                                                     href="#"><?php _e('Demo', 'wp-trivia'); ?></a>
 
@@ -411,7 +411,7 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                                                          src="<?php echo WPPROQUIZ_URL . '/img/questionOverview.png'; ?> ">
                                                 </div>
                                             </div>
-                                            <div class="wpProQuiz_demoBox">
+                                            <div class="wpTrivia_demoBox">
                                                 <?php _e('Quiz-summary', 'wp-trivia'); ?>: <a
                                                     href="#"><?php _e('Demo', 'wp-trivia'); ?></a>
 
@@ -424,7 +424,7 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                                         </fieldset>
                                     </td>
                                 </tr>
-                                <tr class="wpProQuiz_reviewQuestionOptions" style="display: none;">
+                                <tr class="wpTrivia_reviewQuestionOptions" style="display: none;">
                                     <th scope="row">
                                         <?php _e('Quiz-summary', 'wp-trivia'); ?>
                                     </th>
@@ -446,7 +446,7 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                                         </fieldset>
                                     </td>
                                 </tr>
-                                <tr class="wpProQuiz_reviewQuestionOptions" style="display: none;">
+                                <tr class="wpTrivia_reviewQuestionOptions" style="display: none;">
                                     <th scope="row">
                                         <?php _e('Skip question', 'wp-trivia'); ?>
                                     </th>
@@ -610,9 +610,9 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                             </p>
 
                             <div style="padding-top: 10px; padding-bottom: 10px;">
-                                <label for="wpProQuiz_resultGradeEnabled">
+                                <label for="wpTrivia_resultGradeEnabled">
                                     <?php _e('Activate graduation', 'wp-trivia'); ?>
-                                    <input type="checkbox" name="resultGradeEnabled" id="wpProQuiz_resultGradeEnabled"
+                                    <input type="checkbox" name="resultGradeEnabled" id="wpTrivia_resultGradeEnabled"
                                            value="1" <?php echo $this->quiz->isResultGradeEnabled() ? 'checked="checked"' : ''; ?>>
                                 </label>
                             </div>
@@ -711,7 +711,7 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                         </div>
                     </div>
                     <div style="float: left;">
-                        <input type="submit" name="submit" class="button-primary" id="wpProQuiz_save"
+                        <input type="submit" name="submit" class="button-primary" id="wpTrivia_save"
                                value="<?php _e('Save', 'wp-trivia'); ?>">
                     </div>
                     <div style="float: right;">
@@ -726,7 +726,7 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                             ?>
                         </select>
 
-                        <input type="submit" name="template" class="button-primary" id="wpProQuiz_saveTemplate"
+                        <input type="submit" name="template" class="button-primary" id="wpTrivia_saveTemplate"
                                value="<?php _e('Save as template', 'wp-trivia'); ?>">
                     </div>
                     <div style="clear: both;"></div>
@@ -764,7 +764,7 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                                     <?php _e('Statistics-function must be enabled.', 'wp-trivia'); ?>
                                 </p>
 
-                                <div class="wpProQuiz_demoBox">
+                                <div class="wpTrivia_demoBox">
                                     <a href="#"><?php _e('Demo', 'wp-trivia'); ?></a>
 
                                     <div
@@ -796,7 +796,7 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                                 </p>
                             </fieldset>
 
-                            <div class="wpProQuiz_demoBox">
+                            <div class="wpTrivia_demoBox">
                                 <a href="#"><?php _e('Demo', 'wp-trivia'); ?></a>
 
                                 <div
@@ -827,7 +827,7 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                                 </p>
                             </fieldset>
 
-                            <div class="wpProQuiz_demoBox">
+                            <div class="wpTrivia_demoBox">
                                 <a href="#"><?php _e('Demo', 'wp-trivia'); ?></a>
 
                                 <div
@@ -858,7 +858,7 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                                 </p>
                             </fieldset>
 
-                            <div class="wpProQuiz_demoBox">
+                            <div class="wpTrivia_demoBox">
                                 <a href="#"><?php _e('Demo', 'wp-trivia'); ?></a>
 
                                 <div
@@ -889,7 +889,7 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                                 </p>
                             </fieldset>
 
-                            <div class="wpProQuiz_demoBox">
+                            <div class="wpTrivia_demoBox">
                                 <a href="#"><?php _e('Demo', 'wp-trivia'); ?></a>
 
                                 <div
@@ -959,7 +959,7 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                                         'wp-trivia'); ?>
                                 </p>
 
-                                <div class="wpProQuiz_demoBox">
+                                <div class="wpTrivia_demoBox">
                                     <a href="#"><?php _e('Demo', 'wp-trivia'); ?></a>
 
                                     <div
@@ -990,7 +990,7 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                                         'wp-trivia'); ?>
                                 </p>
 
-                                <div class="wpProQuiz_demoBox">
+                                <div class="wpTrivia_demoBox">
                                     <a href="#"><?php _e('Demo', 'wp-trivia'); ?></a>
 
                                     <div
@@ -1022,7 +1022,7 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                                         'wp-trivia'); ?>
                                 </p>
 
-                                <div class="wpProQuiz_demoBox">
+                                <div class="wpTrivia_demoBox">
                                     <a href="#"><?php _e('Demo', 'wp-trivia'); ?></a>
 
                                     <div
@@ -1077,7 +1077,7 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                                         'wp-trivia'); ?>
                                 </p>
 
-                                <div class="wpProQuiz_demoBox">
+                                <div class="wpTrivia_demoBox">
                                     <a href="#"><?php _e('Demo', 'wp-trivia'); ?></a>
 
                                     <div
@@ -1109,7 +1109,7 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                                         'wp-trivia'); ?>
                                 </p>
 
-                                <div class="wpProQuiz_demoBox">
+                                <div class="wpTrivia_demoBox">
                                     <a href="#"><?php _e('Demo', 'wp-trivia'); ?></a>
 
                                     <div
@@ -1141,7 +1141,7 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                                         'wp-trivia'); ?>
                                 </p>
 
-                                <div class="wpProQuiz_demoBox">
+                                <div class="wpTrivia_demoBox">
                                     <a href="#"><?php _e('Demo', 'wp-trivia'); ?></a>
 
                                     <div
@@ -1341,7 +1341,7 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                                            value="1" <?php echo ($this->quiz->getToplistDataShowIn() == 1) ? 'checked="checked"' : ''; ?>>
                                     <?php _e('below the "result text"', 'wp-trivia'); ?>
                                 </label>
-									<span class="wpProQuiz_demoBox" style="margin-right: 5px;">
+									<span class="wpTrivia_demoBox" style="margin-right: 5px;">
 										<a href="#"><?php _e('Demo', 'wp-trivia'); ?></a>
 										<span
                                             style="z-index: 9999999; position: absolute; background-color: #E9E9E9; padding: 10px; box-shadow: 0px 0px 10px 4px rgb(44, 44, 44); display: none; ">
@@ -1354,7 +1354,7 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                                            value="2" <?php echo ($this->quiz->getToplistDataShowIn() == 2) ? 'checked="checked"' : ''; ?>>
                                     <?php _e('in a button', 'wp-trivia'); ?>
                                 </label>
-									<span class="wpProQuiz_demoBox">
+									<span class="wpTrivia_demoBox">
 										<a href="#"><?php _e('Demo', 'wp-trivia'); ?></a>
 										<span
                                             style="z-index: 9999999; position: absolute; background-color: #E9E9E9; padding: 10px; box-shadow: 0px 0px 10px 4px rgb(44, 44, 44); display: none; ">
@@ -1438,7 +1438,7 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                                         WpTrivia_Model_Quiz::QUIZ_FORM_POSITION_START); ?>>
                                     <?php _e('On the quiz startpage', 'wp-trivia'); ?>
 
-                                    <div style="display: inline-block;" class="wpProQuiz_demoBox">
+                                    <div style="display: inline-block;" class="wpTrivia_demoBox">
                                         <a href="#"><?php _e('Demo', 'wp-trivia'); ?></a>
 
                                         <div
@@ -1456,7 +1456,7 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                                         WpTrivia_Model_Quiz::QUIZ_FORM_POSITION_END); ?> >
                                     <?php _e('At the end of the quiz (before the quiz result)', 'wp-trivia'); ?>
 
-                                    <div style="display: inline-block;" class="wpProQuiz_demoBox">
+                                    <div style="display: inline-block;" class="wpTrivia_demoBox">
                                         <a href="#"><?php _e('Demo', 'wp-trivia'); ?></a>
 
                                         <div
@@ -1466,7 +1466,7 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                                         </div>
                                     </div>
 
-                                    <div style="display: inline-block;" class="wpProQuiz_demoBox">
+                                    <div style="display: inline-block;" class="wpTrivia_demoBox">
                                         <a href="#"><?php _e('Demo', 'wp-trivia'); ?></a>
 
                                         <div
@@ -1493,7 +1493,7 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                             <th><?php _e('Required?', 'wp-trivia'); ?></th>
                             <th>
                                 <?php _e('Show in statistic table?', 'wp-trivia'); ?>
-                                <div style="display: inline-block;" class="wpProQuiz_demoBox">
+                                <div style="display: inline-block;" class="wpTrivia_demoBox">
                                     <a href="#"><?php _e('Demo', 'wp-trivia'); ?></a>
 
                                     <div

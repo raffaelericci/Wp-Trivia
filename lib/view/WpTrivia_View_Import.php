@@ -14,13 +14,13 @@ class WpTrivia_View_Import extends WpTrivia_View_View
     {
         ?>
         <style>
-            .wpProQuiz_importList {
+            .wpTrivia_importList {
                 list-style: none;
                 margin: 0;
                 padding: 0;
             }
 
-            .wpProQuiz_importList li {
+            .wpTrivia_importList li {
                 float: left;
                 padding: 5px;
                 border: 1px solid #B3B3B3;
@@ -28,10 +28,10 @@ class WpTrivia_View_Import extends WpTrivia_View_View
                 background-color: #DAECFF;
             }
         </style>
-        <div class="wrap wpProQuiz_importOverall">
+        <div class="wrap wpTrivia_importOverall">
             <h2><?php _e('Import', 'wp-trivia'); ?></h2>
 
-            <p><a class="button-secondary" href="admin.php?page=wpProQuiz"><?php _e('back to overview',
+            <p><a class="button-secondary" href="admin.php?page=wpTrivia"><?php _e('back to overview',
                         'wp-trivia'); ?></a></p>
             <?php if ($this->error) { ?>
                 <div style="padding: 10px; background-color: rgb(255, 199, 199); margin-top: 20px; border: 1px dotted;">
@@ -69,7 +69,7 @@ class WpTrivia_View_Import extends WpTrivia_View_View
                                     </th>
                                     <th><?php echo $master->getName(); ?></th>
                                     <th>
-                                        <ul class="wpProQuiz_importList">
+                                        <ul class="wpTrivia_importList">
                                             <?php if (isset($this->import['question'][$master->getId()])) { ?>
                                                 <?php foreach ($this->import['question'][$master->getId()] as $question) { ?>
                                                     <li><?php echo $question->getTitle(); ?></li>

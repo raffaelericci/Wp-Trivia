@@ -5,7 +5,7 @@ class WpTrivia_Controller_Category
 
     public static function ajaxAddCategory($data)
     {
-        if (!current_user_can('wpProQuiz_edit_quiz')) {
+        if (!current_user_can('wpTrivia_edit_quiz')) {
             return json_encode(array());
         }
 
@@ -23,7 +23,7 @@ class WpTrivia_Controller_Category
 
     public static function ajaxEditCategory($data)
     {
-        if (!current_user_can('wpProQuiz_edit_quiz')) {
+        if (!current_user_can('wpTrivia_edit_quiz')) {
             return json_encode(array());
         }
 
@@ -38,7 +38,7 @@ class WpTrivia_Controller_Category
 
     public static function ajaxDeleteCategory($data)
     {
-        if (!current_user_can('wpProQuiz_edit_quiz')) {
+        if (!current_user_can('wpTrivia_edit_quiz')) {
             return json_encode(array());
         }
 

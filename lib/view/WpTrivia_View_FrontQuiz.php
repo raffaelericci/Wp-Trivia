@@ -30,7 +30,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
             'prerequisite_msg' => __('You have to finish following quiz, to start this quiz:', 'wp-trivia')
         );
 
-        $this->_buttonNames = ((array)apply_filters('wpProQuiz_filter_frontButtonNames', $names, $this)) + $names;
+        $this->_buttonNames = ((array)apply_filters('wpTrivia_filter_frontButtonNames', $names, $this)) + $names;
     }
 
     /**
@@ -74,7 +74,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
         foreach ($this->forms as $form) {
             /* @var $form WpTrivia_Model_Form */
 
-            $resultReplace['$form{' . $form->getSort() . '}'] = '<span class="wpProQuiz_resultForm" data-form_id="' . $form->getFormId() . '"></span>';
+            $resultReplace['$form{' . $form->getSort() . '}'] = '<span class="wpTrivia_resultForm" data-form_id="' . $form->getFormId() . '"></span>';
         }
 
         foreach ($result['text'] as &$text) {
@@ -82,7 +82,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
         }
 
         ?>
-        <div class="wpProQuiz_content" id="wpProQuiz_<?php echo $this->quiz->getId(); ?>">
+        <div class="wpTrivia_content" id="wpTrivia_<?php echo $this->quiz->getId(); ?>">
             <?php
 
             echo '<h2>', $this->quiz->getName(), '</h2>';
@@ -113,10 +113,10 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
         $bo = $this->createOption($preview);
         ?>
         <script type="text/javascript">
-            window.wpProQuizInitList = window.wpProQuizInitList || [];
+            window.wpTriviaInitList = window.wpTriviaInitList || [];
 
-            window.wpProQuizInitList.push({
-                id: '#wpProQuiz_<?php echo $this->quiz->getId(); ?>',
+            window.wpTriviaInitList.push({
+                id: '#wpTrivia_<?php echo $this->quiz->getId(); ?>',
                 init: {
                     quizId: <?php echo (int)$this->quiz->getId(); ?>,
                     globalPoints: <?php echo (int)$quizData['globalPoints']; ?>,
@@ -141,7 +141,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
         $bo |= ((int)$this->quiz->isDisabledAnswerMark()) << 2;
         $bo |= ((int)($this->quiz->isQuizRunOnce() || $this->quiz->isPrerequisite() || $this->quiz->isStartOnlyRegisteredUser())) << 3;
         $bo |= ((int)$preview) << 4;
-        $bo |= ((int)get_option('wpProQuiz_corsActivated')) << 5;
+        $bo |= ((int)get_option('wpTrivia_corsActivated')) << 5;
         $bo |= ((int)$this->quiz->isToplistDataAddAutomatic()) << 6;
         $bo |= ((int)$this->quiz->isShowReviewQuestion()) << 7;
         $bo |= ((int)$this->quiz->isQuizSummaryHide()) << 8;
@@ -174,7 +174,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
         $resultsProzent = json_encode($result['prozent']);
 
         ?>
-        <div class="wpProQuiz_content" id="wpProQuiz_<?php echo $this->quiz->getId(); ?>">
+        <div class="wpTrivia_content" id="wpTrivia_<?php echo $this->quiz->getId(); ?>">
             <?php
 
             echo '<h2>', $this->quiz->getName(), '</h2>';
@@ -204,7 +204,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
         ?>
         <script type="text/javascript">
             jQuery(document).ready(function ($) {
-                $('#wpProQuiz_<?php echo $this->quiz->getId(); ?>').wpProQuizFront({
+                $('#wpTrivia_<?php echo $this->quiz->getId(); ?>').wpTriviaFront({
                     quizId: <?php echo (int)$this->quiz->getId(); ?>,
                     timelimit: <?php echo (int)$this->quiz->getTimeLimit(); ?>,
                     resultsGrade: <?php echo $resultsProzent; ?>,
@@ -236,48 +236,48 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
     private function showQuizAnker()
     {
         ?>
-        <div class="wpProQuiz_quizAnker" style="display: none;"></div>
+        <div class="wpTrivia_quizAnker" style="display: none;"></div>
         <?php
     }
 
     private function showAddToplist()
     {
         ?>
-        <div class="wpProQuiz_addToplist" style="display: none;">
+        <div class="wpTrivia_addToplist" style="display: none;">
             <span style="font-weight: bold;"><?php _e('Your result has been entered into leaderboard',
                     'wp-trivia'); ?></span>
 
             <div style="margin-top: 6px;">
-                <div class="wpProQuiz_addToplistMessage" style="display: none;"><?php _e('Loading',
+                <div class="wpTrivia_addToplistMessage" style="display: none;"><?php _e('Loading',
                         'wp-trivia'); ?></div>
-                <div class="wpProQuiz_addBox">
+                <div class="wpTrivia_addBox">
                     <div>
 						<span>
 							<label>
                                 <?php _e('Name', 'wp-trivia'); ?>: <input type="text" placeholder="<?php _e('Name',
-                                    'wp-trivia'); ?>" name="wpProQuiz_toplistName" maxlength="15" size="16"
+                                    'wp-trivia'); ?>" name="wpTrivia_toplistName" maxlength="15" size="16"
                                                                             style="width: 150px;">
                             </label>
 							<label>
                                 <?php _e('E-Mail', 'wp-trivia'); ?>: <input type="email"
                                                                               placeholder="<?php _e('E-Mail',
                                                                                   'wp-trivia'); ?>"
-                                                                              name="wpProQuiz_toplistEmail" size="20"
+                                                                              name="wpTrivia_toplistEmail" size="20"
                                                                               style="width: 150px;">
                             </label>
 						</span>
 
                         <div style="margin-top: 5px;">
                             <label>
-                                <?php _e('Captcha', 'wp-trivia'); ?>: <input type="text" name="wpProQuiz_captcha"
+                                <?php _e('Captcha', 'wp-trivia'); ?>: <input type="text" name="wpTrivia_captcha"
                                                                                size="8" style="width: 50px;">
                             </label>
-                            <input type="hidden" name="wpProQuiz_captchaPrefix" value="0">
-                            <img alt="captcha" src="" class="wpProQuiz_captchaImg" style="vertical-align: middle;">
+                            <input type="hidden" name="wpTrivia_captchaPrefix" value="0">
+                            <img alt="captcha" src="" class="wpTrivia_captchaImg" style="vertical-align: middle;">
                         </div>
                     </div>
-                    <input class="wpProQuiz_button2" type="submit" value="<?php _e('Send', 'wp-trivia'); ?>"
-                           name="wpProQuiz_toplistAdd">
+                    <input class="wpTrivia_button2" type="submit" value="<?php _e('Send', 'wp-trivia'); ?>"
+                           name="wpTrivia_toplistAdd">
                 </div>
             </div>
         </div>
@@ -312,8 +312,8 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                 $rowText[] = $text;
             }
 
-            $a = '<span class="wpProQuiz_cloze"><input data-wordlen="' . max($len) . '" type="text" value=""> ';
-            $a .= '<span class="wpProQuiz_clozeCorrect" style="display: none;">(' . implode(', ',
+            $a = '<span class="wpTrivia_cloze"><input data-wordlen="' . max($len) . '" type="text" value=""> ';
+            $a .= '<span class="wpTrivia_clozeCorrect" style="display: none;">(' . implode(', ',
                     $rowText) . ')</span></span>';
 
             $data['correct'][] = $multiTextData;
@@ -321,7 +321,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
             $data['data'][] = $a;
         }
 
-        $data['replace'] = preg_replace('#\{(.*?)(?:\|(\d+))?(?:[\s]+)?\}#im', '@@wpProQuizCloze@@', $answer_text);
+        $data['replace'] = preg_replace('#\{(.*?)(?:\|(\d+))?(?:[\s]+)?\}#im', '@@wpTriviaCloze@@', $answer_text);
 
         return $data;
     }
@@ -351,7 +351,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                 $v = $ms[1][$j];
 
                 $a .= '<label>
-					<input type="radio" value="' . ($j + 1) . '" name="question_' . $quizId . '_' . $questionId . '_' . $i . '" class="wpProQuiz_questionInput" data-index="' . $i . '">
+					<input type="radio" value="' . ($j + 1) . '" name="question_' . $quizId . '_' . $questionId . '_' . $i . '" class="wpTrivia_questionInput" data-index="' . $i . '">
 					' . $v . '
 				</label>';
 
@@ -360,7 +360,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
             $this->_assessmetTemp[] = $a;
         }
 
-        $data['replace'] = preg_replace('#\{(.*?)\}#im', '@@wpProQuizAssessment@@', $answerText);
+        $data['replace'] = preg_replace('#\{(.*?)\}#im', '@@wpTriviaAssessment@@', $answerText);
 
         return $data;
     }
@@ -374,7 +374,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
 
     private function showFormBox()
     {
-        $info = '<div class="wpProQuiz_invalidate">' . __('You must fill out this field.', 'wp-trivia') . '</div>';
+        $info = '<div class="wpTrivia_invalidate">' . __('You must fill out this field.', 'wp-trivia') . '</div>';
 
         $validateText = array(
             WpTrivia_Model_Form::FORM_TYPE_NUMBER => __('You must specify a number.', 'wp-trivia'),
@@ -383,7 +383,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
             WpTrivia_Model_Form::FORM_TYPE_DATE => __('You must specify a date.', 'wp-trivia')
         );
         ?>
-        <div class="wpProQuiz_forms">
+        <div class="wpTrivia_forms">
             <table>
                 <tbody>
 
@@ -393,14 +393,14 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                     /* @var $form WpTrivia_Model_Form */
 
                     $id = 'forms_' . $this->quiz->getId() . '_' . $index++;
-                    $name = 'wpProQuiz_field_' . $form->getFormId();
+                    $name = 'wpTrivia_field_' . $form->getFormId();
                     ?>
                     <tr>
                         <td>
                             <?php
                             echo '<label for="' . $id . '">';
                             echo esc_html($form->getFieldname());
-                            echo $form->isRequired() ? '<span class="wpProQuiz_required">*</span>' : '';
+                            echo $form->isRequired() ? '<span class="wpTrivia_required">*</span>' : '';
                             echo '</label>';
                             ?>
                         </td>
@@ -423,13 +423,13 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                                         'data-required="' . (int)$form->isRequired() . '" data-type="' . $form->getType() . '" data-form_id="' . $form->getFormId() . '">';
                                     break;
                                 case WpTrivia_Model_Form::FORM_TYPE_DATE:
-                                    echo '<div data-required="' . (int)$form->isRequired() . '" data-type="' . $form->getType() . '" class="wpProQuiz_formFields" data-form_id="' . $form->getFormId() . '">';
+                                    echo '<div data-required="' . (int)$form->isRequired() . '" data-type="' . $form->getType() . '" class="wpTrivia_formFields" data-form_id="' . $form->getFormId() . '">';
                                     echo WpTrivia_Helper_Until::getDatePicker(get_option('date_format', 'j. F Y'),
                                         $name);
                                     echo '</div>';
                                     break;
                                 case WpTrivia_Model_Form::FORM_TYPE_RADIO:
-                                    echo '<div data-required="' . (int)$form->isRequired() . '" data-type="' . $form->getType() . '" class="wpProQuiz_formFields" data-form_id="' . $form->getFormId() . '">';
+                                    echo '<div data-required="' . (int)$form->isRequired() . '" data-type="' . $form->getType() . '" class="wpTrivia_formFields" data-form_id="' . $form->getFormId() . '">';
 
                                     if ($form->getData() !== null) {
                                         foreach ($form->getData() as $data) {
@@ -457,7 +457,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                                     }
                                     break;
                                 case WpTrivia_Model_Form::FORM_TYPE_YES_NO:
-                                    echo '<div data-required="' . (int)$form->isRequired() . '" data-type="' . $form->getType() . '" class="wpProQuiz_formFields" data-form_id="' . $form->getFormId() . '">';
+                                    echo '<div data-required="' . (int)$form->isRequired() . '" data-type="' . $form->getType() . '" class="wpTrivia_formFields" data-form_id="' . $form->getFormId() . '">';
                                     echo '<label>';
                                     echo '<input name="' . $name . '" type="radio" value="1"> ',
                                     __('Yes', 'wp-trivia');
@@ -472,9 +472,9 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                             }
 
                             if (isset($validateText[$form->getType()])) {
-                                echo '<div class="wpProQuiz_invalidate">' . $validateText[$form->getType()] . '</div>';
+                                echo '<div class="wpTrivia_invalidate">' . $validateText[$form->getType()] . '</div>';
                             } else {
-                                echo '<div class="wpProQuiz_invalidate">' . __('You must fill out this field.',
+                                echo '<div class="wpTrivia_invalidate">' . __('You must fill out this field.',
                                         'wp-trivia') . '</div>';
                             }
                             ?>
@@ -492,7 +492,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
     private function showLockBox()
     {
         ?>
-        <div style="display: none;" class="wpProQuiz_lock">
+        <div style="display: none;" class="wpTrivia_lock">
             <p>
                 <?php echo $this->_buttonNames['lock_box_msg']; ?>
             </p>
@@ -503,7 +503,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
     private function showStartOnlyRegisteredUserBox()
     {
         ?>
-        <div style="display: none;" class="wpProQuiz_startOnlyRegisteredUser">
+        <div style="display: none;" class="wpTrivia_startOnlyRegisteredUser">
             <p>
                 <?php echo $this->_buttonNames['only_registered_user_msg']; ?>
             </p>
@@ -514,7 +514,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
     private function showPrerequisiteBox()
     {
         ?>
-        <div style="display: none;" class="wpProQuiz_prerequisite">
+        <div style="display: none;" class="wpTrivia_prerequisite">
             <p>
                 <?php echo $this->_buttonNames['prerequisite_msg']; ?>
                 <span></span>
@@ -526,8 +526,8 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
     private function showCheckPageBox($questionCount)
     {
         ?>
-        <div class="wpProQuiz_checkPage" style="display: none;">
-            <h4 class="wpProQuiz_header"><?php echo $this->_buttonNames['quiz_summary']; ?></h4>
+        <div class="wpTrivia_checkPage" style="display: none;">
+            <h4 class="wpTrivia_header"><?php echo $this->_buttonNames['quiz_summary']; ?></h4>
 
             <p>
                 <?php printf(__('%s of %s questions completed', 'wp-trivia'), '<span>0</span>', $questionCount); ?>
@@ -535,7 +535,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
 
             <p><?php _e('Questions', 'wp-trivia'); ?>:</p>
 
-            <div style="margin-bottom: 20px;" class="wpProQuiz_box">
+            <div style="margin-bottom: 20px;" class="wpTrivia_box">
                 <ol>
                     <?php for ($xy = 1; $xy <= $questionCount; $xy++) { ?>
                         <li><?php echo $xy; ?></li>
@@ -550,7 +550,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
             ) {
 
                 ?>
-                <h4 class="wpProQuiz_header"><?php _e('Information', 'wp-trivia'); ?></h4>
+                <h4 class="wpTrivia_header"><?php _e('Information', 'wp-trivia'); ?></h4>
                 <?php
                 $this->showFormBox();
             }
@@ -558,7 +558,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
             ?>
 
             <input type="button" name="endQuizSummary" value="<?php echo $this->_buttonNames['finish_quiz']; ?>"
-                   class="wpProQuiz_button">
+                   class="wpTrivia_button">
         </div>
         <?php
     }
@@ -566,7 +566,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
     private function showInfoPageBox()
     {
         ?>
-        <div class="wpProQuiz_infopage" style="display: none;">
+        <div class="wpTrivia_infopage" style="display: none;">
             <h4><?php _e('Information', 'wp-trivia'); ?></h4>
 
             <?php
@@ -579,7 +579,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
             ?>
 
             <input type="button" name="endInfopage" value="<?php echo $this->_buttonNames['finish_quiz']; ?>"
-                   class="wpProQuiz_button">
+                   class="wpTrivia_button">
         </div>
         <?php
     }
@@ -587,7 +587,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
     private function showStartQuizBox()
     {
         ?>
-        <div class="wpProQuiz_text">
+        <div class="wpTrivia_text">
             <p>
                 <?php echo do_shortcode(apply_filters('comment_text', $this->quiz->getText())); ?>
             </p>
@@ -599,7 +599,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
             ?>
 
             <div>
-                <input class="wpProQuiz_button" type="button" value="<?php echo $this->_buttonNames['start_quiz']; ?>"
+                <input class="wpTrivia_button" type="button" value="<?php echo $this->_buttonNames['start_quiz']; ?>"
                        name="startQuiz">
             </div>
         </div>
@@ -609,9 +609,9 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
     private function showTimeLimitBox()
     {
         ?>
-        <div style="display: none;" class="wpProQuiz_time_limit">
+        <div style="display: none;" class="wpTrivia_time_limit">
             <div class="time"><?php _e('Time limit', 'wp-trivia'); ?>: <span>0</span></div>
-            <div class="wpProQuiz_progress"></div>
+            <div class="wpTrivia_progress"></div>
         </div>
         <?php
     }
@@ -619,8 +619,8 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
     private function showReviewBox($questionCount)
     {
         ?>
-        <div class="wpProQuiz_reviewDiv" style="display: none;">
-            <div class="wpProQuiz_reviewQuestion">
+        <div class="wpTrivia_reviewDiv" style="display: none;">
+            <div class="wpTrivia_reviewQuestion">
                 <ol>
                     <?php for ($xy = 1; $xy <= $questionCount; $xy++) { ?>
                         <li><?php echo $xy; ?></li>
@@ -628,15 +628,15 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                 </ol>
                 <div style="display: none;"></div>
             </div>
-            <div class="wpProQuiz_reviewLegend">
+            <div class="wpTrivia_reviewLegend">
                 <ol>
                     <li>
-                        <span class="wpProQuiz_reviewColor" style="background-color: #6CA54C;"></span>
-                        <span class="wpProQuiz_reviewText"><?php _e('Answered', 'wp-trivia'); ?></span>
+                        <span class="wpTrivia_reviewColor" style="background-color: #6CA54C;"></span>
+                        <span class="wpTrivia_reviewText"><?php _e('Answered', 'wp-trivia'); ?></span>
                     </li>
                     <li>
-                        <span class="wpProQuiz_reviewColor" style="background-color: #FFB800;"></span>
-                        <span class="wpProQuiz_reviewText"><?php _e('Review', 'wp-trivia'); ?></span>
+                        <span class="wpTrivia_reviewColor" style="background-color: #FFB800;"></span>
+                        <span class="wpTrivia_reviewText"><?php _e('Review', 'wp-trivia'); ?></span>
                     </li>
                 </ol>
                 <div style="clear: both;"></div>
@@ -648,42 +648,42 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
     private function showResultBox($result, $questionCount)
     {
         ?>
-        <div style="display: none;" class="wpProQuiz_results">
-            <h4 class="wpProQuiz_header"><?php _e('Results', 'wp-trivia'); ?></h4>
+        <div style="display: none;" class="wpTrivia_results">
+            <h4 class="wpTrivia_header"><?php _e('Results', 'wp-trivia'); ?></h4>
             <?php if (!$this->quiz->isHideResultCorrectQuestion()) { ?>
                 <p>
                     <?php printf(__('%s of %s questions answered correctly', 'wp-trivia'),
-                        '<span class="wpProQuiz_correct_answer">0</span>', '<span>' . $questionCount . '</span>'); ?>
+                        '<span class="wpTrivia_correct_answer">0</span>', '<span>' . $questionCount . '</span>'); ?>
                 </p>
             <?php }
             if (!$this->quiz->isHideResultQuizTime()) { ?>
-                <p class="wpProQuiz_quiz_time">
+                <p class="wpTrivia_quiz_time">
                     <?php _e('Your time: <span></span>', 'wp-trivia'); ?>
                 </p>
             <?php } ?>
-            <p class="wpProQuiz_time_limit_expired" style="display: none;">
+            <p class="wpTrivia_time_limit_expired" style="display: none;">
                 <?php _e('Time has elapsed', 'wp-trivia'); ?>
             </p>
             <?php if (!$this->quiz->isHideResultPoints()) { ?>
-                <p class="wpProQuiz_points">
+                <p class="wpTrivia_points">
                     <?php printf(__('You have reached %s of %s points, (%s)', 'wp-trivia'), '<span>0</span>',
                         '<span>0</span>', '<span>0</span>'); ?>
                 </p>
             <?php } ?>
             <?php if ($this->quiz->isShowAverageResult()) { ?>
-                <div class="wpProQuiz_resultTable">
+                <div class="wpTrivia_resultTable">
                     <table>
                         <tbody>
                         <tr>
-                            <td class="wpProQuiz_resultName"><?php _e('Average score', 'wp-trivia'); ?></td>
-                            <td class="wpProQuiz_resultValue">
+                            <td class="wpTrivia_resultName"><?php _e('Average score', 'wp-trivia'); ?></td>
+                            <td class="wpTrivia_resultValue">
                                 <div style="background-color: #6CA54C;">&nbsp;</div>
                                 <span>&nbsp;</span>
                             </td>
                         </tr>
                         <tr>
-                            <td class="wpProQuiz_resultName"><?php _e('Your score', 'wp-trivia'); ?></td>
-                            <td class="wpProQuiz_resultValue">
+                            <td class="wpTrivia_resultName"><?php _e('Your score', 'wp-trivia'); ?></td>
+                            <td class="wpTrivia_resultValue">
                                 <div style="background-color: #F79646;">&nbsp;</div>
                                 <span>&nbsp;</span>
                             </td>
@@ -692,7 +692,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                     </table>
                 </div>
             <?php } ?>
-            <div class="wpProQuiz_catOverview" <?php $this->isDisplayNone($this->quiz->isShowCategoryScore()); ?>>
+            <div class="wpTrivia_catOverview" <?php $this->isDisplayNone($this->quiz->isShowCategoryScore()); ?>>
                 <h4><?php _e('Categories', 'wp-trivia'); ?></h4>
 
                 <div style="margin-top: 10px;">
@@ -703,15 +703,15 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                             }
                             ?>
                             <li data-category_id="<?php echo $cat->getCategoryId(); ?>">
-                                <span class="wpProQuiz_catName"><?php echo $cat->getCategoryName(); ?></span>
-                                <span class="wpProQuiz_catPercent">0%</span>
+                                <span class="wpTrivia_catName"><?php echo $cat->getCategoryName(); ?></span>
+                                <span class="wpTrivia_catPercent">0%</span>
                             </li>
                         <?php } ?>
                     </ol>
                 </div>
             </div>
             <div>
-                <ul class="wpProQuiz_resultsList">
+                <ul class="wpTrivia_resultsList">
                     <?php foreach ($result['text'] as $resultText) { ?>
                         <li style="display: none;">
                             <div>
@@ -732,7 +732,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
             ?>
             <div style="margin: 10px 0px;">
                 <?php if ($this->quiz->isToplistActivated() && $this->quiz->getToplistDataShowIn() == WpTrivia_Model_Quiz::QUIZ_TOPLIST_SHOW_IN_BUTTON) { ?>
-                    <input class="wpProQuiz_button" type="button" name="showToplist"
+                    <input class="wpTrivia_button" type="button" name="showToplist"
                            value="<?php _e('Show leaderboard', 'wp-trivia'); ?>">
                 <?php } ?>
             </div>
@@ -743,7 +743,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
     private function showToplistInButtonBox()
     {
         ?>
-        <div class="wpProQuiz_toplistShowInButton" style="display: none;">
+        <div class="wpTrivia_toplistShowInButton" style="display: none;">
             <?php echo do_shortcode('[WpTrivia_toplist ' . $this->quiz->getId() . ' q="true"]'); ?>
         </div>
         <?php
@@ -755,8 +755,8 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
         $json = array();
         $catPoints = array();
         ?>
-        <div style="display: none;" class="wpProQuiz_quiz">
-            <ol class="wpProQuiz_list">
+        <div style="display: none;" class="wpTrivia_quiz">
+            <ol class="wpTrivia_list">
                 <?php
                 $index = 0;
                 foreach ($this->question as $question) {
@@ -790,14 +790,14 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                     }
 
                     ?>
-                    <li class="wpProQuiz_listItem" style="display: none;">
+                    <li class="wpTrivia_listItem" style="display: none;">
                         <div
-                            class="wpProQuiz_question_page" <?php $this->isDisplayNone(!$this->quiz->isHideQuestionPositionOverview()); ?> >
+                            class="wpTrivia_question_page" <?php $this->isDisplayNone(!$this->quiz->isHideQuestionPositionOverview()); ?> >
                             <?php printf(__('Question %s of %s', 'wp-trivia'), '<span>' . $index . '</span>',
                                 '<span>' . $questionCount . '</span>'); ?>
                         </div>
                         <h5 style="<?php echo $this->quiz->isHideQuestionNumbering() ? 'display: none;' : 'display: inline-block;' ?>"
-                            class="wpProQuiz_header">
+                            class="wpTrivia_header">
                             <span><?php echo $index; ?></span>. <?php _e('Question', 'wp-trivia'); ?>
                         </h5>
 
@@ -813,14 +813,14 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                                     esc_html($question->getCategoryName())); ?>
                             </div>
                         <?php } ?>
-                        <div class="wpProQuiz_question" style="margin: 10px 0 0 0;">
-                            <div class="wpProQuiz_question_text">
+                        <div class="wpTrivia_question" style="margin: 10px 0 0 0;">
+                            <div class="wpTrivia_question_text">
                                 <?php echo do_shortcode(apply_filters('comment_text', $question->getQuestion())); ?>
                             </div>
                             <?php if ($question->getAnswerType() === 'matrix_sort_answer') { ?>
-                                <div class="wpProQuiz_matrixSortString">
-                                    <h5 class="wpProQuiz_header"><?php _e('Sort elements', 'wp-trivia'); ?></h5>
-                                    <ul class="wpProQuiz_sortStringList">
+                                <div class="wpTrivia_matrixSortString">
+                                    <h5 class="wpTrivia_header"><?php _e('Sort elements', 'wp-trivia'); ?></h5>
+                                    <ul class="wpTrivia_sortStringList">
                                         <?php
                                         $matrix = array();
                                         foreach ($answerArray as $k => $v) {
@@ -841,7 +841,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
 
                                         foreach ($answerArray as $k => $v) {
                                             ?>
-                                            <li class="wpProQuiz_sortStringItem" data-pos="<?php echo $k; ?>"
+                                            <li class="wpTrivia_sortStringItem" data-pos="<?php echo $k; ?>"
                                                 data-correct="<?php echo implode(',', $matrix[$k]); ?>">
                                                 <?php echo $v->isSortStringHtml() ? $v->getSortString() : esc_html($v->getSortString()); ?>
                                             </li>
@@ -850,7 +850,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                                     <div style="clear: both;"></div>
                                 </div>
                             <?php } ?>
-                            <ul class="wpProQuiz_questionList" data-question_id="<?php echo $question->getId(); ?>"
+                            <ul class="wpTrivia_questionList" data-question_id="<?php echo $question->getId(); ?>"
                                 data-type="<?php echo $question->getAnswerType(); ?>">
                                 <?php
                                 $answer_index = 0;
@@ -868,13 +868,13 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
 
                                     ?>
 
-                                    <li class="wpProQuiz_questionListItem" data-pos="<?php echo $answer_index; ?>">
+                                    <li class="wpTrivia_questionListItem" data-pos="<?php echo $answer_index; ?>">
 
                                         <?php if ($question->getAnswerType() === 'single' || $question->getAnswerType() === 'multiple') { ?>
                                             <?php $json[$question->getId()]['correct'][] = (int)$v->isCorrect(); ?>
                                             <span <?php echo $this->quiz->isNumberedAnswer() ? '' : 'style="display:none;"' ?>></span>
                                             <label>
-                                                <input class="wpProQuiz_questionInput"
+                                                <input class="wpTrivia_questionInput"
                                                        type="<?php echo $question->getAnswerType() === 'single' ? 'radio' : 'checkbox'; ?>"
                                                        name="question_<?php echo $this->quiz->getId(); ?>_<?php echo $question->getId(); ?>"
                                                        value="<?php echo($answer_index + 1); ?>"> <?php echo $answer_text; ?>
@@ -883,14 +883,14 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                                         <?php } else {
                                             if ($question->getAnswerType() === 'sort_answer') { ?>
                                                 <?php $json[$question->getId()]['correct'][] = (int)$answer_index; ?>
-                                                <div class="wpProQuiz_sortable">
+                                                <div class="wpTrivia_sortable">
                                                     <?php echo $answer_text; ?>
                                                 </div>
                                             <?php } else {
                                                 if ($question->getAnswerType() === 'free_answer') { ?>
                                                     <?php $json[$question->getId()]['correct'] = $this->getFreeCorrect($v); ?>
                                                     <label>
-                                                        <input class="wpProQuiz_questionInput" type="text"
+                                                        <input class="wpTrivia_questionInput" type="text"
                                                                name="question_<?php echo $this->quiz->getId(); ?>_<?php echo $question->getId(); ?>"
                                                                style="width: 300px;">
                                                     </label>
@@ -902,13 +902,13 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                                                         ?>
                                                         <table>
                                                             <tbody>
-                                                            <tr class="wpProQuiz_mextrixTr">
+                                                            <tr class="wpTrivia_mextrixTr">
                                                                 <td width="<?php echo $msacwValue; ?>%">
                                                                     <div
-                                                                        class="wpProQuiz_maxtrixSortText"><?php echo $answer_text; ?></div>
+                                                                        class="wpTrivia_maxtrixSortText"><?php echo $answer_text; ?></div>
                                                                 </td>
                                                                 <td width="<?php echo 100 - $msacwValue; ?>%">
-                                                                    <ul class="wpProQuiz_maxtrixSortCriterion"></ul>
+                                                                    <ul class="wpTrivia_maxtrixSortCriterion"></ul>
                                                                 </td>
                                                             </tr>
                                                             </tbody>
@@ -930,7 +930,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                                                                 $clozeData['replace']));
                                                             $cloze = $clozeData['replace'];
 
-                                                            echo preg_replace_callback('#@@wpProQuizCloze@@#im',
+                                                            echo preg_replace_callback('#@@wpTriviaCloze@@#im',
                                                                 array($this, 'clozeCallback'), $cloze);
                                                         } else {
                                                             if ($question->getAnswerType() === 'assessment_answer') {
@@ -940,7 +940,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                                                                 $assessment = do_shortcode(apply_filters('comment_text',
                                                                     $assessmentData['replace']));
 
-                                                                echo preg_replace_callback('#@@wpProQuizAssessment@@#im',
+                                                                echo preg_replace_callback('#@@wpTriviaAssessment@@#im',
                                                                     array($this, 'assessmentCallback'), $assessment);
 
                                                             }
@@ -957,11 +957,11 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                             </ul>
                         </div>
                         <?php if (!$this->quiz->isHideAnswerMessageBox()) { ?>
-                            <div class="wpProQuiz_response" style="display: none;">
-                                <div style="display: none;" class="wpProQuiz_correct">
+                            <div class="wpTrivia_response" style="display: none;">
+                                <div style="display: none;" class="wpTrivia_correct">
                                     <?php if ($question->isShowPointsInBox() && $question->isAnswerPointsActivated()) { ?>
                                         <div>
-									<span style="float: left;" class="wpProQuiz_respone_span">
+									<span style="float: left;" class="wpTrivia_respone_span">
 										<?php _e('Correct', 'wp-trivia'); ?>
 									</span>
                                             <span
@@ -971,7 +971,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                                             <div style="clear: both;"></div>
                                         </div>
                                     <?php } else { ?>
-                                        <span class="wpProQuiz_respone_span">
+                                        <span class="wpTrivia_respone_span">
 									<?php _e('Correct', 'wp-trivia'); ?>
 								</span><br>
                                     <?php }
@@ -985,20 +985,20 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                                     }
                                     ?>
                                 </div>
-                                <div style="display: none;" class="wpProQuiz_incorrect">
+                                <div style="display: none;" class="wpTrivia_incorrect">
                                     <?php if ($question->isShowPointsInBox() && $question->isAnswerPointsActivated()) { ?>
                                         <div>
-									<span style="float: left;" class="wpProQuiz_respone_span">
+									<span style="float: left;" class="wpTrivia_respone_span">
 										<?php _e('Incorrect', 'wp-trivia'); ?>
 									</span>
                                             <span style="float: right;"><span
-                                                    class="wpProQuiz_responsePoints"></span> / <?php echo $question->getPoints(); ?> <?php _e('Points',
+                                                    class="wpTrivia_responsePoints"></span> / <?php echo $question->getPoints(); ?> <?php _e('Points',
                                                     'wp-trivia'); ?></span>
 
                                             <div style="clear: both;"></div>
                                         </div>
                                     <?php } else { ?>
-                                        <span class="wpProQuiz_respone_span">
+                                        <span class="wpTrivia_respone_span">
 									<?php _e('Incorrect', 'wp-trivia'); ?>
 								</span><br>
                                     <?php }
@@ -1023,9 +1023,9 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                         <?php } ?>
 
                         <?php if ($question->isTipEnabled()) { ?>
-                            <div class="wpProQuiz_tipp" style="display: none; position: relative;">
+                            <div class="wpTrivia_tipp" style="display: none; position: relative;">
                                 <div>
-                                    <h5 style="margin: 0 0 10px;" class="wpProQuiz_header"><?php _e('Hint',
+                                    <h5 style="margin: 0 0 10px;" class="wpTrivia_header"><?php _e('Hint',
                                             'wp-trivia'); ?></h5>
                                     <?php echo do_shortcode(apply_filters('comment_text', $question->getTipMsg())); ?>
                                 </div>
@@ -1034,22 +1034,22 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
 
                         <?php if (!$this->quiz->isSkipQuestionDisabled() && $this->quiz->isShowReviewQuestion()) { ?>
                             <input type="button" name="skip" value="<?php _e('Skip question', 'wp-trivia'); ?>"
-                                   class="wpProQuiz_button wpProQuiz_QuestionButton"
+                                   class="wpTrivia_button wpTrivia_QuestionButton"
                                    style="float: left; margin-right: 10px !important;">
                         <?php } ?>
                         <input type="button" name="back" value="<?php _e('Back', 'wp-trivia'); ?>"
-                               class="wpProQuiz_button wpProQuiz_QuestionButton"
+                               class="wpTrivia_button wpTrivia_QuestionButton"
                                style="float: left !important; margin-right: 10px !important; display: none;">
                         <?php if ($question->isTipEnabled()) { ?>
                             <input type="button" name="tip" value="<?php _e('Hint', 'wp-trivia'); ?>"
-                                   class="wpProQuiz_button wpProQuiz_QuestionButton wpProQuiz_TipButton"
+                                   class="wpTrivia_button wpTrivia_QuestionButton wpTrivia_TipButton"
                                    style="float: left !important; display: inline-block; margin-right: 10px !important;">
                         <?php } ?>
                         <input type="button" name="check" value="<?php _e('Check', 'wp-trivia'); ?>"
-                               class="wpProQuiz_button wpProQuiz_QuestionButton"
+                               class="wpTrivia_button wpTrivia_QuestionButton"
                                style="float: right !important; margin-right: 10px !important; display: none;">
                         <input type="button" name="next" value="<?php _e('Next', 'wp-trivia'); ?>"
-                               class="wpProQuiz_button wpProQuiz_QuestionButton" style="float: right; display: none;">
+                               class="wpTrivia_button wpTrivia_QuestionButton" style="float: right; display: none;">
 
                         <div style="clear: both;"></div>
                     </li>
@@ -1064,7 +1064,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
     private function showLoadQuizBox()
     {
         ?>
-        <div style="display: none;" class="wpProQuiz_loadQuiz">
+        <div style="display: none;" class="wpTrivia_loadQuiz">
             <p>
                 <?php echo $this->_buttonNames['quiz_is_loading']; ?>
             </p>

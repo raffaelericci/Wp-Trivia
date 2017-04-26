@@ -28,7 +28,7 @@ class WpTrivia_Controller_Statistics extends WpTrivia_Controller_Controller
 
     private function showNew($quizId)
     {
-        if (!current_user_can('wpProQuiz_show_statistics')) {
+        if (!current_user_can('wpTrivia_show_statistics')) {
             wp_die(__('You do not have sufficient permissions to access this page.'));
         }
 
@@ -226,7 +226,7 @@ class WpTrivia_Controller_Statistics extends WpTrivia_Controller_Controller
 
     public static function ajaxLoadHistory($data)
     {
-        if (!current_user_can('wpProQuiz_show_statistics')) {
+        if (!current_user_can('wpTrivia_show_statistics')) {
             return json_encode(array());
         }
 
@@ -263,7 +263,7 @@ class WpTrivia_Controller_Statistics extends WpTrivia_Controller_Controller
 
             $model->setResult($result);
             $model->setFormatTime(WpTrivia_Helper_Until::convertTime($model->getCreateTime(),
-                get_option('wpProQuiz_statisticTimeFormat', 'Y/m/d g:i A')));
+                get_option('wpTrivia_statisticTimeFormat', 'Y/m/d g:i A')));
 
             $model->setFormatCorrect($model->getCorrectCount() . ' (' . round(100 * $model->getCorrectCount() / $sum,
                     2) . '%)');
@@ -305,7 +305,7 @@ class WpTrivia_Controller_Statistics extends WpTrivia_Controller_Controller
 
     public static function ajaxLoadStatisticUser($data)
     {
-        if (!current_user_can('wpProQuiz_show_statistics')) {
+        if (!current_user_can('wpTrivia_show_statistics')) {
             return json_encode(array());
         }
 
@@ -384,7 +384,7 @@ class WpTrivia_Controller_Statistics extends WpTrivia_Controller_Controller
 
     public static function ajaxRestStatistic($data)
     {
-        if (!current_user_can('wpProQuiz_reset_statistics')) {
+        if (!current_user_can('wpTrivia_reset_statistics')) {
             return;
         }
 
@@ -408,7 +408,7 @@ class WpTrivia_Controller_Statistics extends WpTrivia_Controller_Controller
 
     public static function ajaxLoadStatsticOverviewNew($data)
     {
-        if (!current_user_can('wpProQuiz_show_statistics')) {
+        if (!current_user_can('wpTrivia_show_statistics')) {
             return json_encode(array());
         }
 

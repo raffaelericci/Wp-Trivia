@@ -2,15 +2,15 @@ jQuery(document).ready(function ($) {
     /**
      * @memberOf $.fn
      */
-    $.fn.wpProQuiz_preview = function () {
+    $.fn.wpTrivia_preview = function () {
         var methods = {
             openPreview: function (obj) {
-                window.open($(obj).attr('href'), 'wpProQuizPreview', 'width=900,height=900');
+                window.open($(obj).attr('href'), 'wpTriviaPreview', 'width=900,height=900');
             }
         };
 
         var init = function () {
-            $('.wpProQuiz_prview').click(function (e) {
+            $('.wpTrivia_prview').click(function (e) {
                 methods.openPreview(this);
                 e.preventDefault();
             });
@@ -19,7 +19,7 @@ jQuery(document).ready(function ($) {
         init();
     };
 
-    $.fn.wpProQuiz_quizEdit = function () {
+    $.fn.wpTrivia_quizEdit = function () {
 
         function ajaxPost(func, data, success) {
             var d = {
@@ -145,8 +145,8 @@ jQuery(document).ready(function ($) {
             },
 
             validInput: function () {
-                if (isEmpty($('#wpProQuiz_title').val())) {
-                    alert(wpProQuizLocalize.no_title_msg);
+                if (isEmpty($('#wpTrivia_title').val())) {
+                    alert(wpTriviaLocalize.no_title_msg);
                     return false;
                 }
 
@@ -159,11 +159,11 @@ jQuery(document).ready(function ($) {
                 }
 
                 if (isEmpty(text)) {
-                    alert(wpProQuizLocalize.no_quiz_start_msg);
+                    alert(wpTriviaLocalize.no_quiz_start_msg);
                     return false;
                 }
 
-                if ($('#wpProQuiz_resultGradeEnabled:checked').length) {
+                if ($('#wpTrivia_resultGradeEnabled:checked').length) {
                     var rCheck = true;
 
                     $('#resultList').children().each(function () {
@@ -176,7 +176,7 @@ jQuery(document).ready(function ($) {
                     });
 
                     if (!rCheck) {
-                        alert(wpProQuizLocalize.fail_grade_result);
+                        alert(wpTriviaLocalize.fail_grade_result);
                         return false;
                     }
                 }
@@ -280,7 +280,7 @@ jQuery(document).ready(function ($) {
                 }
             });
 
-            $('#wpProQuiz_resultGradeEnabled').change(function () {
+            $('#wpTrivia_resultGradeEnabled').change(function () {
                 if (this.checked) {
                     $('#resultGrade').show();
                     $('#resultNormal').hide();
@@ -290,7 +290,7 @@ jQuery(document).ready(function ($) {
                 }
             });
 
-            $('#wpProQuiz_save').click(function (e) {
+            $('#wpTrivia_save').click(function (e) {
                 if (!methode.validInput())
                     e.preventDefault();
                 else
@@ -302,7 +302,7 @@ jQuery(document).ready(function ($) {
             $('input[name="template"]').click(function (e) {
                 if ($('select[name="templateSaveList"]').val() == '0') {
                     if (isEmpty($('input[name="templateName"]').val())) {
-                        alert(wpProQuizLocalize.temploate_no_name);
+                        alert(wpTriviaLocalize.temploate_no_name);
 
                         e.preventDefault();
                         return false;
@@ -325,18 +325,18 @@ jQuery(document).ready(function ($) {
 
             $('input[name="quizRunOnce"]').change(function (e) {
                 if (this.checked) {
-                    $('#wpProQuiz_quiz_run_once_type').show();
+                    $('#wpTrivia_quiz_run_once_type').show();
                     $('input[name="quizRunOnceType"]:checked').change();
                 } else {
-                    $('#wpProQuiz_quiz_run_once_type').hide();
+                    $('#wpTrivia_quiz_run_once_type').hide();
                 }
             });
 
             $('input[name="quizRunOnceType"]').change(function (e) {
                 if (this.checked && (this.value == "1" || this.value == "3")) {
-                    $('#wpProQuiz_quiz_run_once_cookie').show();
+                    $('#wpTrivia_quiz_run_once_cookie').show();
                 } else {
-                    $('#wpProQuiz_quiz_run_once_cookie').hide();
+                    $('#wpTrivia_quiz_run_once_cookie').hide();
                 }
             });
 
@@ -346,7 +346,7 @@ jQuery(document).ready(function ($) {
                 return false;
             });
 
-            $('.wpProQuiz_demoBox a').mouseover(function (e) {
+            $('.wpTrivia_demoBox a').mouseover(function (e) {
                 var $this = $(this);
                 var d = $('#poststuff').width();
                 var img = $this.siblings().outerWidth(true);
@@ -368,10 +368,10 @@ jQuery(document).ready(function ($) {
             $('input[name="showMaxQuestion"]').change(function () {
                 if (this.checked) {
 //					$('input[name="statisticsOn"]').removeAttr('checked').attr('disabled', 'disabled').change();
-                    $('#wpProQuiz_showMaxBox').show();
+                    $('#wpTrivia_showMaxBox').show();
                 } else {
 //					$('input[name="statisticsOn"]').removeAttr('disabled');
-                    $('#wpProQuiz_showMaxBox').hide();
+                    $('#wpTrivia_showMaxBox').hide();
                 }
             });
 
@@ -409,14 +409,14 @@ jQuery(document).ready(function ($) {
 
             $('input[name="showReviewQuestion"]').change(function () {
                 if (this.checked) {
-                    $('.wpProQuiz_reviewQuestionOptions').show();
+                    $('.wpTrivia_reviewQuestionOptions').show();
                 } else {
-                    $('.wpProQuiz_reviewQuestionOptions').hide();
+                    $('.wpTrivia_reviewQuestionOptions').hide();
                 }
             }).change();
 
             $('#statistics_on').change();
-            $('#wpProQuiz_resultGradeEnabled').change();
+            $('#wpTrivia_resultGradeEnabled').change();
             $('input[name="quizRunOnce"]').change();
             $('input[name="quizRunOnceType"]:checked').change();
             $('input[name="showMaxQuestion"]').change();
@@ -557,8 +557,8 @@ jQuery(document).ready(function ($) {
         init();
     };
 
-    $.fn.wpProQuiz_statistics = function () {
-        var currectTab = 'wpProQuiz_typeAnonymeUser';
+    $.fn.wpTrivia_statistics = function () {
+        var currectTab = 'wpTrivia_typeAnonymeUser';
         var changePageNav = true;
 
         var methode = {
@@ -570,8 +570,8 @@ jQuery(document).ready(function ($) {
                     userId: userId
                 };
 
-                $('#wpProQuiz_loadData').show();
-                $('#wpProQuiz_statistics_content, #wpProQuiz_statistics_overview').hide();
+                $('#wpTrivia_loadData').show();
+                $('#wpTrivia_statistics_content, #wpTrivia_statistics_overview').hide();
 
                 $.post(
                     url,
@@ -582,48 +582,48 @@ jQuery(document).ready(function ($) {
             },
 
             setStatistics: function (json) {
-                var $table = $('.wpProQuiz_statistics_table');
+                var $table = $('.wpTrivia_statistics_table');
                 var $tbody = $table.find('tbody');
 
-                if (currectTab == 'wpProQuiz_typeOverview') {
+                if (currectTab == 'wpTrivia_typeOverview') {
                     return;
                 }
 
                 var setItem = function (i, j, r) {
-                    i.find('.wpProQuiz_cCorrect').text(j.cCorrect + ' (' + j.pCorrect + '%)');
-                    i.find('.wpProQuiz_cIncorrect').text(j.cIncorrect + ' (' + j.pIncorrect + '%)');
-                    i.find('.wpProQuiz_cTip').text(j.cTip);
-                    i.find('.wpProQuiz_cPoints').text(j.cPoints);
+                    i.find('.wpTrivia_cCorrect').text(j.cCorrect + ' (' + j.pCorrect + '%)');
+                    i.find('.wpTrivia_cIncorrect').text(j.cIncorrect + ' (' + j.pIncorrect + '%)');
+                    i.find('.wpTrivia_cTip').text(j.cTip);
+                    i.find('.wpTrivia_cPoints').text(j.cPoints);
 
                     if (r == true) {
-                        $table.find('.wpProQuiz_cResult').text(j.result + '%');
+                        $table.find('.wpTrivia_cResult').text(j.result + '%');
                     }
                 };
 
                 setItem($table, json.clear, false);
 
                 $.each(json.items, function (i, v) {
-                    setItem($tbody.find('#wpProQuiz_tr_' + v.id), v, false);
+                    setItem($tbody.find('#wpTrivia_tr_' + v.id), v, false);
                 });
 
                 setItem($table.find('tfoot'), json.global, true);
 
-                $('#wpProQuiz_loadData').hide();
-                $('#wpProQuiz_statistics_content, .wpProQuiz_statistics_table').show();
+                $('#wpTrivia_loadData').hide();
+                $('#wpTrivia_statistics_content, .wpTrivia_statistics_table').show();
             },
 
             loadOverview: function () {
-                $('.wpProQuiz_statistics_table, #wpProQuiz_statistics_content, #wpProQuiz_statistics_overview').hide();
-                $('#wpProQuiz_loadData').show();
+                $('.wpTrivia_statistics_table, #wpTrivia_statistics_content, #wpTrivia_statistics_overview').hide();
+                $('#wpTrivia_loadData').show();
 
                 var location = window.location.pathname + window.location.search;
                 var url = location.replace('admin.php', 'admin-ajax.php') + '&action=load_statistics';
                 var data = {
                     action: 'wp_pro_quiz_load_statistics',
                     overview: true,
-                    pageLimit: $('#wpProQuiz_pageLimit').val(),
-                    onlyCompleted: Number($('#wpProQuiz_onlyCompleted').is(':checked')),
-                    page: $('#wpProQuiz_currentPage').val(),
+                    pageLimit: $('#wpTrivia_pageLimit').val(),
+                    onlyCompleted: Number($('#wpTrivia_onlyCompleted').is(':checked')),
+                    page: $('#wpTrivia_currentPage').val(),
                     generatePageNav: Number(changePageNav)
                 };
 
@@ -631,19 +631,19 @@ jQuery(document).ready(function ($) {
                     url,
                     data,
                     function (json) {
-                        $('#wpProQuiz_statistics_overview_data').empty();
+                        $('#wpTrivia_statistics_overview_data').empty();
 
-                        if (currectTab != 'wpProQuiz_typeOverview') {
+                        if (currectTab != 'wpTrivia_typeOverview') {
                             return;
                         }
 
                         var item = $('<tr>'
                             + '<th><a href="#">---</a></th>'
-                            + '<th class="wpProQuiz_points">---</th>'
-                            + '<th class="wpProQuiz_cCorrect" style="color: green;">---</th>'
-                            + '<th class="wpProQuiz_cIncorrect" style="color: red;">---</th>'
-                            + '<th class="wpProQuiz_cTip">---</th>'
-                            + '<th class="wpProQuiz_cResult" style="font-weight: bold;">---</th>'
+                            + '<th class="wpTrivia_points">---</th>'
+                            + '<th class="wpTrivia_cCorrect" style="color: green;">---</th>'
+                            + '<th class="wpTrivia_cIncorrect" style="color: red;">---</th>'
+                            + '<th class="wpTrivia_cTip">---</th>'
+                            + '<th class="wpTrivia_cResult" style="font-weight: bold;">---</th>'
                             + '</tr>'
                         );
 
@@ -653,22 +653,22 @@ jQuery(document).ready(function ($) {
                             d.find('a').text(v.userName).data('userId', v.userId).click(function () {
                                 $('#userSelect').val($(this).data('userId'));
 
-                                $('#wpProQuiz_typeRegisteredUser').click();
+                                $('#wpTrivia_typeRegisteredUser').click();
 
                                 return false;
                             });
 
                             if (v.completed) {
-                                d.find('.wpProQuiz_points').text(v.cPoints);
-                                d.find('.wpProQuiz_cCorrect').text(v.cCorrect + ' (' + v.pCorrect + '%)');
-                                d.find('.wpProQuiz_cIncorrect').text(v.cIncorrect + ' (' + v.pIncorrect + '%)');
-                                d.find('.wpProQuiz_cTip').text(v.cTip);
-                                d.find('.wpProQuiz_cResult').text(v.result + '%');
+                                d.find('.wpTrivia_points').text(v.cPoints);
+                                d.find('.wpTrivia_cCorrect').text(v.cCorrect + ' (' + v.pCorrect + '%)');
+                                d.find('.wpTrivia_cIncorrect').text(v.cIncorrect + ' (' + v.pIncorrect + '%)');
+                                d.find('.wpTrivia_cTip').text(v.cTip);
+                                d.find('.wpTrivia_cResult').text(v.result + '%');
                             } else {
                                 d.find('th').removeAttr('style');
                             }
 
-                            $('#wpProQuiz_statistics_overview_data').append(d);
+                            $('#wpTrivia_statistics_overview_data').append(d);
                         });
 
                         if (json.page != undefined) {
@@ -676,25 +676,25 @@ jQuery(document).ready(function ($) {
                             changePageNav = false;
                         }
 
-                        $('#wpProQuiz_loadData').hide();
-                        $('#wpProQuiz_statistics_overview').show();
+                        $('#wpTrivia_loadData').hide();
+                        $('#wpTrivia_statistics_overview').show();
                     },
                     'json'
                 );
             },
 
             loadFormOverview: function () {
-                $('#wpProQuiz_tabFormOverview').show();
+                $('#wpTrivia_tabFormOverview').show();
             },
 
             changeTab: function (id) {
                 currectTab = id;
 
-                if (id == 'wpProQuiz_typeRegisteredUser') {
+                if (id == 'wpTrivia_typeRegisteredUser') {
                     methode.loadStatistics($('#userSelect').val());
-                } else if (id == 'wpProQuiz_typeAnonymeUser') {
+                } else if (id == 'wpTrivia_typeAnonymeUser') {
                     methode.loadStatistics(0);
-                } else if (id == 'wpProQuiz_typeForm') {
+                } else if (id == 'wpTrivia_typeForm') {
                     methode.loadFormOverview();
                 } else {
                     methode.loadOverview();
@@ -702,7 +702,7 @@ jQuery(document).ready(function ($) {
             },
 
             resetStatistic: function (complete) {
-                var userId = (currectTab == 'wpProQuiz_typeRegisteredUser') ? $('#userSelect').val() : 0;
+                var userId = (currectTab == 'wpTrivia_typeRegisteredUser') ? $('#userSelect').val() : 0;
                 var location = window.location.pathname + window.location.search;
                 var url = location.replace('admin.php', 'admin-ajax.php') + '&action=reset';
                 var data = {
@@ -717,40 +717,40 @@ jQuery(document).ready(function ($) {
             },
 
             setPageNav: function (page) {
-                page = Math.ceil(page / $('#wpProQuiz_pageLimit').val());
-                $('#wpProQuiz_currentPage').empty();
+                page = Math.ceil(page / $('#wpTrivia_pageLimit').val());
+                $('#wpTrivia_currentPage').empty();
 
                 for (var i = 1; i <= page; i++) {
                     $(document.createElement('option'))
                         .val(i)
                         .text(i)
-                        .appendTo($('#wpProQuiz_currentPage'));
+                        .appendTo($('#wpTrivia_currentPage'));
                 }
 
-                $('#wpProQuiz_pageLeft, #wpProQuiz_pageRight').hide();
+                $('#wpTrivia_pageLeft, #wpTrivia_pageRight').hide();
 
-                if ($('#wpProQuiz_currentPage option').length > 1) {
-                    $('#wpProQuiz_pageRight').show();
+                if ($('#wpTrivia_currentPage option').length > 1) {
+                    $('#wpTrivia_pageRight').show();
 
                 }
             }
         };
 
         var init = function () {
-            $('.wpProQuiz_tab').click(function (e) {
+            $('.wpTrivia_tab').click(function (e) {
                 var $this = $(this);
 
                 if ($this.hasClass('button-primary')) {
                     return false;
                 }
 
-                if ($this.attr('id') == 'wpProQuiz_typeRegisteredUser') {
-                    $('#wpProQuiz_userBox').show();
+                if ($this.attr('id') == 'wpTrivia_typeRegisteredUser') {
+                    $('#wpTrivia_userBox').show();
                 } else {
-                    $('#wpProQuiz_userBox').hide();
+                    $('#wpTrivia_userBox').hide();
                 }
 
-                $('.wpProQuiz_tab').removeClass('button-primary').addClass('button-secondary');
+                $('.wpTrivia_tab').removeClass('button-primary').addClass('button-secondary');
                 $this.removeClass('button-secondary').addClass('button-primary');
 
                 methode.changeTab($this.attr('id'));
@@ -759,18 +759,18 @@ jQuery(document).ready(function ($) {
             });
 
             $('#userSelect').change(function () {
-                methode.changeTab('wpProQuiz_typeRegisteredUser');
+                methode.changeTab('wpTrivia_typeRegisteredUser');
             });
 
-            $('.wpProQuiz_update').click(function () {
+            $('.wpTrivia_update').click(function () {
                 methode.changeTab(currectTab);
 
                 return false;
             });
 
-            $('#wpProQuiz_reset').click(function () {
+            $('#wpTrivia_reset').click(function () {
 
-                var c = confirm(wpProQuizLocalize.reset_statistics_msg);
+                var c = confirm(wpTriviaLocalize.reset_statistics_msg);
 
                 if (c) {
                     methode.resetStatistic(false);
@@ -779,9 +779,9 @@ jQuery(document).ready(function ($) {
                 return false;
             });
 
-            $('.wpProQuiz_resetComplete').click(function () {
+            $('.wpTrivia_resetComplete').click(function () {
 
-                var c = confirm(wpProQuizLocalize.reset_statistics_msg);
+                var c = confirm(wpTriviaLocalize.reset_statistics_msg);
 
                 if (c) {
                     methode.resetStatistic(true);
@@ -790,51 +790,51 @@ jQuery(document).ready(function ($) {
                 return false;
             });
 
-            $('#wpProQuiz_pageLimit, #wpProQuiz_onlyCompleted').change(function () {
-                $('#wpProQuiz_currentPage').val(0);
+            $('#wpTrivia_pageLimit, #wpTrivia_onlyCompleted').change(function () {
+                $('#wpTrivia_currentPage').val(0);
                 changePageNav = true;
                 methode.changeTab(currectTab);
 
                 return false;
             });
 
-            $('#wpProQuiz_currentPage').change(function () {
-                $('#wpProQuiz_pageLeft, #wpProQuiz_pageRight').hide();
+            $('#wpTrivia_currentPage').change(function () {
+                $('#wpTrivia_pageLeft, #wpTrivia_pageRight').hide();
 
-                if ($('#wpProQuiz_currentPage option').length == 1) {
+                if ($('#wpTrivia_currentPage option').length == 1) {
 
-                } else if ($('#wpProQuiz_currentPage option:first-child:selected').length) {
-                    $('#wpProQuiz_pageRight').show();
-                } else if ($('#wpProQuiz_currentPage option:last-child:selected').length) {
-                    $('#wpProQuiz_pageLeft').show();
+                } else if ($('#wpTrivia_currentPage option:first-child:selected').length) {
+                    $('#wpTrivia_pageRight').show();
+                } else if ($('#wpTrivia_currentPage option:last-child:selected').length) {
+                    $('#wpTrivia_pageLeft').show();
                 } else {
-                    $('#wpProQuiz_pageLeft, #wpProQuiz_pageRight').show();
+                    $('#wpTrivia_pageLeft, #wpTrivia_pageRight').show();
                 }
 
                 methode.changeTab(currectTab);
             });
 
-            $('#wpProQuiz_pageRight').click(function () {
-                $('#wpProQuiz_currentPage option:selected').next().attr('selected', 'selected');
-                $('#wpProQuiz_currentPage').change();
+            $('#wpTrivia_pageRight').click(function () {
+                $('#wpTrivia_currentPage option:selected').next().attr('selected', 'selected');
+                $('#wpTrivia_currentPage').change();
 
                 return false;
             });
 
-            $('#wpProQuiz_pageLeft').click(function () {
-                $('#wpProQuiz_currentPage option:selected').prev().attr('selected', 'selected');
-                $('#wpProQuiz_currentPage').change();
+            $('#wpTrivia_pageLeft').click(function () {
+                $('#wpTrivia_currentPage option:selected').prev().attr('selected', 'selected');
+                $('#wpTrivia_currentPage').change();
 
                 return false;
             });
 
-            methode.changeTab('wpProQuiz_typeAnonymeUser');
+            methode.changeTab('wpTrivia_typeAnonymeUser');
         };
 
         init();
     };
 
-    $.fn.wpProQuiz_toplist = function () {
+    $.fn.wpTrivia_toplist = function () {
         function ajaxPost(func, data, success) {
             var d = {
                 action: 'wp_pro_quiz_admin_ajax',
@@ -846,15 +846,15 @@ jQuery(document).ready(function ($) {
         }
 
         var elements = {
-            sort: $('#wpProQuiz_sorting'),
-            pageLimit: $('#wpProQuiz_pageLimit'),
-            currentPage: $('#wpProQuiz_currentPage'),
-            loadDataBox: $('#wpProQuiz_loadData'),
-            pageLeft: $('#wpProQuiz_pageLeft'),
-            pageRight: $('#wpProQuiz_pageRight'),
-            dataBody: $('#wpProQuiz_toplistTable tbody'),
-            rowClone: $('#wpProQuiz_toplistTable tbody tr:eq(0)').clone(),
-            content: $('#wpProQuiz_content')
+            sort: $('#wpTrivia_sorting'),
+            pageLimit: $('#wpTrivia_pageLimit'),
+            currentPage: $('#wpTrivia_currentPage'),
+            loadDataBox: $('#wpTrivia_loadData'),
+            pageLeft: $('#wpTrivia_pageLeft'),
+            pageRight: $('#wpTrivia_pageRight'),
+            dataBody: $('#wpTrivia_toplistTable tbody'),
+            rowClone: $('#wpTrivia_toplistTable tbody tr:eq(0)').clone(),
+            content: $('#wpTrivia_content')
         };
 
         var methods = {
@@ -925,7 +925,7 @@ jQuery(document).ready(function ($) {
                     data.eq(0).children().val(v.id);
                     data.eq(1).find('strong').text(v.name);
                     data.eq(1).find('.inline_editUsername').val(v.name);
-                    data.eq(2).find('.wpProQuiz_email').text(v.email);
+                    data.eq(2).find('.wpTrivia_email').text(v.email);
                     data.eq(2).find('input').val(v.email);
                     data.eq(3).text(v.type);
                     data.eq(4).text(v.date);
@@ -938,7 +938,7 @@ jQuery(document).ready(function ($) {
                 if (!json.length) {
                     $(document.createElement('td'))
                         .attr('colspan', '7')
-                        .text(wpProQuizLocalize.no_data_available)
+                        .text(wpTriviaLocalize.no_data_available)
                         .css({
                             'font-weight': 'bold',
                             'text-align': 'center',
@@ -948,8 +948,8 @@ jQuery(document).ready(function ($) {
                         .appendTo(elements.dataBody);
                 }
 
-                $('.wpProQuiz_delete').click(function () {
-                    if (confirm(wpProQuizLocalize.confirm_delete_entry)) {
+                $('.wpTrivia_delete').click(function () {
+                    if (confirm(wpTriviaLocalize.confirm_delete_entry)) {
                         var id = new Array($(this).closest('tr').find('input[name="checkedData[]"]').val());
 
                         methods.loadData({
@@ -961,13 +961,13 @@ jQuery(document).ready(function ($) {
                     return false;
                 });
 
-                $('.wpProQuiz_edit').click(function () {
+                $('.wpTrivia_edit').click(function () {
                     var $contain = $(this).closest('tr');
 
                     $contain.find('.row-actions').hide();
                     $contain.find('.inline-edit').show();
 
-                    $contain.find('.wpProQuiz_username, .wpProQuiz_email').hide();
+                    $contain.find('.wpTrivia_username, .wpTrivia_email').hide();
                     $contain.find('.inline_editUsername, .inline_editEmail').show();
 
                     return false;
@@ -979,7 +979,7 @@ jQuery(document).ready(function ($) {
                     var email = $contain.find('.inline_editEmail').val();
 
                     if (methods.isEmpty(username) || methods.isEmpty(email)) {
-                        alert(wpProQuizLocalize.not_all_fields_completed);
+                        alert(wpTriviaLocalize.not_all_fields_completed);
 
                         return false;
                     }
@@ -1000,11 +1000,11 @@ jQuery(document).ready(function ($) {
                     $contain.find('.row-actions').show();
                     $contain.find('.inline-edit').hide();
 
-                    $contain.find('.wpProQuiz_username, .wpProQuiz_email').show();
+                    $contain.find('.wpTrivia_username, .wpTrivia_email').show();
                     $contain.find('.inline_editUsername, .inline_editEmail').hide();
 
-                    $contain.find('.inline_editUsername').val($contain.find('.wpProQuiz_username').text());
-                    $contain.find('.inline_editEmail').val($contain.find('.wpProQuiz_email').text());
+                    $contain.find('.inline_editUsername').val($contain.find('.wpTrivia_username').text());
+                    $contain.find('.inline_editEmail').val($contain.find('.wpTrivia_email').text());
 
                     return false;
                 });
@@ -1059,12 +1059,12 @@ jQuery(document).ready(function ($) {
                 methods.loadData();
             });
 
-            $('#wpProQuiz_deleteAll').click(function () {
+            $('#wpTrivia_deleteAll').click(function () {
                 methods.loadData({a: 'deleteAll'});
             });
 
-            $('#wpProQuiz_action').click(function () {
-                var name = $('#wpProQuiz_actionName').val();
+            $('#wpTrivia_action').click(function () {
+                var name = $('#wpTrivia_actionName').val();
 
                 if (name != '0') {
 
@@ -1079,7 +1079,7 @@ jQuery(document).ready(function ($) {
                 }
             });
 
-            $('#wpProQuiz_checkedAll').change(function () {
+            $('#wpTrivia_checkedAll').change(function () {
                 if (this.checked)
                     $('input[name="checkedData[]"]').attr('checked', 'checked');
                 else
@@ -1092,27 +1092,27 @@ jQuery(document).ready(function ($) {
         init();
     };
 
-    if ($('.wpProQuiz_quizOverall').length)
-        $('.wpProQuiz_quizOverall').wpProQuiz_preview();
+    if ($('.wpTrivia_quizOverall').length)
+        $('.wpTrivia_quizOverall').wpTrivia_preview();
 
-    if ($('.wpProQuiz_quizOverall').length) {
-        $('.wpProQuiz_quizOverall').wpProQuiz_quizOverall();
+    if ($('.wpTrivia_quizOverall').length) {
+        $('.wpTrivia_quizOverall').wpTrivia_quizOverall();
     }
 
-    if ($('.wpProQuiz_quizEdit').length)
-        $('.wpProQuiz_quizEdit').wpProQuiz_quizEdit();
+    if ($('.wpTrivia_quizEdit').length)
+        $('.wpTrivia_quizEdit').wpTrivia_quizEdit();
 
-//	if($('.wpProQuiz_questionEdit').length)
-//		$('.wpProQuiz_questionEdit').wpProQuiz_questionEdit();
+//	if($('.wpTrivia_questionEdit').length)
+//		$('.wpTrivia_questionEdit').wpTrivia_questionEdit();
 
-    //if($('.wpProQuiz_questionOverall').length)
-    //	$('.wpProQuiz_questionOverall').wpProQuiz_questionOverall();
+    //if($('.wpTrivia_questionOverall').length)
+    //	$('.wpTrivia_questionOverall').wpTrivia_questionOverall();
 
-//	if($('.wpProQuiz_statistics').length)
-//		$('.wpProQuiz_statistics').wpProQuiz_statistics();
+//	if($('.wpTrivia_statistics').length)
+//		$('.wpTrivia_statistics').wpTrivia_statistics();
 
-    if ($('.wpProQuiz_toplist').length)
-        $('.wpProQuiz_toplist').wpProQuiz_toplist();
+    if ($('.wpTrivia_toplist').length)
+        $('.wpTrivia_toplist').wpTrivia_toplist();
 
     /**
      * NEW
@@ -1166,7 +1166,7 @@ jQuery(document).ready(function ($) {
         };
 
         var tabWrapper = function () {
-            $('.wpProQuiz_tab_wrapper a').click(function () {
+            $('.wpTrivia_tab_wrapper a').click(function () {
                 var $this = $(this);
                 var tabId = $this.data('tab');
                 var currentTab = $this.siblings('.button-primary').removeClass('button-primary').addClass('button-secondary');
@@ -1215,7 +1215,7 @@ jQuery(document).ready(function ($) {
                         };
 
                         if (global.isEmpty(name)) {
-                            alert(wpProQuizLocalize.category_no_name);
+                            alert(wpTriviaLocalize.category_no_name);
                             return;
                         }
 
@@ -1260,7 +1260,7 @@ jQuery(document).ready(function ($) {
                     templateEdit: function (id, name, type) {
 
                         if (global.isEmpty(name)) {
-                            alert(wpProQuizLocalize.category_no_name);
+                            alert(wpTriviaLocalize.category_no_name);
                             return;
                         }
 
@@ -1288,10 +1288,10 @@ jQuery(document).ready(function ($) {
                 };
 
                 var init = function () {
-//					$('.wpProQuiz_tab').click(function() {
+//					$('.wpTrivia_tab').click(function() {
 //						var $this = $(this);
 //
-//						$('.wpProQuiz_tab').removeClass('button-primary').addClass('button-secondary');
+//						$('.wpTrivia_tab').removeClass('button-primary').addClass('button-secondary');
 //						$this.removeClass('button-secondary').addClass('button-primary');
 //
 //						$('#problemInfo, #problemContent, #globalContent').hide('fast');
@@ -1449,7 +1449,7 @@ jQuery(document).ready(function ($) {
 
                     globalValidate: function () {
                         if (global.isEmpty(global.getMceContent('question'))) {
-                            alert(wpProQuizLocalize.no_question_msg);
+                            alert(wpTriviaLocalize.no_question_msg);
 
                             return false;
                         }
@@ -1458,13 +1458,13 @@ jQuery(document).ready(function ($) {
                             var p = elements.gPoints.val();
 
                             if (!global.isNumber(p) || p < 1) {
-                                alert(wpProQuizLocalize.no_nummber_points);
+                                alert(wpTriviaLocalize.no_nummber_points);
 
                                 return false;
                             }
                         } else {
                             if ($('input[name="answerType"]:checked').val() == 'free_answer') {
-                                alert(wpProQuizLocalize.dif_points);
+                                alert(wpTriviaLocalize.dif_points);
                                 return false;
                             }
                         }
@@ -1519,7 +1519,7 @@ jQuery(document).ready(function ($) {
 
                         var closest = $(this).closest('li');
                         var htmlCheck = closest.find('input[name="answerData[][html]"]:eq(0)');
-                        var field = closest.find('.wpProQuiz_text:eq(0)');
+                        var field = closest.find('.wpTrivia_text:eq(0)');
 
                         window.org_send_to_editor = window.send_to_editor;
                         var org_tb_remove = tb_remove;
@@ -1571,7 +1571,7 @@ jQuery(document).ready(function ($) {
                         });
 
                         if (!findText) {
-                            alert(wpProQuizLocalize.no_answer_msg);
+                            alert(wpTriviaLocalize.no_answer_msg);
                             return false;
                         }
 
@@ -1579,12 +1579,12 @@ jQuery(document).ready(function ($) {
                             && $('input[name="answerPointsDiffModusActivated"]').is(':checked')
                             && $('input[name="answerPointsActivated"]').is(':checked')
                             && $('input[name="answerType"]:checked').val() == 'single')) {
-                            alert(wpProQuizLocalize.no_correct_msg);
+                            alert(wpTriviaLocalize.no_correct_msg);
                             return false;
                         }
 
                         if (findPoints != findText && elements.pointsModus.is(':checked')) {
-                            alert(wpProQuizLocalize.no_nummber_points_new);
+                            alert(wpTriviaLocalize.no_nummber_points_new);
                             return false;
                         }
 
@@ -1593,7 +1593,7 @@ jQuery(document).ready(function ($) {
 
                     free_answer: function () {
                         if (global.isEmpty($('.free_answer textarea[name="answerData[][answer]"]').val())) {
-                            alert(wpProQuizLocalize.no_answer_msg);
+                            alert(wpTriviaLocalize.no_answer_msg);
                             return false;
                         }
 
@@ -1602,7 +1602,7 @@ jQuery(document).ready(function ($) {
 
                     cloze_answer: function () {
                         if (global.isEmpty(global.getMceContent('cloze'))) {
-                            alert(wpProQuizLocalize.no_answer_msg);
+                            alert(wpTriviaLocalize.no_answer_msg);
                             return false;
                         }
 
@@ -1628,12 +1628,12 @@ jQuery(document).ready(function ($) {
                         });
 
                         if (!findText) {
-                            alert(wpProQuizLocalize.no_answer_msg);
+                            alert(wpTriviaLocalize.no_answer_msg);
                             return false;
                         }
 
                         if (findPoints != findText && elements.pointsModus.is(':checked')) {
-                            alert(wpProQuizLocalize.no_nummber_points_new);
+                            alert(wpTriviaLocalize.no_nummber_points_new);
                             return false;
                         }
 
@@ -1673,17 +1673,17 @@ jQuery(document).ready(function ($) {
                         });
 
                         if (!findText) {
-                            alert(wpProQuizLocalize.no_answer_msg);
+                            alert(wpTriviaLocalize.no_answer_msg);
                             return false;
                         }
 
                         if (!sortString) {
-                            alert(wpProQuizLocalize.no_sort_element_criterion);
+                            alert(wpTriviaLocalize.no_sort_element_criterion);
                             return false;
                         }
 
                         if (findPoints != menge && elements.pointsModus.is(':checked')) {
-                            alert(wpProQuizLocalize.no_nummber_points_new);
+                            alert(wpTriviaLocalize.no_nummber_points_new);
                             return false;
                         }
 
@@ -1692,7 +1692,7 @@ jQuery(document).ready(function ($) {
 
                     assessment_answer: function () {
                         if (global.isEmpty(global.getMceContent('assessment'))) {
-                            alert(wpProQuizLocalize.no_answer_msg);
+                            alert(wpTriviaLocalize.no_answer_msg);
                             return false;
                         }
 
@@ -1701,12 +1701,12 @@ jQuery(document).ready(function ($) {
                 };
 
                 var formListener = function () {
-                    $('#wpProQuiz_tip').change(function () {
-                        global.displayChecked(this, $('#wpProQuiz_tipBox'));
+                    $('#wpTrivia_tip').change(function () {
+                        global.displayChecked(this, $('#wpTrivia_tipBox'));
                     }).change();
 
-                    $('#wpProQuiz_correctSameText').change(function () {
-                        global.displayChecked(this, $('#wpProQuiz_incorrectMassageBox'), true);
+                    $('#wpTrivia_correctSameText').change(function () {
+                        global.displayChecked(this, $('#wpTrivia_incorrectMassageBox'), true);
                     }).change();
 
                     $('input[name="answerType"]').click(function () {
@@ -1718,21 +1718,21 @@ jQuery(document).ready(function ($) {
                             $('input[name="disableCorrect"]').change();
                         } else {
                             $('#singleChoiceOptions').hide();
-                            $('.classic_answer .wpProQuiz_classCorrect').parent().parent().show();
+                            $('.classic_answer .wpTrivia_classCorrect').parent().parent().show();
                         }
 
                         if (v == 'single' || v == 'multiple') {
                             var type = (v == 'single') ? 'radio' : 'checkbox';
                             v = 'classic_answer';
 
-                            $('.wpProQuiz_classCorrect').each(function () {
+                            $('.wpTrivia_classCorrect').each(function () {
                                 $("<input type=" + type + " />")
                                     .attr({
                                         name: this.name,
                                         value: this.value,
                                         checked: this.checked
                                     })
-                                    .addClass('wpProQuiz_classCorrect wpProQuiz_checkbox')
+                                    .addClass('wpTrivia_classCorrect wpTrivia_checkbox')
                                     .insertBefore(this);
                             }).remove();
                         }
@@ -1750,9 +1750,9 @@ jQuery(document).ready(function ($) {
                         var ul = $(this).siblings('ul');
                         var clone = ul.find('li:eq(0)').clone();
 
-                        clone.find('.wpProQuiz_checkbox').removeAttr('checked');
-                        clone.find('.wpProQuiz_text').val('');
-                        clone.find('.wpProQuiz_points').val(1);
+                        clone.find('.wpTrivia_checkbox').removeAttr('checked');
+                        clone.find('.wpTrivia_text').val('');
+                        clone.find('.wpTrivia_points').val(1);
                         clone.find('.deleteAnswer').click(methode.answerRemove);
                         clone.find('.addMedia').click(methode.addMediaClick);
 
@@ -1762,7 +1762,7 @@ jQuery(document).ready(function ($) {
                     });
 
                     $('.sort_answer ul, .classic_answer ul, .matrix_sort_answer ul').sortable({
-                        handle: '.wpProQuiz_move'
+                        handle: '.wpTrivia_move'
                     });
 
                     $('#saveQuestion').click(function () {
@@ -1776,8 +1776,8 @@ jQuery(document).ready(function ($) {
                     });
 
                     $(elements.pointsModus).change(function () {
-                        global.displayChecked(this, $('.wpProQuiz_answerPoints'));
-                        global.displayChecked(this, $('#wpProQuiz_showPointsBox'));
+                        global.displayChecked(this, $('.wpTrivia_answerPoints'));
+                        global.displayChecked(this, $('#wpTrivia_showPointsBox'));
                         global.displayChecked(this, elements.gPoints, false, true);
                         global.displayChecked(this, $('input[name="answerPointsDiffModusActivated"]'), true, true);
 
@@ -1785,7 +1785,7 @@ jQuery(document).ready(function ($) {
                             $('input[name="answerPointsDiffModusActivated"]').change();
                             $('input[name="disableCorrect"]').change();
                         } else {
-                            $('.classic_answer .wpProQuiz_classCorrect').parent().parent().show();
+                            $('.classic_answer .wpTrivia_classCorrect').parent().parent().show();
                             $('input[name="disableCorrect"]').attr('disabled', 'disabled');
                         }
                     }).change();
@@ -1812,11 +1812,11 @@ jQuery(document).ready(function ($) {
                         if (this.checked)
                             $('input[name="disableCorrect"]').change();
                         else
-                            $('.classic_answer .wpProQuiz_classCorrect').parent().parent().show();
+                            $('.classic_answer .wpTrivia_classCorrect').parent().parent().show();
                     }).change();
 
                     $('input[name="disableCorrect"]').change(function () {
-                        global.displayChecked(this, $('.classic_answer .wpProQuiz_classCorrect').parent().parent(), true);
+                        global.displayChecked(this, $('.classic_answer .wpTrivia_classCorrect').parent().parent(), true);
                     }).change();
 
                     $('#clickPointDia').click(function () {
@@ -1828,7 +1828,7 @@ jQuery(document).ready(function ($) {
                     $('input[name="template"]').click(function (e) {
                         if ($('select[name="templateSaveList"]').val() == '0') {
                             if (global.isEmpty($('input[name="templateName"]').val())) {
-                                alert(wpProQuizLocalize.temploate_no_name);
+                                alert(wpTriviaLocalize.temploate_no_name);
 
                                 e.preventDefault();
                                 return false;
@@ -1867,9 +1867,9 @@ jQuery(document).ready(function ($) {
                 var currentTab = 'users';
 
                 var elements = {
-                    currentPage: $('#wpProQuiz_currentPage'),
-                    pageLeft: $('#wpProQuiz_pageLeft'),
-                    pageRight: $('#wpProQuiz_pageRight'),
+                    currentPage: $('#wpTrivia_currentPage'),
+                    pageLeft: $('#wpTrivia_pageLeft'),
+                    pageRight: $('#wpTrivia_pageRight'),
                     testSelect: $('#testSelect')
 
                 };
@@ -1898,13 +1898,13 @@ jQuery(document).ready(function ($) {
                         //
                         //global.ajaxPost('statisticLoad', data, function (json) {
                         //    $.each(json.question, function () {
-                        //        var $tr = $('#wpProQuiz_tr_' + this.questionId);
+                        //        var $tr = $('#wpTrivia_tr_' + this.questionId);
                         //
                         //        methode.setStatisticData($tr, this);
                         //    });
                         //
                         //    $.each(json.category, function (i, v) {
-                        //        var $tr = $('#wpProQuiz_ctr_' + i);
+                        //        var $tr = $('#wpTrivia_ctr_' + i);
                         //
                         //        methode.setStatisticData($tr, v);
                         //    });
@@ -1942,13 +1942,13 @@ jQuery(document).ready(function ($) {
 
                         global.ajaxPost('statisticLoad', data, function (json) {
                             $.each(json.question, function () {
-                                var $tr = $('#wpProQuiz_tr_' + this.questionId);
+                                var $tr = $('#wpTrivia_tr_' + this.questionId);
 
                                 methode.setStatisticData($tr, this);
                             });
 
                             $.each(json.category, function (i, v) {
-                                var $tr = $('#wpProQuiz_ctr_' + i);
+                                var $tr = $('#wpTrivia_ctr_' + i);
 
                                 methode.setStatisticData($tr, v);
                             });
@@ -1978,7 +1978,7 @@ jQuery(document).ready(function ($) {
                     },
 
                     parseFormData: function (data) {
-                        var $formBox = $('#wpProQuiz_form_box');
+                        var $formBox = $('#wpTrivia_form_box');
 
                         if (data == null) {
                             $formBox.hide();
@@ -1993,18 +1993,18 @@ jQuery(document).ready(function ($) {
                     },
 
                     setStatisticData: function ($o, v) {
-                        $o.find('.wpProQuiz_cCorrect').text(v.correct);
-                        $o.find('.wpProQuiz_cIncorrect').text(v.incorrect);
-                        $o.find('.wpProQuiz_cTip').text(v.hint);
-                        $o.find('.wpProQuiz_cPoints').text(v.points);
-                        $o.find('.wpProQuiz_cResult').text(v.result);
-                        $o.find('.wpProQuiz_cTime').text(v.questionTime);
-                        $o.find('.wpProQuiz_cCreateTime').text(v.date);
+                        $o.find('.wpTrivia_cCorrect').text(v.correct);
+                        $o.find('.wpTrivia_cIncorrect').text(v.incorrect);
+                        $o.find('.wpTrivia_cTip').text(v.hint);
+                        $o.find('.wpTrivia_cPoints').text(v.points);
+                        $o.find('.wpTrivia_cResult').text(v.result);
+                        $o.find('.wpTrivia_cTime').text(v.questionTime);
+                        $o.find('.wpTrivia_cCreateTime').text(v.date);
                     },
 
                     toggleLoadBox: function (show) {
-                        var $loadBox = $('#wpProQuiz_loadData');
-                        var $content = $('#wpProQuiz_content');
+                        var $loadBox = $('#wpTrivia_loadData');
+                        var $content = $('#wpTrivia_content');
 
                         if (show) {
                             $loadBox.hide();
@@ -2018,7 +2018,7 @@ jQuery(document).ready(function ($) {
                     reset: function (type) {
                         var userId = $('#userSelect').val();
 
-                        if (!confirm(wpProQuizLocalize.reset_statistics_msg)) {
+                        if (!confirm(wpTriviaLocalize.reset_statistics_msg)) {
                             return;
                         }
 
@@ -2040,8 +2040,8 @@ jQuery(document).ready(function ($) {
 
                         var data = {
                             quizId: quizId,
-                            pageLimit: $('#wpProQuiz_pageLimit').val(),
-                            onlyCompleted: Number($('#wpProQuiz_onlyCompleted').is(':checked')),
+                            pageLimit: $('#wpTrivia_pageLimit').val(),
+                            onlyCompleted: Number($('#wpTrivia_onlyCompleted').is(':checked')),
                             page: elements.currentPage.val(),
                             nav: Number(nav)
                         };
@@ -2049,7 +2049,7 @@ jQuery(document).ready(function ($) {
                         methode.toggleLoadBox(false);
 
                         global.ajaxPost('statisticLoadOverview', data, function (json) {
-                            var $body = $('#wpProQuiz_statistics_overview_data');
+                            var $body = $('#wpTrivia_statistics_overview_data');
                             var $tr = $body.children();
                             var $c = $tr.first().clone();
 
@@ -2063,7 +2063,7 @@ jQuery(document).ready(function ($) {
                                 clone.find('a').text(this.userName).data('userId', this.userId).click(function () {
                                     $('#userSelect').val($(this).data('userId'));
 
-                                    $('#wpProQuiz_typeUser').click();
+                                    $('#wpTrivia_typeUser').click();
 
                                     return false;
                                 });
@@ -2082,7 +2082,7 @@ jQuery(document).ready(function ($) {
                     },
 
                     handleNav: function (nav) {
-                        var $p = $('#wpProQuiz_currentPage').empty();
+                        var $p = $('#wpTrivia_currentPage').empty();
 
                         for (var i = 1; i <= nav; i++) {
                             $(document.createElement('option'))
@@ -2123,16 +2123,16 @@ jQuery(document).ready(function ($) {
                     loadFormsOverview: function (nav) {
                         var data = {
                             quizId: quizId,
-                            pageLimit: $('#wpProQuiz_fromPageLimit').val(),
-                            onlyUser: $('#wpProQuiz_formUser').val(),
-                            page: $('#wpProQuiz_formCurrentPage').val(),
+                            pageLimit: $('#wpTrivia_fromPageLimit').val(),
+                            onlyUser: $('#wpTrivia_formUser').val(),
+                            page: $('#wpTrivia_formCurrentPage').val(),
                             nav: Number(nav)
                         };
 
                         methode.toggleLoadBox(false);
 
                         global.ajaxPost('statisticLoadFormOverview', data, function (json) {
-                            var $body = $('#wpProQuiz_statistics_form_data');
+                            var $body = $('#wpTrivia_statistics_form_data');
                             var $tr = $body.children();
                             var $c = $tr.first().clone();
 
@@ -2163,7 +2163,7 @@ jQuery(document).ready(function ($) {
                     },
 
                     handleFormNav: function (nav) {
-                        var $p = $('#wpProQuiz_formCurrentPage').empty();
+                        var $p = $('#wpTrivia_formCurrentPage').empty();
 
                         for (var i = 1; i <= nav; i++) {
                             $(document.createElement('option'))
@@ -2176,38 +2176,38 @@ jQuery(document).ready(function ($) {
                     },
 
                     checkFormNavBar: function () {
-                        var n = $('#wpProQuiz_formCurrentPage').val();
+                        var n = $('#wpTrivia_formCurrentPage').val();
 
                         if (n == 1) {
-                            $('#wpProQuiz_formPageLeft').hide();
+                            $('#wpTrivia_formPageLeft').hide();
                         } else {
-                            $('#wpProQuiz_formPageLeft').show();
+                            $('#wpTrivia_formPageLeft').show();
                         }
 
-                        if (n == $('#wpProQuiz_formCurrentPage').children().length) {
-                            $('#wpProQuiz_formPageRight').hide();
+                        if (n == $('#wpTrivia_formCurrentPage').children().length) {
+                            $('#wpTrivia_formPageRight').hide();
                         } else {
-                            $('#wpProQuiz_formPageRight').show();
+                            $('#wpTrivia_formPageRight').show();
                         }
                     },
 
                     switchTabOnLoad: function (name) {
-                        $('.wpProQuiz_tab').removeClass('button-primary').addClass('button-secondary');
-                        $('.wpProQuiz_tabContent').hide();
+                        $('.wpTrivia_tab').removeClass('button-primary').addClass('button-secondary');
+                        $('.wpTrivia_tabContent').hide();
 
-                        var $this = $('#wpProQuiz_typeOverview');
+                        var $this = $('#wpTrivia_typeOverview');
 
                         if (name == 'users') {
                             currentTab = 'users';
-                            $('#wpProQuiz_tabUsers').show();
-                            $this = $('#wpProQuiz_typeUser');
+                            $('#wpTrivia_tabUsers').show();
+                            $this = $('#wpTrivia_typeUser');
                         } else if (name == 'formOverview') {
                             currentTab = 'formOverview';
-                            $('#wpProQuiz_tabFormOverview').show();
-                            $this = $('#wpProQuiz_typeForm');
+                            $('#wpTrivia_tabFormOverview').show();
+                            $this = $('#wpTrivia_typeForm');
                         } else {
                             currentTab = 'overview';
-                            $('#wpProQuiz_tabOverview').show();
+                            $('#wpTrivia_tabOverview').show();
                         }
 
                         $this.removeClass('button-secondary').addClass('button-primary');
@@ -2220,52 +2220,52 @@ jQuery(document).ready(function ($) {
                         methode.loadUsersStatistic();
                     });
 
-                    $('.wpProQuiz_update').click(function () {
+                    $('.wpTrivia_update').click(function () {
                         methode.refresh();
                     });
 
-                    $('#wpProQuiz_reset').click(function () {
+                    $('#wpTrivia_reset').click(function () {
                         methode.reset(0);
                     });
 
-                    $('#wpProQuiz_resetUser').click(function () {
+                    $('#wpTrivia_resetUser').click(function () {
                         methode.reset(1);
                     });
 
-                    $('.wpProQuiz_resetComplete').click(function () {
+                    $('.wpTrivia_resetComplete').click(function () {
                         methode.reset(2);
                     });
 
-                    $('.wpProQuiz_tab').click(function () {
+                    $('.wpTrivia_tab').click(function () {
                         var $this = $(this);
 
-                        $('.wpProQuiz_tab').removeClass('button-primary').addClass('button-secondary');
+                        $('.wpTrivia_tab').removeClass('button-primary').addClass('button-secondary');
                         $this.removeClass('button-secondary').addClass('button-primary');
-                        $('.wpProQuiz_tabContent').hide();
+                        $('.wpTrivia_tabContent').hide();
 
-                        if ($this.attr('id') == 'wpProQuiz_typeUser') {
+                        if ($this.attr('id') == 'wpTrivia_typeUser') {
                             currentTab = 'users';
-                            $('#wpProQuiz_tabUsers').show();
+                            $('#wpTrivia_tabUsers').show();
                             methode.loadUsersStatistic();
-                        } else if ($this.attr('id') == 'wpProQuiz_typeForm') {
+                        } else if ($this.attr('id') == 'wpTrivia_typeForm') {
                             currentTab = 'formOverview';
-                            $('#wpProQuiz_tabFormOverview').show();
+                            $('#wpTrivia_tabFormOverview').show();
                             methode.loadFormsOverview(true);
                         } else {
                             currentTab = 'overview';
-                            $('#wpProQuiz_tabOverview').show();
+                            $('#wpTrivia_tabOverview').show();
                             methode.loadStatisticOverview(true);
                         }
 
                         return false;
                     });
 
-                    $('#wpProQuiz_onlyCompleted').change(function () {
+                    $('#wpTrivia_onlyCompleted').change(function () {
                         elements.currentPage.val(1);
                         methode.loadStatisticOverview(true);
                     });
 
-                    $('#wpProQuiz_pageLimit').change(function () {
+                    $('#wpTrivia_pageLimit').change(function () {
                         elements.currentPage.val(1);
                         methode.loadStatisticOverview(true);
                     });
@@ -2287,24 +2287,24 @@ jQuery(document).ready(function ($) {
                         methode.checkNavBar();
                     });
 
-                    $('#wpProQuiz_formUser, #wpProQuiz_fromPageLimit').change(function () {
-                        $('#wpProQuiz_formCurrentPage').val(1);
+                    $('#wpTrivia_formUser, #wpTrivia_fromPageLimit').change(function () {
+                        $('#wpTrivia_formCurrentPage').val(1);
                         methode.loadFormsOverview(true);
                     });
 
-                    $('#wpProQuiz_formPageLeft').click(function () {
-                        $('#wpProQuiz_formCurrentPage').val(Number(elements.currentPage.val()) - 1);
+                    $('#wpTrivia_formPageLeft').click(function () {
+                        $('#wpTrivia_formCurrentPage').val(Number(elements.currentPage.val()) - 1);
                         methode.loadFormsOverview(false);
                         methode.checkFormNavBar();
                     });
 
-                    $('#wpProQuiz_formPageRight').click(function () {
-                        $('#wpProQuiz_formCurrentPage').val(Number(elements.currentPage.val()) + 1);
+                    $('#wpTrivia_formPageRight').click(function () {
+                        $('#wpTrivia_formCurrentPage').val(Number(elements.currentPage.val()) + 1);
                         methode.loadFormsOverview(false);
                         methode.checkFormNavBar();
                     });
 
-                    $('#wpProQuiz_formCurrentPage').change(function () {
+                    $('#wpTrivia_formCurrentPage').change(function () {
                         methode.loadFormsOverview(false);
                         methode.checkFormNavBar();
                     });
@@ -2338,8 +2338,8 @@ jQuery(document).ready(function ($) {
                         };
 
                         $.extend(this.data, {
-                            users: $('#wpProQuiz_historyUser').val(),
-                            pageLimit: $('#wpProQuiz_historyPageLimit').val(),
+                            users: $('#wpTrivia_historyUser').val(),
+                            pageLimit: $('#wpTrivia_historyPageLimit').val(),
                             dateFrom: getTime($('#datepickerFrom')),
                             dateTo: getTime($('#datepickerTo')),
                             generateNav: 1
@@ -2359,8 +2359,8 @@ jQuery(document).ready(function ($) {
 
                     changeFilter: function () {
                         $.extend(this.data, {
-                            pageLimit: $('#wpProQuiz_overviewPageLimit').val(),
-                            onlyCompleted: Number($('#wpProQuiz_overviewOnlyCompleted').is(':checked')),
+                            pageLimit: $('#wpTrivia_overviewPageLimit').val(),
+                            onlyCompleted: Number($('#wpTrivia_overviewOnlyCompleted').is(':checked')),
                             generateNav: 1
                         });
                     }
@@ -2368,7 +2368,7 @@ jQuery(document).ready(function ($) {
 
                 var deleteMethode = {
                     deleteUserStatistic: function (refId, userId) {
-                        if (!confirm(wpProQuizLocalize.reset_statistics_msg))
+                        if (!confirm(wpTriviaLocalize.reset_statistics_msg))
                             return false;
 
                         var data = {
@@ -2379,7 +2379,7 @@ jQuery(document).ready(function ($) {
                         };
 
                         global.ajaxPost('statisticResetNew', data, function () {
-                            $('#wpProQuiz_user_overlay').hide();
+                            $('#wpTrivia_user_overlay').hide();
 
                             historyFilter.changeFilter();
                             methode.loadHistoryAjax();
@@ -2391,7 +2391,7 @@ jQuery(document).ready(function ($) {
                     },
 
                     deleteAll: function () {
-                        if (!confirm(wpProQuizLocalize.reset_statistics_msg))
+                        if (!confirm(wpTriviaLocalize.reset_statistics_msg))
                             return false;
 
                         var data = {
@@ -2417,7 +2417,7 @@ jQuery(document).ready(function ($) {
                         }, historyFilter.data);
 
                         methode.loadBox(true);
-                        var content = $('#wpProQuiz_historyLoadContext').hide();
+                        var content = $('#wpTrivia_historyLoadContext').hide();
 
                         global.ajaxPost('statisticLoadHistory', data, function (json) {
                             content.html(json.html).show();
@@ -2433,7 +2433,7 @@ jQuery(document).ready(function ($) {
                                 return false;
                             });
 
-                            content.find('.wpProQuiz_delete').click(function () {
+                            content.find('.wpTrivia_delete').click(function () {
                                 deleteMethode.deleteUserStatistic($(this).parents('tr').find('.user_statistic').data('ref_id'), 0);
 
                                 return false;
@@ -2445,9 +2445,9 @@ jQuery(document).ready(function ($) {
                     },
 
                     loadUserAjax: function (userId, refId, avg) {
-                        $('#wpProQuiz_user_overlay, #wpProQuiz_loadUserData').show();
+                        $('#wpTrivia_user_overlay, #wpTrivia_loadUserData').show();
 
-                        var content = $('#wpProQuiz_user_content').hide();
+                        var content = $('#wpTrivia_user_content').hide();
 
                         var data = {
                             quizId: quizId,
@@ -2459,13 +2459,13 @@ jQuery(document).ready(function ($) {
                         global.ajaxPost('statisticLoadUser', data, function (json) {
                             content.html(json.html);
 
-                            content.find('.wpProQuiz_update').click(function () {
+                            content.find('.wpTrivia_update').click(function () {
                                 methode.loadUserAjax(userId, refId, avg);
 
                                 return false;
                             });
 
-                            content.find('#wpProQuiz_resetUserStatistic').click(function () {
+                            content.find('#wpTrivia_resetUserStatistic').click(function () {
                                 deleteMethode.deleteUserStatistic(refId, userId);
                             });
 
@@ -2475,7 +2475,7 @@ jQuery(document).ready(function ($) {
                                 return false;
                             });
 
-                            $('#wpProQuiz_loadUserData').hide();
+                            $('#wpTrivia_loadUserData').hide();
                             content.show();
                         });
 
@@ -2483,9 +2483,9 @@ jQuery(document).ready(function ($) {
 
                     loadBox: function (show, contain) {
                         if (show)
-                            $('#wpProQuiz_loadDataHistory').show();
+                            $('#wpTrivia_loadDataHistory').show();
                         else
-                            $('#wpProQuiz_loadDataHistory').hide();
+                            $('#wpTrivia_loadDataHistory').hide();
 
                     },
 
@@ -2494,9 +2494,9 @@ jQuery(document).ready(function ($) {
                             page: overviewFilter.data.generateNav ? 1 : overviewNavigator.getCurrentPage()
                         }, overviewFilter.data);
 
-                        $('#wpProQuiz_loadDataOverview').show();
+                        $('#wpTrivia_loadDataOverview').show();
 
-                        var content = $('#wpProQuiz_overviewLoadContext').hide();
+                        var content = $('#wpTrivia_overviewLoadContext').hide();
 
                         global.ajaxPost('statisticLoadOverviewNew', data, function (json) {
                             content.html(json.html).show();
@@ -2512,13 +2512,13 @@ jQuery(document).ready(function ($) {
                                 return false;
                             });
 
-                            content.find('.wpProQuiz_delete').click(function () {
+                            content.find('.wpTrivia_delete').click(function () {
                                 deleteMethode.deleteUserStatistic(0, $(this).parents('tr').find('.user_statistic').data('user_id'));
 
                                 return false;
                             });
 
-                            $('#wpProQuiz_loadDataOverview').hide();
+                            $('#wpTrivia_loadDataOverview').hide();
                         });
                     }
                 };
@@ -2537,15 +2537,15 @@ jQuery(document).ready(function ($) {
                     });
 
                     $('#datepickerFrom').datepicker({
-                        closeText: wpProQuizLocalize.closeText,
-                        currentText: wpProQuizLocalize.currentText,
-                        monthNames: wpProQuizLocalize.monthNames,
-                        monthNamesShort: wpProQuizLocalize.monthNamesShort,
-                        dayNames: wpProQuizLocalize.dayNames,
-                        dayNamesShort: wpProQuizLocalize.dayNamesShort,
-                        dayNamesMin: wpProQuizLocalize.dayNamesMin,
-                        dateFormat: wpProQuizLocalize.dateFormat,
-                        firstDay: wpProQuizLocalize.firstDay,
+                        closeText: wpTriviaLocalize.closeText,
+                        currentText: wpTriviaLocalize.currentText,
+                        monthNames: wpTriviaLocalize.monthNames,
+                        monthNamesShort: wpTriviaLocalize.monthNamesShort,
+                        dayNames: wpTriviaLocalize.dayNames,
+                        dayNamesShort: wpTriviaLocalize.dayNamesShort,
+                        dayNamesMin: wpTriviaLocalize.dayNamesMin,
+                        dateFormat: wpTriviaLocalize.dateFormat,
+                        firstDay: wpTriviaLocalize.firstDay,
 
                         changeMonth: true,
                         onClose: function (selectedDate) {
@@ -2554,15 +2554,15 @@ jQuery(document).ready(function ($) {
                     });
 
                     $('#datepickerTo').datepicker({
-                        closeText: wpProQuizLocalize.closeText,
-                        currentText: wpProQuizLocalize.currentText,
-                        monthNames: wpProQuizLocalize.monthNames,
-                        monthNamesShort: wpProQuizLocalize.monthNamesShort,
-                        dayNames: wpProQuizLocalize.dayNames,
-                        dayNamesShort: wpProQuizLocalize.dayNamesShort,
-                        dayNamesMin: wpProQuizLocalize.dayNamesMin,
-                        dateFormat: wpProQuizLocalize.dateFormat,
-                        firstDay: wpProQuizLocalize.firstDay,
+                        closeText: wpTriviaLocalize.closeText,
+                        currentText: wpTriviaLocalize.currentText,
+                        monthNames: wpTriviaLocalize.monthNames,
+                        monthNamesShort: wpTriviaLocalize.monthNamesShort,
+                        dayNames: wpTriviaLocalize.dayNames,
+                        dayNamesShort: wpTriviaLocalize.dayNamesShort,
+                        dayNamesMin: wpTriviaLocalize.dayNamesMin,
+                        dateFormat: wpTriviaLocalize.dateFormat,
+                        firstDay: wpTriviaLocalize.firstDay,
 
                         changeMonth: true,
                         onClose: function (selectedDate) {
@@ -2575,25 +2575,25 @@ jQuery(document).ready(function ($) {
                         methode.loadHistoryAjax();
                     });
 
-                    $('#wpProQuiz_overlay_close').click(function () {
-                        $('#wpProQuiz_user_overlay').hide();
+                    $('#wpTrivia_overlay_close').click(function () {
+                        $('#wpTrivia_user_overlay').hide();
                     });
 
-                    $('#wpProQuiz_tabHistory .wpProQuiz_update').click(function () {
+                    $('#wpTrivia_tabHistory .wpTrivia_update').click(function () {
                         historyFilter.changeFilter();
                         methode.loadHistoryAjax();
 
                         return false;
                     });
 
-                    $('#wpProQuiz_tabOverview .wpProQuiz_update').click(function () {
+                    $('#wpTrivia_tabOverview .wpTrivia_update').click(function () {
                         overviewFilter.changeFilter();
                         methode.loadOverviewAjax();
 
                         return false;
                     });
 
-                    $('.wpProQuiz_resetComplete').click(function () {
+                    $('.wpTrivia_resetComplete').click(function () {
                         deleteMethode.deleteAll();
 
                         return false;
@@ -2620,19 +2620,19 @@ jQuery(document).ready(function ($) {
 
             var m = $.noop;
 
-            if ($('.wpProQuiz_questionEdit').length) {
+            if ($('.wpTrivia_questionEdit').length) {
                 m = module.questionEdit;
-            } else if ($('.wpProQuiz_globalSettings').length) {
+            } else if ($('.wpTrivia_globalSettings').length) {
                 m = module.gobalSettings;
-            } else if ($('.wpProQuiz_statistics').length) {
+            } else if ($('.wpTrivia_statistics').length) {
                 m = module.statistic;
-            } else if ($('.wpProQuiz_statisticsNew').length) {
+            } else if ($('.wpTrivia_statisticsNew').length) {
                 m = module.statisticNew;
             }
 
             m();
 
-            $('.wpProQuiz_demoImgBox a').mouseover(function (e) {
+            $('.wpTrivia_demoImgBox a').mouseover(function (e) {
                 var $this = $(this);
                 var d = $(document).width();
                 var img = $this.siblings().outerWidth(true);
