@@ -10,7 +10,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Pretty and simple WordPress quiz/trivia plugin
 
 == Description ==
-A simplified and prettified fork of WP-Pro-Quiz, quiz plugin for WordPress
+A simplified and prettified fork of Wp-Pro-Quiz, quiz plugin for WordPress
 
 == Installation ==
 1. Upload the Wp-Trivia folder to the /wp-content/plugins/directory

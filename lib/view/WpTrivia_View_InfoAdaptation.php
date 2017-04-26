@@ -7,9 +7,9 @@ class WpTrivia_View_InfoAdaptation extends WpTrivia_View_View
         ?>
 
         <div class="wrap">
-            <h2><?php _e('WP-Pro-Quiz special modification', 'wp-trivia'); ?></h2>
+            <h2><?php _e('Wp-Trivia special modification', 'wp-trivia'); ?></h2>
 
-            <p><?php _e('You need special WP-Pro-Quiz modification for your website?', 'wp-trivia'); ?></p>
+            <p><?php _e('You need special Wp-Trivia modification for your website?', 'wp-trivia'); ?></p>
 
             <h3><?php _e('We offer you:', 'wp-trivia'); ?></h3>
             <ol style="list-style-type: disc;">

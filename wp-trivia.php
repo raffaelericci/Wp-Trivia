@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: WP-Pro-Quiz
+Plugin Name: Wp-Trivia
 Plugin URI: http://wordpress.org/extend/plugins/wp-trivia
 Description: A powerful and beautiful quiz plugin for WordPress.
 Version: 1.0.0

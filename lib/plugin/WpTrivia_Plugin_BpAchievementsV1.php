@@ -21,7 +21,7 @@ class WpTrivia_Plugin_BpAchievementsV1 extends DPA_Extension
         $this->description = __('A powerful and beautiful quiz plugin for WordPress.', 'wp-trivia');
         $this->id = 'wp-trivia';
         $this->image_url = WPPROQUIZ_URL . '/img/wp_pro_quiz.jpg';
-        $this->name = __('WP-Pro-Quiz', 'wp-trivia');
+        $this->name = __('Wp-Trivia', 'wp-trivia');
         //$this->rss_url         = '';
         $this->small_image_url = WPPROQUIZ_URL . '/img/wp_pro_quiz_small.jpg';
         $this->version = 5;

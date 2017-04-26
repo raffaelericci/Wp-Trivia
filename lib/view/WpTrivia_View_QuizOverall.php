@@ -321,7 +321,7 @@ class WpTrivia_View_QuizOverall extends WpTrivia_View_View
                 <div class="wpProQuiz_InfoBar" style="display: none; margin-top:-36px; float: right;">
 
                     <div style="background-color: #FFFBCC; padding: 6px; border: 1px solid #E6DB55; float: left;">
-                        <strong><?php _e('You need special WP-Pro-Quiz modification for your website?',
+                        <strong><?php _e('You need special Wp-Trivia modification for your website?',
                                 'wp-trivia'); ?></strong><br>
                         <a class="button-primary" href="admin.php?page=wpProQuiz&module=info_adaptation"
                            style="margin-top: 5px;"><?php _e('Learn more', 'wp-trivia'); ?></a>
@@ -329,7 +329,7 @@ class WpTrivia_View_QuizOverall extends WpTrivia_View_View
 
                     <div
                         style="background-color: #FFFBCC; padding: 3px 35px; border: 1px solid #E6DB55; float: left; margin-left: 10px;">
-                        <span style="font-weight: bold; margin-left: 15px;"><?php _e('WP-Pro-Quiz',
+                        <span style="font-weight: bold; margin-left: 15px;"><?php _e('Wp-Trivia',
                                 'wp-trivia'); ?></span>
 
                         <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">

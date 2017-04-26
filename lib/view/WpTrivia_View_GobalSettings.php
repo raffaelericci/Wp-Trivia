@@ -624,7 +624,7 @@ class WpTrivia_View_GobalSettings extends WpTrivia_View_View
                                    value="<?php _e('Repair database', 'wp-trivia'); ?>">
 
                             <p class="description">
-                                <?php _e('No date will be deleted. Only WP-Pro-Quiz tables will be repaired.',
+                                <?php _e('No date will be deleted. Only Wp-Trivia tables will be repaired.',
                                     'wp-trivia'); ?>
                             </p>
                         </fieldset>

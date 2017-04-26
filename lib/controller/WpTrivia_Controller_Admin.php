@@ -87,8 +87,8 @@ class WpTrivia_Controller_Admin
         $pages = array();
 
         $pages[] = add_menu_page(
-            'WP-Pro-Quiz',
-            'WP-Pro-Quiz',
+            'Wp-Trivia',
+            'Wp-Trivia',
             'wpProQuiz_show',
             'wpProQuiz',
             array($this, 'route'));
