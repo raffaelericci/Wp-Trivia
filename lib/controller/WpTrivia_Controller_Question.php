@@ -201,10 +201,6 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
             $post['title'] = sprintf(__('Question: %d', 'wp-trivia'), $count + 1);
         }
 
-        if ($post['answerType'] === 'assessment_answer') {
-            $post['answerPointsActivated'] = 1;
-        }
-
         if (isset($post['answerPointsActivated'])) {
             if (isset($post['answerPointsDiffModusActivated'])) {
                 $post['points'] = $clearPost['maxPoints'];
@@ -336,10 +332,7 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
         $data = array(
             'sort_answer' => array(new WpTrivia_Model_AnswerTypes()),
             'classic_answer' => array(new WpTrivia_Model_AnswerTypes()),
-            'matrix_sort_answer' => array(new WpTrivia_Model_AnswerTypes()),
-            'cloze_answer' => array(new WpTrivia_Model_AnswerTypes()),
-            'free_answer' => array(new WpTrivia_Model_AnswerTypes()),
-            'assessment_answer' => array(new WpTrivia_Model_AnswerTypes())
+            'free_answer' => array(new WpTrivia_Model_AnswerTypes())
         );
 
         if ($question !== null) {
@@ -357,55 +350,11 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
 
     public function clearPost($post)
     {
-
-        if ($post['answerType'] == 'cloze_answer' && isset($post['answerData']['cloze'])) {
-            preg_match_all('#\{(.*?)(?:\|(\d+))?(?:[\s]+)?\}#im', $post['answerData']['cloze']['answer'], $matches);
-
-            $points = 0;
-            $maxPoints = 0;
-
-            foreach ($matches[2] as $match) {
-                if (empty($match)) {
-                    $match = 1;
-                }
-
-                $points += $match;
-                $maxPoints = max($maxPoints, $match);
-            }
-
-            return array(
-                'points' => $points,
-                'maxPoints' => $maxPoints,
-                'answerData' => array(new WpTrivia_Model_AnswerTypes($post['answerData']['cloze']))
-            );
-        }
-
-        if ($post['answerType'] == 'assessment_answer' && isset($post['answerData']['assessment'])) {
-            preg_match_all('#\{(.*?)\}#im', $post['answerData']['assessment']['answer'], $matches);
-
-            $points = 0;
-            $maxPoints = 0;
-
-            foreach ($matches[1] as $match) {
-                preg_match_all('#\[([^\|\]]+)(?:\|(\d+))?\]#im', $match, $ms);
-
-                $points += count($ms[1]);
-                $maxPoints = max($maxPoints, count($ms[1]));
-            }
-
-            return array(
-                'points' => $points,
-                'maxPoints' => $maxPoints,
-                'answerData' => array(new WpTrivia_Model_AnswerTypes($post['answerData']['assessment']))
-            );
-        }
-
-        unset($post['answerData']['cloze']);
-        unset($post['answerData']['assessment']);
-
+        /* TODO - necessary?
         if (isset($post['answerData']['none'])) {
             unset($post['answerData']['none']);
         }
+        */
 
         $answerData = array();
         $points = 0;
@@ -413,12 +362,8 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
 
         foreach ($post['answerData'] as $k => $v) {
             if (trim($v['answer']) == '') {
-                if ($post['answerType'] != 'matrix_sort_answer') {
+                if (trim($v['sort_string']) == '') {
                     continue;
-                } else {
-                    if (trim($v['sort_string']) == '') {
-                        continue;
-                    }
                 }
             }
 

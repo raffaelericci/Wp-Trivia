@@ -1095,21 +1095,8 @@ jQuery(document).ready(function ($) {
     if ($('.wpTrivia_quizOverall').length)
         $('.wpTrivia_quizOverall').wpTrivia_preview();
 
-    if ($('.wpTrivia_quizOverall').length) {
-        $('.wpTrivia_quizOverall').wpTrivia_quizOverall();
-    }
-
     if ($('.wpTrivia_quizEdit').length)
         $('.wpTrivia_quizEdit').wpTrivia_quizEdit();
-
-//	if($('.wpTrivia_questionEdit').length)
-//		$('.wpTrivia_questionEdit').wpTrivia_questionEdit();
-
-    //if($('.wpTrivia_questionOverall').length)
-    //	$('.wpTrivia_questionOverall').wpTrivia_questionOverall();
-
-//	if($('.wpTrivia_statistics').length)
-//		$('.wpTrivia_statistics').wpTrivia_statistics();
 
     if ($('.wpTrivia_toplist').length)
         $('.wpTrivia_toplist').wpTrivia_toplist();
@@ -1600,15 +1587,6 @@ jQuery(document).ready(function ($) {
                         return true;
                     },
 
-                    cloze_answer: function () {
-                        if (global.isEmpty(global.getMceContent('cloze'))) {
-                            alert(wpTriviaLocalize.no_answer_msg);
-                            return false;
-                        }
-
-                        return true;
-                    },
-
                     sort_answer: function () {
                         var findText = 0;
                         var findPoints = 0;
@@ -1634,65 +1612,6 @@ jQuery(document).ready(function ($) {
 
                         if (findPoints != findText && elements.pointsModus.is(':checked')) {
                             alert(wpTriviaLocalize.no_nummber_points_new);
-                            return false;
-                        }
-
-                        return true;
-                    },
-
-                    matrix_sort_answer: function () {
-                        var findText = 0;
-                        var findPoints = 0;
-                        var sortString = true;
-                        var menge = 0;
-
-                        $('.matrix_sort_answer .answerList').children().each(function () {
-                            var t = $(this);
-                            var p = t.find('input[name="answerData[][points]"]').val();
-
-                            if (!global.isEmpty(t.find('textarea[name="answerData[][answer]"]').val())) {
-                                findText++;
-                                menge++;
-
-                                if (global.isEmpty(t.find('textarea[name="answerData[][sort_string]"]').val())) {
-                                    sortString = false;
-                                }
-
-                                if (global.isNumber(p) && p >= 0) {
-                                    findPoints++;
-                                }
-                            } else {
-                                if (!global.isEmpty(t.find('textarea[name="answerData[][sort_string]"]').val())) {
-                                    menge++;
-
-                                    if (global.isNumber(p) && p >= 0) {
-                                        findPoints++;
-                                    }
-                                }
-                            }
-                        });
-
-                        if (!findText) {
-                            alert(wpTriviaLocalize.no_answer_msg);
-                            return false;
-                        }
-
-                        if (!sortString) {
-                            alert(wpTriviaLocalize.no_sort_element_criterion);
-                            return false;
-                        }
-
-                        if (findPoints != menge && elements.pointsModus.is(':checked')) {
-                            alert(wpTriviaLocalize.no_nummber_points_new);
-                            return false;
-                        }
-
-                        return true;
-                    },
-
-                    assessment_answer: function () {
-                        if (global.isEmpty(global.getMceContent('assessment'))) {
-                            alert(wpTriviaLocalize.no_answer_msg);
                             return false;
                         }
 
@@ -1759,10 +1678,6 @@ jQuery(document).ready(function ($) {
                         clone.appendTo(ul);
 
                         return false;
-                    });
-
-                    $('.sort_answer ul, .classic_answer ul, .matrix_sort_answer ul').sortable({
-                        handle: '.wpTrivia_move'
                     });
 
                     $('#saveQuestion').click(function () {

@@ -170,11 +170,6 @@ class WpTrivia_View_StatisticsAjax extends WpTrivia_View_View
                 border: 1px solid lightGrey !important;
                 background-color: #F8FAF5 !important;
             }
-
-            .wpTrivia_cloze {
-                padding: 0 4px 2px 4px;
-                border-bottom: 1px solid #000;
-            }
         </style>
         <h2><?php printf(__('User statistics: %s', 'wp-trivia'), esc_html($this->userName)); ?></h2>
         <?php if ($this->avg) { ?>
@@ -341,25 +336,6 @@ class WpTrivia_View_StatisticsAjax extends WpTrivia_View_View
 
     private function showUserAnswer($qAnswerData, $sAnswerData, $anserType)
     {
-        $matrix = array();
-
-        if ($anserType == 'matrix_sort_answer') {
-            foreach ($qAnswerData as $k => $v) {
-                $matrix[$k][] = $k;
-
-                foreach ($qAnswerData as $k2 => $v2) {
-                    if ($k != $k2) {
-                        if ($v->getAnswer() == $v2->getAnswer()) {
-                            $matrix[$k][] = $k2;
-                        } else {
-                            if ($v->getSortString() == $v2->getSortString()) {
-                                $matrix[$k][] = $k2;
-                            }
-                        }
-                    }
-                }
-            }
-        }
         ?>
         <ul class="wpTrivia_questionList">
             <?php for ($i = 0; $i < count($qAnswerData); $i++) {
@@ -425,173 +401,12 @@ class WpTrivia_View_StatisticsAjax extends WpTrivia_View_View
                                     <?php echo $sortText; ?>
                                 </div>
                             </li>
-                        <?php } else {
-                            if ($anserType == 'matrix_sort_answer') {
-                                $correct = 'wpTrivia_answerIncorrect';
-                                $sortText = '';
-
-                                if (isset($sAnswerData[$i]) && isset($qAnswerData[$sAnswerData[$i]])) {
-                                    if (in_array($sAnswerData[$i], $matrix[$i])) {
-                                        $correct = 'wpTrivia_answerCorrect';
-                                    }
-
-                                    $v = $qAnswerData[$sAnswerData[$i]];
-                                    $sortText = $v->isSortStringHtml() ? $v->getSortString() : esc_html($v->getSortString());
-                                }
-
-                                ?>
-                                <li>
-                                    <table>
-                                        <tbody>
-                                        <tr class="wpTrivia_mextrixTr">
-                                            <td width="20%">
-                                                <div class="wpTrivia_maxtrixSortText"><?php echo $answerText; ?></div>
-                                            </td>
-                                            <td width="80%">
-                                                <ul class="wpTrivia_maxtrixSortCriterion <?php echo $correct; ?>">
-                                                    <li class="wpTrivia_sortStringItem" data-pos="0"
-                                                        style="box-shadow: 0px 0px; cursor: auto;">
-                                                        <?php echo $sortText; ?>
-                                                    </li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </li>
-                            <?php } else {
-                                if ($anserType == 'cloze_answer') {
-                                    $clozeData = $this->fetchCloze($qAnswerData[$i]->getAnswer(), $sAnswerData);
-
-                                    $this->_clozeTemp = $clozeData['data'];
-
-                                    $cloze = $clozeData['replace'];
-
-                                    echo preg_replace_callback('#@@wpTriviaCloze@@#im', array($this, 'clozeCallback'),
-                                        $cloze);
-                                } else {
-                                    if ($anserType == 'assessment_answer') {
-                                        $assessmentData = $this->fetchAssessment($qAnswerData[$i]->getAnswer(),
-                                            $sAnswerData);
-
-                                        $assessment = do_shortcode(apply_filters('comment_text',
-                                            $assessmentData['replace']));
-
-                                        echo preg_replace_callback('#@@wpTriviaAssessment@@#im',
-                                            array($this, 'assessmentCallback'), $assessment);
-                                    }
-                                }
-                            }
-                        }
+                        <?php }
                     }
                 } ?>
             <?php } ?>
         </ul>
         <?php
-    }
-
-    private $_assessmetTemp = array();
-
-    private function assessmentCallback($t)
-    {
-        $a = array_shift($this->_assessmetTemp);
-
-        return $a === null ? '' : $a;
-    }
-
-    private function fetchAssessment($answerText, $answerData)
-    {
-        preg_match_all('#\{(.*?)\}#im', $answerText, $matches);
-
-        $this->_assessmetTemp = array();
-        $data = array();
-
-        for ($i = 0, $ci = count($matches[1]); $i < $ci; $i++) {
-            $match = $matches[1][$i];
-
-            preg_match_all('#\[([^\|\]]+)(?:\|(\d+))?\]#im', $match, $ms);
-
-            $a = '';
-
-            $checked = isset($answerData[$i]) ? $answerData[$i] - 1 : -1;
-
-            for ($j = 0, $cj = count($ms[1]); $j < $cj; $j++) {
-                $v = $ms[1][$j];
-
-                $a .= '<label>
-					<input type="radio" disabled="disabled" ' . ($checked == $j ? 'checked="checked"' : '') . '>
-					' . $v . '
-				</label>';
-            }
-
-            $this->_assessmetTemp[] = $a;
-        }
-
-        $data['replace'] = preg_replace('#\{(.*?)\}#im', '@@wpTriviaAssessment@@', $answerText);
-
-        return $data;
-    }
-
-    private $_clozeTemp = array();
-
-    private function fetchCloze($answer_text, $answerData)
-    {
-        preg_match_all('#\{(.*?)(?:\|(\d+))?(?:[\s]+)?\}#im', $answer_text, $matches, PREG_SET_ORDER);
-
-        $data = array();
-        $index = 0;
-
-        foreach ($matches as $k => $v) {
-            $text = $v[1];
-            $points = !empty($v[2]) ? (int)$v[2] : 1;
-            $rowText = $multiTextData = array();
-            $len = array();
-
-            if (preg_match_all('#\[(.*?)\]#im', $text, $multiTextMatches)) {
-                foreach ($multiTextMatches[1] as $multiText) {
-                    $x = mb_strtolower(trim(html_entity_decode($multiText, ENT_QUOTES)));
-
-                    $len[] = strlen($x);
-                    $multiTextData[] = $x;
-                    $rowText[] = $multiText;
-                }
-            } else {
-                $x = mb_strtolower(trim(html_entity_decode($text, ENT_QUOTES)));
-
-                $len[] = strlen($x);
-                $multiTextData[] = $x;
-                $rowText[] = $text;
-            }
-
-            $correct = 'wpTrivia_answerIncorrect';
-
-            if (isset($answerData[$index]) && in_array($answerData[$index], $rowText)) {
-                $correct = 'wpTrivia_answerCorrect';
-            }
-
-// 			$a = '<span class="wpTrivia_cloze"><input data-wordlen="'.max($len).'" type="text" value=""> ';
-// 			$a .= '<span class="wpTrivia_clozeCorrect" style="display: none;">('.implode(', ', $rowText).')</span></span>';
-            $a = '<span class="wpTrivia_cloze ' . $correct . '">' . esc_html(isset($answerData[$index]) ? empty($answerData[$index]) ? '---' : $answerData[$index]
-                    : '---') . '</span> ';
-            $a .= '<span>(' . implode(', ', $rowText) . ')</span>';
-
-            $data['correct'][] = $multiTextData;
-            $data['points'][] = $points;
-            $data['data'][] = $a;
-
-            $index++;
-        }
-
-        $data['replace'] = preg_replace('#\{(.*?)(?:\|(\d+))?(?:[\s]+)?\}#im', '@@wpTriviaCloze@@', $answer_text);
-
-        return $data;
-    }
-
-    private function clozeCallback($t)
-    {
-        $a = array_shift($this->_clozeTemp);
-
-        return $a === null ? '' : $a;
     }
 
     private function formTable()

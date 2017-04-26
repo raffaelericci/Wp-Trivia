@@ -536,49 +536,6 @@ wpTriviaReady(function () {
                     $questionList.append($items);
                 },
 
-                matrix_sort_answer: function () {
-                    var $items = $questionList.children();
-                    var matrix = new Array();
-                    statistcAnswerData = {0: -1};
-
-                    $items.each(function () {
-                        var $this = $(this);
-                        var i = $this.data('pos');
-                        var $stringUl = $this.find('.wpTrivia_maxtrixSortCriterion');
-                        var $stringItem = $stringUl.children();
-
-                        if ($stringItem.length)
-                            statistcAnswerData[i] = $stringItem.data('pos');
-
-                        if ($stringItem.length && $.inArray(String(i), String($stringItem.data('correct')).split(',')) >= 0) {
-//						if(i == $stringItem.data('pos')) {
-                            plugin.methode.marker($stringUl, true);
-
-                            if (isDiffPoints) {
-                                points += data.points[i];
-                            }
-                        } else {
-                            correct = false;
-                            plugin.methode.marker($stringUl, false);
-                        }
-
-                        matrix[i] = $stringUl;
-                    });
-
-                    plugin.methode.resetMatrix($question);
-
-                    $question.find('.wpTrivia_sortStringItem').each(function () {
-                        var x = matrix[$(this).data('pos')];
-                        if (x != undefined)
-                            x.append(this);
-                    }).css({
-                        'box-shadow': '0 0',
-                        'cursor': 'auto'
-                    });
-
-                    $question.find('.wpTrivia_sortStringList, .wpTrivia_maxtrixSortCriterion').sortable("destroy");
-                },
-
                 free_answer: function () {
                     var $li = $questionList.children();
                     var value = $li.find('.wpTrivia_questionInput').attr('disabled', 'disabled').val();
@@ -589,48 +546,6 @@ wpTriviaReady(function () {
                         plugin.methode.marker($li, false);
                         correct = false;
                     }
-                },
-
-                cloze_answer: function () {
-                    $questionList.find('.wpTrivia_cloze').each(function (i, v) {
-                        var $this = $(this);
-                        var cloze = $this.children();
-                        var input = cloze.eq(0);
-                        var span = cloze.eq(1);
-                        var inputText = plugin.methode.cleanupCurlyQuotes(input.val());
-
-                        if ($.inArray(inputText, data.correct[i]) >= 0) {
-                            if (isDiffPoints) {
-                                points += data.points[i];
-                            }
-
-                            if (!bitOptions.disabledAnswerMark) {
-                                input.css('background-color', '#B0DAB0');
-                            }
-                        } else {
-                            if (!bitOptions.disabledAnswerMark) {
-                                input.css('background-color', '#FFBABA');
-                            }
-
-                            correct = false;
-
-                            span.show();
-                        }
-
-                        input.attr('disabled', 'disabled');
-                    });
-                },
-
-                assessment_answer: function () {
-                    correct = true;
-                    var $input = $questionList.find('.wpTrivia_questionInput').attr('disabled', 'disabled');
-                    var val = 0;
-
-                    $input.filter(':checked').each(function () {
-                        val += parseInt($(this).val());
-                    });
-
-                    points = val;
                 }
             };
 
@@ -656,20 +571,6 @@ wpTriviaReady(function () {
                     str = $.trim(str);
                     return (!str || 0 === str.length);
                 }
-
-//					testValidate: function(str, type) {
-//						switch (type) {
-//						case 0: //None
-//							return true;
-//						case 1: //Text
-//							return !funcs.isEmpty(str);
-//						case 2: //Number
-//							return !isNaN(str);
-//						case 3: //E-Mail
-//							return new RegExp(/^[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/)
-//                                          .test($.trim(str));
-//						}
-//					}
             };
 
             var typeConst = {
@@ -745,44 +646,6 @@ wpTriviaReady(function () {
                     }
 
                 });
-
-//				$('.wpTrivia_forms input, .wpTrivia_forms textarea').each(function() {
-//					var $this = $(this);
-//					var isRequired = $this.data('required') == 1;
-//					var validate = $this.data('validate') & 0xFF;
-//					var test = false;
-//					var $infos = $this.parents('div:eq(0)').find('.wpTrivia_invalidate');
-//
-//					if(isRequired) {
-//						if($this.attr('type') == 'checkbox') {
-//							if($this.is(':checked'))
-//								test = true;
-//
-//						} else {
-//							if(!funcs.isEmpty($this.val()))
-//								test = true;
-//						}
-//
-//						if(!test) {
-//							check = false;
-//							$infos.eq(0).show();
-//						} else {
-//							$infos.eq(0).hide();
-//						}
-//					}
-//
-//					if(!funcs.testValidate($this.val(), validate)) {
-//						check = false;
-//						$infos.eq(1).show();
-//					} else {
-//						$infos.eq(1).hide();
-//					}
-//
-//				});
-
-//				if(!check)
-//					alert(WpTriviaGlobal.fieldsNotFilled);
-//
                 return check;
             };
 
@@ -838,29 +701,9 @@ wpTriviaReady(function () {
                     data[0] = $this.find('.wpTrivia_questionInput').val();
                 } else if (type == 'sort_answer') {
                     return true;
-//					$this.find('.wpTrivia_questionListItem').each(function() {
-//						data[$(this).index()] = $(this).data('pos');
-//					});
-                } else if (type == 'matrix_sort_answer') {
-                    return true;
-//					$this.find('.wpTrivia_questionListItem').each(function() {
-//						data[$(this).data('pos')] = $(this).find('.wpTrivia_answerCorrect').length;
-//					});
-                } else if (type == 'cloze_answer') {
-                    var i = 0;
-                    $this.find('.wpTrivia_cloze input').each(function () {
-                        data[i++] = $(this).val();
-                    });
-                } else if (type == 'assessment_answer') {
-                    data[0] = '';
-
-                    $this.find('.wpTrivia_questionInput:checked').each(function () {
-                        data[$(this).data('index')] = $(this).val();
-                    });
                 }
 
                 resultData[questionId]['data'] = data;
-
             });
         };
 
@@ -893,28 +736,6 @@ wpTriviaReady(function () {
                 }
             },
 
-            setClozeStyle: function () {
-                $e.find('.wpTrivia_cloze input').each(function () {
-                    var $this = $(this);
-                    var word = "";
-                    var wordLen = $this.data('wordlen');
-
-                    for (var i = 0; i < wordLen; i++)
-                        word += "w";
-
-                    var clone = $(document.createElement("span"))
-                        .css('visibility', 'hidden')
-                        .text(word)
-                        .appendTo($('body'));
-
-                    var width = clone.width();
-
-                    clone.remove();
-
-                    $this.width(width + 5);
-                });
-            },
-
             parseTime: function (sec) {
                 var seconds = parseInt(sec % 60);
                 var minutes = parseInt((sec / 60) % 60);
@@ -935,17 +756,6 @@ wpTriviaReady(function () {
                 str = str.replace(/\u201D/, '"');
 
                 return $.trim(str).toLowerCase();
-            },
-
-            resetMatrix: function (selector) {
-                selector.each(function () {
-                    var $this = $(this);
-                    var $list = $this.find('.wpTrivia_sortStringList');
-
-                    $this.find('.wpTrivia_sortStringItem').each(function () {
-                        $list.append($(this));
-                    });
-                });
             },
 
             marker: function (e, correct) {
@@ -994,7 +804,6 @@ wpTriviaReady(function () {
                     $e.find('.wpTrivia_loadQuiz').show();
 
                     plugin.methode.loadQuizDataAjax(true);
-
                     return;
                 }
 
@@ -1018,7 +827,7 @@ wpTriviaReady(function () {
                     $this.find('> h5 span').text(i + 1);
 
                     $this.find('.wpTrivia_questionListItem').each(function (i, v) {
-                        $(this).find('> span:not(.wpTrivia_cloze)').text(i + 1 + '. ');
+                        $(this).find('> span').text(i + 1 + '. ');
                     });
                 });
 
@@ -1124,8 +933,6 @@ wpTriviaReady(function () {
                 var page = question ? Math.ceil(question / config.qpp) : 1;
 
                 this.showSinglePage(page);
-
-//				plugin.methode.scrollTo($element, 1);
             },
 
             showSinglePage: function (page) {
@@ -1167,16 +974,6 @@ wpTriviaReady(function () {
             },
 
             nextQuestion: function () {
-//				currentQuestion = currentQuestion.hide().next().show();
-//
-//				plugin.methode.scrollTo(globalElements.quiz);
-//
-//				$e.trigger({type: 'changeQuestion', values: {item: currentQuestion, index: currentQuestion.index()}});
-//
-//				if(!currentQuestion.length) {
-//					plugin.methode.showQuizSummary();
-//				}
-
                 this.showQuestionObject(currentQuestion.next());
             },
 
@@ -1320,9 +1117,6 @@ wpTriviaReady(function () {
                 results.comp.result = Math.round(results.comp.points / config.globalPoints * 100 * 100) / 100;
                 results.comp.solved = 0;
 
-                //for(var i = 0; i < quizSolved.length; i++)
-                //	results.comp.solved += quizSolved[i] ? 1 : 0;
-
                 var $pointFields = $e.find('.wpTrivia_points span');
 
                 $pointFields.eq(0).text(results.comp.points);
@@ -1406,13 +1200,6 @@ wpTriviaReady(function () {
                 fetchAllAnswerData(results);
 
                 var formData = formClass.getFormData();
-
-                //plugin.methode.ajax({
-                //    action: 'wp_trivia_completed_quiz',
-                //    quizId: config.quizId,
-                //    results: results,
-                //    forms: formData
-                //});
 
                 plugin.methode.ajax({
                     action: 'wp_trivia_admin_ajax',
@@ -1571,9 +1358,6 @@ wpTriviaReady(function () {
                 quizStatus.loadLock = 1;
 
                 plugin.methode.ajax({
-                    //action: 'wp_trivia_check_lock',
-                    //quizId: config.quizId
-
                     action: 'wp_trivia_admin_ajax',
                     func: 'quizCheckLock',
                     data: {
@@ -1618,24 +1402,10 @@ wpTriviaReady(function () {
                         plugin.methode.setAverageResult(json.averageResult, true);
                     }
                 });
-
-                //plugin.methode.ajax({
-                //    action: 'wp_trivia_load_quiz_data',
-                //    quizId: config.quizId
-                //}, function (json) {
-                //    if (json.toplist) {
-                //        plugin.methode.handleToplistData(json.toplist);
-                //    }
-                //
-                //    if (json.averageResult != undefined) {
-                //        plugin.methode.setAverageResult(json.averageResult, true);
-                //    }
-                //});
             },
 
             setAverageResult: function (p, g) {
                 var v = $e.find('.wpTrivia_resultValue:eq(' + (g ? 0 : 1) + ') > * ');
-
                 v.eq(1).text(p + '%');
                 v.eq(0).css('width', (240 * p / 100) + 'px');
             },
@@ -1696,16 +1466,6 @@ wpTriviaReady(function () {
                 var $addBox = $e.find('.wpTrivia_addBox').hide();
 
                 plugin.methode.ajax({
-                    //action: 'wp_trivia_add_toplist',
-                    //quizId: config.quizId,
-                    //token: toplistData.token,
-                    //name: $addBox.find('input[name="wpTrivia_toplistName"]').val(),
-                    //email: $addBox.find('input[name="wpTrivia_toplistEmail"]').val(),
-                    //captcha: $addBox.find('input[name="wpTrivia_captcha"]').val(),
-                    //prefix: $addBox.find('input[name="wpTrivia_captchaPrefix"]').val(),
-                    //points: results.comp.points,
-                    //totalPoints: config.globalPoints
-
                     action: 'wp_trivia_admin_ajax',
                     func: 'addInToplist',
                     data: {
@@ -1751,43 +1511,6 @@ wpTriviaReady(function () {
                     if ($this.val() != '') {
                         s = true;
                     }
-
-                    $e.trigger({
-                        type: 'questionSolved',
-                        values: {
-                            item: $p,
-                            index: $p.index(),
-                            solved: s
-                        }
-                    });
-                });
-
-                $e.find('.wpTrivia_questionList[data-type="single"] .wpTrivia_questionInput, .wpTrivia_questionList[data-type="assessment_answer"] .wpTrivia_questionInput').change(function (e) {
-                    var $this = $(this);
-                    var $p = $this.parents('.wpTrivia_listItem');
-                    var s = this.checked;
-
-                    $e.trigger({
-                        type: 'questionSolved',
-                        values: {
-                            item: $p,
-                            index: $p.index(),
-                            solved: s
-                        }
-                    });
-                });
-
-                $e.find('.wpTrivia_cloze input').change(function () {
-                    var $this = $(this);
-                    var $p = $this.parents('.wpTrivia_listItem');
-                    var s = true;
-
-                    $p.find('.wpTrivia_cloze input').each(function () {
-                        if ($(this).val() == '') {
-                            s = false;
-                            return false;
-                        }
-                    });
 
                     $e.trigger({
                         type: 'questionSolved',
@@ -1860,7 +1583,6 @@ wpTriviaReady(function () {
             },
 
             initQuiz: function () {
-                plugin.methode.setClozeStyle();
                 plugin.methode.registerSolved();
 
                 globalElements.next.click(function () {

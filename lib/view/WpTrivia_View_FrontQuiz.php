@@ -8,9 +8,6 @@
  */
 class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
 {
-    private $_clozeTemp = array();
-    private $_assessmetTemp = array();
-
     private $_buttonNames = array();
 
     private function loadButtonNames()
@@ -282,94 +279,6 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
             </div>
         </div>
         <?php
-    }
-
-    private function fetchCloze($answer_text)
-    {
-        preg_match_all('#\{(.*?)(?:\|(\d+))?(?:[\s]+)?\}#im', $answer_text, $matches, PREG_SET_ORDER);
-
-        $data = array();
-
-        foreach ($matches as $k => $v) {
-            $text = $v[1];
-            $points = !empty($v[2]) ? (int)$v[2] : 1;
-            $rowText = $multiTextData = array();
-            $len = array();
-
-            if (preg_match_all('#\[(.*?)\]#im', $text, $multiTextMatches)) {
-                foreach ($multiTextMatches[1] as $multiText) {
-                    $x = mb_strtolower(trim(html_entity_decode($multiText, ENT_QUOTES)));
-
-                    $len[] = strlen($x);
-                    $multiTextData[] = $x;
-                    $rowText[] = $multiText;
-                }
-            } else {
-                $x = mb_strtolower(trim(html_entity_decode($text, ENT_QUOTES)));
-
-                $len[] = strlen($x);
-                $multiTextData[] = $x;
-                $rowText[] = $text;
-            }
-
-            $a = '<span class="wpTrivia_cloze"><input data-wordlen="' . max($len) . '" type="text" value=""> ';
-            $a .= '<span class="wpTrivia_clozeCorrect" style="display: none;">(' . implode(', ',
-                    $rowText) . ')</span></span>';
-
-            $data['correct'][] = $multiTextData;
-            $data['points'][] = $points;
-            $data['data'][] = $a;
-        }
-
-        $data['replace'] = preg_replace('#\{(.*?)(?:\|(\d+))?(?:[\s]+)?\}#im', '@@wpTriviaCloze@@', $answer_text);
-
-        return $data;
-    }
-
-    private function clozeCallback($t)
-    {
-        $a = array_shift($this->_clozeTemp);
-
-        return $a === null ? '' : $a;
-    }
-
-    private function fetchAssessment($answerText, $quizId, $questionId)
-    {
-        preg_match_all('#\{(.*?)\}#im', $answerText, $matches);
-
-        $this->_assessmetTemp = array();
-        $data = array();
-
-        for ($i = 0, $ci = count($matches[1]); $i < $ci; $i++) {
-            $match = $matches[1][$i];
-
-            preg_match_all('#\[([^\|\]]+)(?:\|(\d+))?\]#im', $match, $ms);
-
-            $a = '';
-
-            for ($j = 0, $cj = count($ms[1]); $j < $cj; $j++) {
-                $v = $ms[1][$j];
-
-                $a .= '<label>
-					<input type="radio" value="' . ($j + 1) . '" name="question_' . $quizId . '_' . $questionId . '_' . $i . '" class="wpTrivia_questionInput" data-index="' . $i . '">
-					' . $v . '
-				</label>';
-
-            }
-
-            $this->_assessmetTemp[] = $a;
-        }
-
-        $data['replace'] = preg_replace('#\{(.*?)\}#im', '@@wpTriviaAssessment@@', $answerText);
-
-        return $data;
-    }
-
-    private function assessmentCallback($t)
-    {
-        $a = array_shift($this->_assessmetTemp);
-
-        return $a === null ? '' : $a;
     }
 
     private function showFormBox()
@@ -817,39 +726,6 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                             <div class="wpTrivia_question_text">
                                 <?php echo do_shortcode(apply_filters('comment_text', $question->getQuestion())); ?>
                             </div>
-                            <?php if ($question->getAnswerType() === 'matrix_sort_answer') { ?>
-                                <div class="wpTrivia_matrixSortString">
-                                    <h5 class="wpTrivia_header"><?php _e('Sort elements', 'wp-trivia'); ?></h5>
-                                    <ul class="wpTrivia_sortStringList">
-                                        <?php
-                                        $matrix = array();
-                                        foreach ($answerArray as $k => $v) {
-                                            $matrix[$k][] = $k;
-
-                                            foreach ($answerArray as $k2 => $v2) {
-                                                if ($k != $k2) {
-                                                    if ($v->getAnswer() == $v2->getAnswer()) {
-                                                        $matrix[$k][] = $k2;
-                                                    } else {
-                                                        if ($v->getSortString() == $v2->getSortString()) {
-                                                            $matrix[$k][] = $k2;
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-
-                                        foreach ($answerArray as $k => $v) {
-                                            ?>
-                                            <li class="wpTrivia_sortStringItem" data-pos="<?php echo $k; ?>"
-                                                data-correct="<?php echo implode(',', $matrix[$k]); ?>">
-                                                <?php echo $v->isSortStringHtml() ? $v->getSortString() : esc_html($v->getSortString()); ?>
-                                            </li>
-                                        <?php } ?>
-                                    </ul>
-                                    <div style="clear: both;"></div>
-                                </div>
-                            <?php } ?>
                             <ul class="wpTrivia_questionList" data-question_id="<?php echo $question->getId(); ?>"
                                 data-type="<?php echo $question->getAnswerType(); ?>">
                                 <?php
@@ -894,59 +770,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                                                                name="question_<?php echo $this->quiz->getId(); ?>_<?php echo $question->getId(); ?>"
                                                                style="width: 300px;">
                                                     </label>
-                                                <?php } else {
-                                                    if ($question->getAnswerType() === 'matrix_sort_answer') { ?>
-                                                        <?php
-                                                        $json[$question->getId()]['correct'][] = (int)$answer_index;
-                                                        $msacwValue = $question->getMatrixSortAnswerCriteriaWidth() > 0 ? $question->getMatrixSortAnswerCriteriaWidth() : 20;
-                                                        ?>
-                                                        <table>
-                                                            <tbody>
-                                                            <tr class="wpTrivia_mextrixTr">
-                                                                <td width="<?php echo $msacwValue; ?>%">
-                                                                    <div
-                                                                        class="wpTrivia_maxtrixSortText"><?php echo $answer_text; ?></div>
-                                                                </td>
-                                                                <td width="<?php echo 100 - $msacwValue; ?>%">
-                                                                    <ul class="wpTrivia_maxtrixSortCriterion"></ul>
-                                                                </td>
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
-
-                                                    <?php } else {
-                                                        if ($question->getAnswerType() === 'cloze_answer') {
-                                                            $clozeData = $this->fetchCloze($v->getAnswer());
-
-                                                            $this->_clozeTemp = $clozeData['data'];
-
-                                                            $json[$question->getId()]['correct'] = $clozeData['correct'];
-
-                                                            if ($question->isAnswerPointsActivated()) {
-                                                                $json[$question->getId()]['points'] = $clozeData['points'];
-                                                            }
-
-                                                            $cloze = do_shortcode(apply_filters('comment_text',
-                                                                $clozeData['replace']));
-                                                            $cloze = $clozeData['replace'];
-
-                                                            echo preg_replace_callback('#@@wpTriviaCloze@@#im',
-                                                                array($this, 'clozeCallback'), $cloze);
-                                                        } else {
-                                                            if ($question->getAnswerType() === 'assessment_answer') {
-                                                                $assessmentData = $this->fetchAssessment($v->getAnswer(),
-                                                                    $this->quiz->getId(), $question->getId());
-
-                                                                $assessment = do_shortcode(apply_filters('comment_text',
-                                                                    $assessmentData['replace']));
-
-                                                                echo preg_replace_callback('#@@wpTriviaAssessment@@#im',
-                                                                    array($this, 'assessmentCallback'), $assessment);
-
-                                                            }
-                                                        }
-                                                    }
-                                                }
+                                                <?php }
                                             }
                                         } ?>
                                     </li>

@@ -176,7 +176,6 @@ class WpTrivia_Helper_DbUpgrade
 			  category_id int(10) unsigned NOT NULL,
 			  answer_points_diff_modus_activated tinyint(1) unsigned NOT NULL,
 			  disable_correct tinyint(1) unsigned NOT NULL,
-			  matrix_sort_answer_criteria_width tinyint(3) unsigned NOT NULL,
 			  PRIMARY KEY  (id),
 			  KEY quiz_id (quiz_id),
 			  KEY category_id (category_id)

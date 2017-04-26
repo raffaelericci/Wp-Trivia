@@ -247,21 +247,6 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
                                        value="sort_answer" <?php echo ($type === 'sort_answer') ? 'checked="checked"' : ''; ?>>
                                 <?php _e('"Sorting" choice', 'wp-trivia'); ?>
                             </label>
-                            <label style="padding-right: 10px;">
-                                <input type="radio" name="answerType"
-                                       value="matrix_sort_answer" <?php echo ($type === 'matrix_sort_answer') ? 'checked="checked"' : ''; ?>>
-                                <?php _e('"Matrix Sorting" choice', 'wp-trivia'); ?>
-                            </label>
-                            <label style="padding-right: 10px;">
-                                <input type="radio" name="answerType"
-                                       value="cloze_answer" <?php echo ($type === 'cloze_answer') ? 'checked="checked"' : ''; ?>>
-                                <?php _e('Cloze', 'wp-trivia'); ?>
-                            </label>
-                            <label style="padding-right: 10px;">
-                                <input type="radio" name="answerType"
-                                       value="assessment_answer" <?php echo ($type === 'assessment_answer') ? 'checked="checked"' : ''; ?>>
-                                <?php _e('Assessment', 'wp-trivia'); ?>
-                            </label>
                         </div>
                     </div>
                     <?php $this->singleChoiceOptions(); ?>
@@ -290,41 +275,6 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
                                 </ul>
                                 <input type="button" class="button-primary addAnswer"
                                        value="<?php _e('Add new answer', 'wp-trivia'); ?>">
-                            </div>
-                            <div class="matrix_sort_answer">
-                                <p class="description">
-                                    <?php _e('In this mode, not a list have to be sorted, but elements must be assigned to matching criterion.',
-                                        'wp-trivia'); ?>
-                                </p>
-
-                                <p class="description">
-                                    <?php _e('You can create sort elements with empty criteria, which can\'t be assigned by user.',
-                                        'wp-trivia'); ?>
-                                </p>
-                                <br>
-                                <label>
-                                    <?php _e('Percentage width of criteria table column:', 'wp-trivia'); ?>
-                                    <?php $msacwValue = $this->question->getMatrixSortAnswerCriteriaWidth() > 0 ? $this->question->getMatrixSortAnswerCriteriaWidth() : 20; ?>
-                                    <input type="number" min="1" max="99" step="1" name="matrixSortAnswerCriteriaWidth"
-                                           value="<?php echo $msacwValue; ?>">%
-                                </label>
-
-                                <p class="description">
-                                    <?php _e('Allows adjustment of the left column\'s width, and the right column will auto-fill the rest of the available space. Increase this to allow accommodate longer criterion text. Defaults to 20%.',
-                                        'wp-trivia'); ?>
-                                </p>
-                                <br>
-                                <ul class="answerList">
-                                    <?php $this->matrixSortingChoice($this->answerData['matrix_sort_answer']); ?>
-                                </ul>
-                                <input type="button" class="button-primary addAnswer"
-                                       value="<?php _e('Add new answer', 'wp-trivia'); ?>">
-                            </div>
-                            <div class="cloze_answer">
-                                <?php $this->clozeChoice($this->answerData['cloze_answer']); ?>
-                            </div>
-                            <div class="assessment_answer">
-                                <?php $this->assessmentChoice($this->answerData['assessment_answer']); ?>
                             </div>
                         </div>
                     </div>
@@ -423,72 +373,6 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
     /**
      * @param WpTrivia_Model_AnswerTypes[] $data
      */
-    private function matrixSortingChoice($data)
-    {
-        foreach ($data as $d) {
-            ?>
-            <li style="border-bottom:1px dotted #ccc; padding-bottom: 5px; background-color: whiteSmoke;">
-                <table style="width: 100%;border: 1px solid #9E9E9E;border-collapse: collapse; margin-bottom: 20px;">
-                    <thead>
-                    <tr>
-                        <th width="130px" style=" border-right: 1px solid #9E9E9E; padding: 5px; "><?php _e('Options',
-                                'wp-trivia'); ?></th>
-                        <th style=" border-right: 1px solid #9E9E9E; padding: 5px; "><?php _e('Criterion',
-                                'wp-trivia'); ?></th>
-                        <th style="padding: 5px;"><?php _e('Sort elements', 'wp-trivia'); ?></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td style="border-right: 1px solid #9E9E9E; padding: 5px; vertical-align: top;">
-                            <label class="wpTrivia_answerPoints">
-                                <input type="number" min="0" class="small-text wpTrivia_points"
-                                       name="answerData[][points]" value="<?php echo $d->getPoints(); ?>">
-                                <?php _e('Points', 'wp-trivia'); ?>
-                            </label>
-                        </td>
-                        <td style="border-right: 1px solid #9E9E9E; padding: 5px; vertical-align: top;">
-                            <textarea rows="4" name="answerData[][answer]" class="wpTrivia_text"
-                                      style="width: 100%; resize:vertical;"><?php echo $d->getAnswer(); ?></textarea>
-                        </td>
-                        <td style="padding: 5px; vertical-align: top;">
-                            <textarea rows="4" name="answerData[][sort_string]" class="wpTrivia_text"
-                                      style="width: 100%; resize:vertical;"><?php echo $d->getSortString(); ?></textarea>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="border-right: 1px solid #9E9E9E; padding: 5px; vertical-align: top;"></td>
-                        <td style="border-right: 1px solid #9E9E9E; padding: 5px; vertical-align: top;">
-                            <label>
-                                <input type="checkbox" class="wpTrivia_checkbox" name="answerData[][html]"
-                                       value="1" <?php $this->checked($d->isHtml()); ?>>
-                                <?php _e('Allow HTML', 'wp-trivia'); ?>
-                            </label>
-                        </td>
-                        <td style="padding: 5px; vertical-align: top;">
-                            <label>
-                                <input type="checkbox" class="wpTrivia_checkbox" name="answerData[][sort_string_html]"
-                                       value="1" <?php $this->checked($d->isSortStringHtml()); ?>>
-                                <?php _e('Allow HTML', 'wp-trivia'); ?>
-                            </label>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-
-                <input type="button" name="submit" class="button-primary deleteAnswer"
-                       value="<?php _e('Delete answer', 'wp-trivia'); ?>">
-                <input type="button" class="button-secondary addMedia" value="<?php _e('Add Media'); ?>">
-                <a href="#" class="button-secondary wpTrivia_move" style="cursor: move;"><?php _e('Move',
-                        'wp-trivia'); ?></a>
-            </li>
-            <?php
-        }
-    }
-
-    /**
-     * @param WpTrivia_Model_AnswerTypes[] $data
-     */
     private function sortingChoice($data)
     {
         foreach ($data as $d) {
@@ -555,84 +439,6 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
                           name="answerData[][answer]"><?php echo $single->getAnswer(); ?></textarea>
             </p>
         </div>
-        <?php
-    }
-
-    /**
-     * @param WpTrivia_Model_AnswerTypes[] $data
-     */
-    private function clozeChoice($data)
-    {
-        $single = $data[0];
-        ?>
-        <p class="description">
-            <?php _e('Enclose the searched words with { } e.g. "I {play} soccer". Capital and small letters will be ignored.',
-                'wp-trivia'); ?>
-        </p>
-        <p class="description">
-            <?php _e('You can specify multiple options for a search word. Enclose the word with [ ] e.g. <span style="font-style: normal; letter-spacing: 2px;"> "I {[play][love][hate]} soccer" </span>. In this case answers play, love OR hate are correct.',
-                'wp-trivia'); ?>
-        </p>
-        <p class="description" style="margin-top: 10px;">
-            <?php _e('If mode "Different points for every answer" is activated, you can assign points with |POINTS. Otherwise 1 point will be awarded for every answer.',
-                'wp-trivia'); ?>
-        </p>
-        <p class="description">
-            <?php _e('e.g. "I {play} soccer, with a {ball|3}" - "play" gives 1 point and "ball" 3 points.',
-                'wp-trivia'); ?>
-        </p>
-        <?php
-        wp_editor($single->getAnswer(), 'cloze',
-            array('textarea_rows' => 10, 'textarea_name' => 'answerData[cloze][answer]'));
-        ?>
-        <?php
-    }
-
-    /**
-     * @param WpTrivia_Model_AnswerTypes[] $data
-     */
-    private function assessmentChoice($data)
-    {
-        $single = $data[0];
-        ?>
-        <p class="description">
-            <?php _e('Here you can create an assessment question.', 'wp-trivia'); ?>
-        </p>
-        <p class="description">
-            <?php _e('Enclose a assesment with {}. The individual assessments are marked with [].', 'wp-trivia'); ?>
-            <br>
-            <?php _e('The number of options in the maximum score.', 'wp-trivia'); ?>
-        </p>
-        <p>
-            <?php _e('Examples:', 'wp-trivia'); ?>
-            <br>
-            * <?php _e('less true { [1] [2] [3] [4] [5] } more true', 'wp-trivia'); ?>
-        </p>
-        <div class="wpTrivia_demoImgBox">
-            <a href="#"><?php _e('Demo', 'wp-trivia'); ?></a>
-
-            <div
-                style="z-index: 9999999; position: absolute; background-color: #E9E9E9; padding: 10px; box-shadow: 0 0 10px 4px rgb(44, 44, 44); display: none; ">
-                <img alt="" src="<?php echo WPPROQUIZ_URL . '/img/assessmentDemo1.png'; ?> ">
-            </div>
-        </div>
-        <p>
-            * <?php _e('less true { [a] [b] [c] } more true', 'wp-trivia'); ?>
-        </p>
-        <div class="wpTrivia_demoImgBox">
-            <a href="#"><?php _e('Demo', 'wp-trivia'); ?></a>
-
-            <div
-                style="z-index: 9999999; position: absolute; background-color: #E9E9E9; padding: 10px; box-shadow: 0 0 10px 4px rgb(44, 44, 44); display: none; ">
-                <img alt="" src="<?php echo WPPROQUIZ_URL . '/img/assessmentDemo2.png'; ?> ">
-            </div>
-        </div>
-        <p></p>
-
-        <?php
-        wp_editor($single->getAnswer(), 'assessment',
-            array('textarea_rows' => 10, 'textarea_name' => 'answerData[assessment][answer]'));
-        ?>
         <?php
     }
 
@@ -703,7 +509,7 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
 			A=3 Points [correct]
 			B=2 Points [incorrect]
 			C=1 Point [incorrect]
-			
+
 			= 6 Points
 			'); ?>
 
@@ -715,7 +521,7 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
 			A=3 Points [correct]
 			B=2 Points [incorrect]
 			C=1 Point [incorrect]
-			
+
 			= 3 Points
 			'); ?>
                 </td>
@@ -724,16 +530,16 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
                 <td>
                     <?php
                     echo nl2br('~~~ User 1: ~~~
-			
+
 			A=checked
 			B=unchecked
 			C=unchecked
-			
+
 			Result:
 			A=correct and checked (correct) = 3 Points
 			B=incorrect and unchecked (correct) = 2 Points
 			C=incorrect and unchecked (correct) = 1 Points
-			
+
 			= 6 / 6 Points 100%
 			'); ?>
 
@@ -741,16 +547,16 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
                 <td>
                     <?php
                     echo nl2br('~~~ User 1: ~~~
-			
+
 			A=checked
 			B=unchecked
 			C=unchecked
-			
+
 			Result:
 			A=checked = 3 Points
 			B=unchecked = 0 Points
 			C=unchecked = 0 Points
-			
+
 			= 3 / 3 Points 100%'); ?>
                 </td>
             </tr>
@@ -758,16 +564,16 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
                 <td>
                     <?php
                     echo nl2br('~~~ User 2: ~~~
-			
+
 			A=unchecked
 			B=checked
 			C=unchecked
-			
+
 			Result:
 			A=correct and unchecked (incorrect) = 0 Points
 			B=incorrect and checked (incorrect) = 0 Points
 			C=incorrect and uncecked (correct) = 1 Points
-			
+
 			= 1 / 6 Points 16.67%
 			'); ?>
 
@@ -775,16 +581,16 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
                 <td>
                     <?php
                     echo nl2br('~~~ User 2: ~~~
-			
+
 			A=unchecked
 			B=checked
 			C=unchecked
-			
+
 			Result:
 			A=unchecked = 0 Points
 			B=checked = 2 Points
 			C=uncecked = 0 Points
-			
+
 			= 2 / 3 Points 66,67%'); ?>
                 </td>
             </tr>
@@ -792,16 +598,16 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
                 <td>
                     <?php
                     echo nl2br('~~~ User 3: ~~~
-			
+
 			A=unchecked
 			B=unchecked
 			C=checked
-			
+
 			Result:
 			A=correct and unchecked (incorrect) = 0 Points
 			B=incorrect and unchecked (correct) = 2 Points
 			C=incorrect and checked (incorrect) = 0 Points
-			
+
 			= 2 / 6 Points 33.33%
 			'); ?>
 
@@ -809,16 +615,16 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
                 <td>
                     <?php
                     echo nl2br('~~~ User 3: ~~~
-			
+
 			A=unchecked
 			B=unchecked
 			C=checked
-			
+
 			Result:
 			A=unchecked = 0 Points
 			B=unchecked = 0 Points
 			C=checked = 1 Points
-			
+
 			= 1 / 3 Points 33,33%'); ?>
                 </td>
             </tr>
@@ -826,16 +632,16 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
                 <td>
                     <?php
                     echo nl2br('~~~ User 4: ~~~
-			
+
 			A=unchecked
 			B=unchecked
 			C=unchecked
-			
+
 			Result:
 			A=correct and unchecked (incorrect) = 0 Points
 			B=incorrect and unchecked (correct) = 2 Points
 			C=incorrect and unchecked (correct) = 1 Points
-			
+
 			= 3 / 6 Points 50%
 			'); ?>
 
@@ -843,16 +649,16 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
                 <td>
                     <?php
                     echo nl2br('~~~ User 4: ~~~
-			
+
 			A=unchecked
 			B=unchecked
 			C=unchecked
-			
+
 			Result:
 			A=unchecked = 0 Points
 			B=unchecked = 0 Points
 			C=unchecked = 0 Points
-			
+
 			= 0 / 3 Points 0%'); ?>
                 </td>
             </tr>

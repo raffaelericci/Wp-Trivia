@@ -30,9 +30,6 @@ class WpTrivia_Model_Question extends WpTrivia_Model_Model
     protected $_answerPointsDiffModusActivated = false;
     protected $_disableCorrect = false;
 
-    //0.27
-    protected $_matrixSortAnswerCriteriaWidth = 20;
-
     public function setId($_id)
     {
         $this->_id = (int)$_id;
@@ -281,17 +278,5 @@ class WpTrivia_Model_Question extends WpTrivia_Model_Model
     public function isDisableCorrect()
     {
         return $this->_disableCorrect;
-    }
-
-    public function setMatrixSortAnswerCriteriaWidth($_matrixSortAnswerCriteriaWidth)
-    {
-        $this->_matrixSortAnswerCriteriaWidth = (int)$_matrixSortAnswerCriteriaWidth;
-
-        return $this;
-    }
-
-    public function getMatrixSortAnswerCriteriaWidth()
-    {
-        return $this->_matrixSortAnswerCriteriaWidth;
     }
 }

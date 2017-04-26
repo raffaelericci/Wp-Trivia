@@ -90,8 +90,7 @@ class WpTrivia_Model_QuestionMapper extends WpTrivia_Model_Mapper
                     'answer_data' => $question->getAnswerData(true),
                     'category_id' => $question->getCategoryId(),
                     'answer_points_diff_modus_activated' => (int)$question->isAnswerPointsDiffModusActivated(),
-                    'disable_correct' => (int)$question->isDisableCorrect(),
-                    'matrix_sort_answer_criteria_width' => $question->getMatrixSortAnswerCriteriaWidth()
+                    'disable_correct' => (int)$question->isDisableCorrect()
                 ),
                 array('id' => $question->getId()),
                 array('%s', '%d', '%s', '%s', '%s', '%d', '%d', '%s', '%s', '%d', '%d', '%s', '%d', '%d', '%d', '%d'),
@@ -115,8 +114,7 @@ class WpTrivia_Model_QuestionMapper extends WpTrivia_Model_Mapper
                 'answer_data' => $question->getAnswerData(true),
                 'category_id' => $question->getCategoryId(),
                 'answer_points_diff_modus_activated' => (int)$question->isAnswerPointsDiffModusActivated(),
-                'disable_correct' => (int)$question->isDisableCorrect(),
-                'matrix_sort_answer_criteria_width' => $question->getMatrixSortAnswerCriteriaWidth()
+                'disable_correct' => (int)$question->isDisableCorrect()
             ),
                 array(
                     '%d',
@@ -226,8 +224,8 @@ class WpTrivia_Model_QuestionMapper extends WpTrivia_Model_Mapper
             $this->_wpdb->prepare(
                 'SELECT
 								q.*,
-								c.category_name 
-							FROM 
+								c.category_name
+							FROM
 								' . $this->_table . ' AS q
 								LEFT JOIN ' . $this->_tableCategory . ' AS c
 									ON c.category_id = q.category_id
