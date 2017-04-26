@@ -54,9 +54,9 @@ function wpTrivia_fetchToplist() {
                 return;
 
             jQuery.post(WpTriviaGlobal.ajaxurl, {
-                //action: 'wp_pro_quiz_show_front_toplist',
+                //action: 'wp_trivia_show_front_toplist',
                 //quizIds: quizIds
-                action: 'wp_pro_quiz_admin_ajax',
+                action: 'wp_trivia_admin_ajax',
                 func: 'showFrontToplist',
                 data: {
                     quizIds: quizIds

@@ -28,7 +28,7 @@ class WpTrivia_View_GlobalHelperTabs
         ob_end_clean();
 
         return array(
-            'id' => 'wp_pro_quiz_help_tab_1',
+            'id' => 'wp_trivia_help_tab_1',
             'title' => __('Wp-Trivia', 'wp-trivia'),
             'content' => $content,
         );

@@ -1408,14 +1408,14 @@ wpTriviaReady(function () {
                 var formData = formClass.getFormData();
 
                 //plugin.methode.ajax({
-                //    action: 'wp_pro_quiz_completed_quiz',
+                //    action: 'wp_trivia_completed_quiz',
                 //    quizId: config.quizId,
                 //    results: results,
                 //    forms: formData
                 //});
 
                 plugin.methode.ajax({
-                    action: 'wp_pro_quiz_admin_ajax',
+                    action: 'wp_trivia_admin_ajax',
                     func: 'completedQuiz',
                     data: {
                         quizId: config.quizId,
@@ -1571,10 +1571,10 @@ wpTriviaReady(function () {
                 quizStatus.loadLock = 1;
 
                 plugin.methode.ajax({
-                    //action: 'wp_pro_quiz_check_lock',
+                    //action: 'wp_trivia_check_lock',
                     //quizId: config.quizId
 
-                    action: 'wp_pro_quiz_admin_ajax',
+                    action: 'wp_trivia_admin_ajax',
                     func: 'quizCheckLock',
                     data: {
                         quizId: config.quizId
@@ -1604,7 +1604,7 @@ wpTriviaReady(function () {
 
             loadQuizData: function () {
                 plugin.methode.ajax({
-                    action: 'wp_pro_quiz_admin_ajax',
+                    action: 'wp_trivia_admin_ajax',
                     func: 'loadQuizData',
                     data: {
                         quizId: config.quizId
@@ -1620,7 +1620,7 @@ wpTriviaReady(function () {
                 });
 
                 //plugin.methode.ajax({
-                //    action: 'wp_pro_quiz_load_quiz_data',
+                //    action: 'wp_trivia_load_quiz_data',
                 //    quizId: config.quizId
                 //}, function (json) {
                 //    if (json.toplist) {
@@ -1696,7 +1696,7 @@ wpTriviaReady(function () {
                 var $addBox = $e.find('.wpTrivia_addBox').hide();
 
                 plugin.methode.ajax({
-                    //action: 'wp_pro_quiz_add_toplist',
+                    //action: 'wp_trivia_add_toplist',
                     //quizId: config.quizId,
                     //token: toplistData.token,
                     //name: $addBox.find('input[name="wpTrivia_toplistName"]').val(),
@@ -1706,7 +1706,7 @@ wpTriviaReady(function () {
                     //points: results.comp.points,
                     //totalPoints: config.globalPoints
 
-                    action: 'wp_pro_quiz_admin_ajax',
+                    action: 'wp_trivia_admin_ajax',
                     func: 'addInToplist',
                     data: {
                         quizId: config.quizId,
@@ -1823,7 +1823,7 @@ wpTriviaReady(function () {
 
             loadQuizDataAjax: function (quizStart) {
                 plugin.methode.ajax({
-                    action: 'wp_pro_quiz_admin_ajax',
+                    action: 'wp_trivia_admin_ajax',
                     func: 'quizLoadData',
                     data: {
                         quizId: config.quizId

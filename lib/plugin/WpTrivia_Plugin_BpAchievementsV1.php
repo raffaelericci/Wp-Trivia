@@ -6,8 +6,8 @@ class WpTrivia_Plugin_BpAchievementsV1 extends DPA_Extension
     public function __construct()
     {
         $this->actions = array(
-            'wp_pro_quiz_completed_quiz' => __('The user completed a quiz.', 'wp-trivia'),
-            'wp_pro_quiz_completed_quiz_100_percent' => __('The user completed a quiz with 100 percent.', 'wp-trivia')
+            'wp_trivia_completed_quiz' => __('The user completed a quiz.', 'wp-trivia'),
+            'wp_trivia_completed_quiz_100_percent' => __('The user completed a quiz with 100 percent.', 'wp-trivia')
         );
 
         $this->contributors = array(
@@ -20,10 +20,10 @@ class WpTrivia_Plugin_BpAchievementsV1 extends DPA_Extension
 
         $this->description = __('A powerful and beautiful quiz plugin for WordPress.', 'wp-trivia');
         $this->id = 'wp-trivia';
-        $this->image_url = WPPROQUIZ_URL . '/img/wp_pro_quiz.jpg';
+        $this->image_url = WPPROQUIZ_URL . '/img/wp_trivia.jpg';
         $this->name = __('Wp-Trivia', 'wp-trivia');
         //$this->rss_url         = '';
-        $this->small_image_url = WPPROQUIZ_URL . '/img/wp_pro_quiz_small.jpg';
+        $this->small_image_url = WPPROQUIZ_URL . '/img/wp_trivia_small.jpg';
         $this->version = 5;
         $this->wporg_url = 'http://wordpress.org/extend/plugins/wp-trivia/';
     }

@@ -46,16 +46,16 @@ class WpTrivia_Helper_DbUpgrade
 
     public function delete()
     {
-        $this->_wpdb->query('DROP TABLE IF EXISTS `' . $this->_wpdb->prefix . 'wp_pro_quiz_category`');
-        $this->_wpdb->query('DROP TABLE IF EXISTS `' . $this->_wpdb->prefix . 'wp_pro_quiz_form`');
-        $this->_wpdb->query('DROP TABLE IF EXISTS `' . $this->_wpdb->prefix . 'wp_pro_quiz_lock`');
-        $this->_wpdb->query('DROP TABLE IF EXISTS `' . $this->_wpdb->prefix . 'wp_pro_quiz_master`');
-        $this->_wpdb->query('DROP TABLE IF EXISTS `' . $this->_wpdb->prefix . 'wp_pro_quiz_prerequisite`');
-        $this->_wpdb->query('DROP TABLE IF EXISTS `' . $this->_wpdb->prefix . 'wp_pro_quiz_question`');
-        $this->_wpdb->query('DROP TABLE IF EXISTS `' . $this->_wpdb->prefix . 'wp_pro_quiz_statistic`');
-        $this->_wpdb->query('DROP TABLE IF EXISTS `' . $this->_wpdb->prefix . 'wp_pro_quiz_statistic_ref`');
-        $this->_wpdb->query('DROP TABLE IF EXISTS `' . $this->_wpdb->prefix . 'wp_pro_quiz_template`');
-        $this->_wpdb->query('DROP TABLE IF EXISTS `' . $this->_wpdb->prefix . 'wp_pro_quiz_toplist`');
+        $this->_wpdb->query('DROP TABLE IF EXISTS `' . $this->_wpdb->prefix . 'wp_trivia_category`');
+        $this->_wpdb->query('DROP TABLE IF EXISTS `' . $this->_wpdb->prefix . 'wp_trivia_form`');
+        $this->_wpdb->query('DROP TABLE IF EXISTS `' . $this->_wpdb->prefix . 'wp_trivia_lock`');
+        $this->_wpdb->query('DROP TABLE IF EXISTS `' . $this->_wpdb->prefix . 'wp_trivia_master`');
+        $this->_wpdb->query('DROP TABLE IF EXISTS `' . $this->_wpdb->prefix . 'wp_trivia_prerequisite`');
+        $this->_wpdb->query('DROP TABLE IF EXISTS `' . $this->_wpdb->prefix . 'wp_trivia_question`');
+        $this->_wpdb->query('DROP TABLE IF EXISTS `' . $this->_wpdb->prefix . 'wp_trivia_statistic`');
+        $this->_wpdb->query('DROP TABLE IF EXISTS `' . $this->_wpdb->prefix . 'wp_trivia_statistic_ref`');
+        $this->_wpdb->query('DROP TABLE IF EXISTS `' . $this->_wpdb->prefix . 'wp_trivia_template`');
+        $this->_wpdb->query('DROP TABLE IF EXISTS `' . $this->_wpdb->prefix . 'wp_trivia_toplist`');
     }
 
     private function install()
@@ -71,14 +71,14 @@ class WpTrivia_Helper_DbUpgrade
         }
 
         dbDelta("
-			CREATE TABLE {$this->_wpdb->prefix}wp_pro_quiz_category (
+			CREATE TABLE {$this->_wpdb->prefix}wp_trivia_category (
 			  category_id int(10) unsigned NOT NULL AUTO_INCREMENT,
 			  category_name varchar(200) NOT NULL,
 			  type enum('QUESTION','QUIZ') NOT NULL DEFAULT 'QUESTION',
 			  PRIMARY KEY  (category_id)
 			) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
-			CREATE TABLE {$this->_wpdb->prefix}wp_pro_quiz_form (
+			CREATE TABLE {$this->_wpdb->prefix}wp_trivia_form (
 			  form_id int(11) NOT NULL AUTO_INCREMENT,
 			  quiz_id int(11) NOT NULL,
 			  fieldname varchar(100) NOT NULL,
@@ -91,7 +91,7 @@ class WpTrivia_Helper_DbUpgrade
 			  KEY quiz_id (quiz_id)
 			) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
-			CREATE TABLE {$this->_wpdb->prefix}wp_pro_quiz_lock (
+			CREATE TABLE {$this->_wpdb->prefix}wp_trivia_lock (
 			  quiz_id int(11) NOT NULL,
 			  lock_ip varchar(100) NOT NULL,
 			  user_id bigint(20) unsigned NOT NULL,
@@ -100,7 +100,7 @@ class WpTrivia_Helper_DbUpgrade
 			  PRIMARY KEY  (quiz_id,lock_ip,user_id,lock_type)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-			CREATE TABLE {$this->_wpdb->prefix}wp_pro_quiz_master (
+			CREATE TABLE {$this->_wpdb->prefix}wp_trivia_master (
 			  id int(11) NOT NULL AUTO_INCREMENT,
 			  name varchar(200) NOT NULL,
 			  text text NOT NULL,
@@ -150,13 +150,13 @@ class WpTrivia_Helper_DbUpgrade
 			  PRIMARY KEY  (id)
 			) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
-			CREATE TABLE {$this->_wpdb->prefix}wp_pro_quiz_prerequisite (
+			CREATE TABLE {$this->_wpdb->prefix}wp_trivia_prerequisite (
 			  prerequisite_quiz_id int(11) NOT NULL,
 			  quiz_id int(11) NOT NULL,
 			  PRIMARY KEY  (prerequisite_quiz_id,quiz_id)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-			CREATE TABLE {$this->_wpdb->prefix}wp_pro_quiz_question (
+			CREATE TABLE {$this->_wpdb->prefix}wp_trivia_question (
 			  id int(11) NOT NULL AUTO_INCREMENT,
 			  quiz_id int(11) NOT NULL,
 			  online tinyint(1) unsigned NOT NULL,
@@ -182,7 +182,7 @@ class WpTrivia_Helper_DbUpgrade
 			  KEY category_id (category_id)
 			) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
-			CREATE TABLE {$this->_wpdb->prefix}wp_pro_quiz_statistic (
+			CREATE TABLE {$this->_wpdb->prefix}wp_trivia_statistic (
 			  statistic_ref_id int(10) unsigned NOT NULL,
 			  question_id int(11) NOT NULL,
 			  correct_count int(10) unsigned NOT NULL,
@@ -195,7 +195,7 @@ class WpTrivia_Helper_DbUpgrade
 			  PRIMARY KEY  (statistic_ref_id,question_id)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-			CREATE TABLE {$this->_wpdb->prefix}wp_pro_quiz_statistic_ref (
+			CREATE TABLE {$this->_wpdb->prefix}wp_trivia_statistic_ref (
 			  statistic_ref_id int(10) unsigned NOT NULL AUTO_INCREMENT,
 			  quiz_id int(11) NOT NULL,
 			  user_id bigint(20) unsigned NOT NULL,
@@ -207,7 +207,7 @@ class WpTrivia_Helper_DbUpgrade
 			  KEY time (create_time)
 			) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
-			CREATE TABLE {$this->_wpdb->prefix}wp_pro_quiz_template (
+			CREATE TABLE {$this->_wpdb->prefix}wp_trivia_template (
 			  template_id int(11) NOT NULL AUTO_INCREMENT,
 			  name varchar(200) NOT NULL,
 			  type tinyint(3) unsigned NOT NULL,
@@ -215,7 +215,7 @@ class WpTrivia_Helper_DbUpgrade
 			  PRIMARY KEY  (template_id)
 			) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
-			CREATE TABLE {$this->_wpdb->prefix}wp_pro_quiz_toplist (
+			CREATE TABLE {$this->_wpdb->prefix}wp_trivia_toplist (
 			  toplist_id int(11) NOT NULL AUTO_INCREMENT,
 			  quiz_id int(11) NOT NULL,
 			  date int(10) unsigned NOT NULL,

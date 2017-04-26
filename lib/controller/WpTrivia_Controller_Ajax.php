@@ -13,8 +13,8 @@ class WpTrivia_Controller_Ajax
     {
         $this->initCallbacks();
 
-        add_action('wp_ajax_wp_pro_quiz_admin_ajax', array($this, 'adminAjaxCallback'));
-        add_action('wp_ajax_nopriv_wp_pro_quiz_admin_ajax', array($this, 'frontAjaxCallback'));
+        add_action('wp_ajax_wp_trivia_admin_ajax', array($this, 'adminAjaxCallback'));
+        add_action('wp_ajax_nopriv_wp_trivia_admin_ajax', array($this, 'frontAjaxCallback'));
     }
 
     public function adminAjaxCallback()

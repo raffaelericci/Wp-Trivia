@@ -23,7 +23,7 @@ jQuery(document).ready(function ($) {
 
         function ajaxPost(func, data, success) {
             var d = {
-                action: 'wp_pro_quiz_admin_ajax',
+                action: 'wp_trivia_admin_ajax',
                 func: func,
                 data: data
             };
@@ -190,7 +190,7 @@ jQuery(document).ready(function ($) {
                 //url = url.replace('action=edit', 'action=reset_lock');
                 //
                 //$.post(url, {
-                //    action: 'wp_pro_quiz_reset_lock'
+                //    action: 'wp_trivia_reset_lock'
                 //}, function (data) {
                 //    $('#resetLockMsg').show('fast').delay(2000).hide('fast');
                 //});
@@ -566,7 +566,7 @@ jQuery(document).ready(function ($) {
                 var location = window.location.pathname + window.location.search;
                 var url = location.replace('admin.php', 'admin-ajax.php') + '&action=load_statistics';
                 var data = {
-                    action: 'wp_pro_quiz_load_statistics',
+                    action: 'wp_trivia_load_statistics',
                     userId: userId
                 };
 
@@ -619,7 +619,7 @@ jQuery(document).ready(function ($) {
                 var location = window.location.pathname + window.location.search;
                 var url = location.replace('admin.php', 'admin-ajax.php') + '&action=load_statistics';
                 var data = {
-                    action: 'wp_pro_quiz_load_statistics',
+                    action: 'wp_trivia_load_statistics',
                     overview: true,
                     pageLimit: $('#wpTrivia_pageLimit').val(),
                     onlyCompleted: Number($('#wpTrivia_onlyCompleted').is(':checked')),
@@ -706,7 +706,7 @@ jQuery(document).ready(function ($) {
                 var location = window.location.pathname + window.location.search;
                 var url = location.replace('admin.php', 'admin-ajax.php') + '&action=reset';
                 var data = {
-                    action: 'wp_pro_quiz_statistics',
+                    action: 'wp_trivia_statistics',
                     userId: userId,
                     'complete': complete
                 };
@@ -837,7 +837,7 @@ jQuery(document).ready(function ($) {
     $.fn.wpTrivia_toplist = function () {
         function ajaxPost(func, data, success) {
             var d = {
-                action: 'wp_pro_quiz_admin_ajax',
+                action: 'wp_trivia_admin_ajax',
                 func: func,
                 data: data
             };
@@ -863,7 +863,7 @@ jQuery(document).ready(function ($) {
                 //var url = location.replace('admin.php', 'admin-ajax.php') + '&action=load_toplist';
                 var th = this;
                 var data = {
-                    //action: 'wp_pro_quiz_load_toplist',
+                    //action: 'wp_trivia_load_toplist',
                     sort: elements.sort.val(),
                     limit: elements.pageLimit.val(),
                     page: elements.currentPage.val(),
@@ -1156,7 +1156,7 @@ jQuery(document).ready(function ($) {
 
             ajaxPost: function (func, data, success) {
                 var d = {
-                    action: 'wp_pro_quiz_admin_ajax',
+                    action: 'wp_trivia_admin_ajax',
                     func: func,
                     data: data
                 };

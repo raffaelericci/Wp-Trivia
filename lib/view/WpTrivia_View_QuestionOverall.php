@@ -44,7 +44,7 @@ class WpTrivia_View_QuestionOverall extends WpTrivia_View_View {
 
 		var ajaxPost = function(func, data, success) {
 			var d = {
-				action: 'wp_pro_quiz_admin_ajax',
+				action: 'wp_trivia_admin_ajax',
 				func: func,
 				data: data
 			};

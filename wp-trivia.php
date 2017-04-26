@@ -22,8 +22,8 @@ define('WPPROQUIZ_PLUGIN_PATH', WPPROQUIZ_PATH . '/plugin');
 
 $uploadDir = wp_upload_dir();
 
-define('WPPROQUIZ_CAPTCHA_DIR', $uploadDir['basedir'] . '/wp_pro_quiz_captcha');
-define('WPPROQUIZ_CAPTCHA_URL', $uploadDir['baseurl'] . '/wp_pro_quiz_captcha');
+define('WPPROQUIZ_CAPTCHA_DIR', $uploadDir['basedir'] . '/wp_trivia_captcha');
+define('WPPROQUIZ_CAPTCHA_URL', $uploadDir['baseurl'] . '/wp_trivia_captcha');
 
 spl_autoload_register('wpTrivia_autoload');
 
@@ -85,7 +85,7 @@ function wpTrivia_pluginLoaded()
 function wpTrivia_achievementsV1()
 {
     if (function_exists('achievements')) {
-        achievements()->extensions->wp_pro_quiz = new WpTrivia_Plugin_BpAchievementsV1();
+        achievements()->extensions->wp_trivia = new WpTrivia_Plugin_BpAchievementsV1();
 
         do_action('wpTrivia_achievementsV1');
     }

@@ -18,7 +18,7 @@ class WpTrivia_Controller_Admin
 
     public function setScreenOption($status, $option, $value)
     {
-        if (in_array($option, array('wp_pro_quiz_quiz_overview_per_page', 'wp_pro_quiz_question_overview_per_page'))) {
+        if (in_array($option, array('wp_trivia_quiz_overview_per_page', 'wp_trivia_question_overview_per_page'))) {
             return $value;
         }
 

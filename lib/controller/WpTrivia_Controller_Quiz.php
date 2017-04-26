@@ -55,7 +55,7 @@ class WpTrivia_Controller_Quiz extends WpTrivia_Controller_Controller
         add_screen_option('per_page', array(
             'label' => __('Quiz', 'wp-trivia'),
             'default' => 20,
-            'option' => 'wp_pro_quiz_quiz_overview_per_page'
+            'option' => 'wp_trivia_quiz_overview_per_page'
         ));
     }
 
@@ -274,7 +274,7 @@ class WpTrivia_Controller_Quiz extends WpTrivia_Controller_Controller
         $m = new WpTrivia_Model_QuizMapper();
         $categoryMapper = new WpTrivia_Model_CategoryMapper();
 
-        $per_page = (int)get_user_option('wp_pro_quiz_quiz_overview_per_page');
+        $per_page = (int)get_user_option('wp_trivia_quiz_overview_per_page');
         if (empty($per_page) || $per_page < 1) {
             $per_page = 20;
         }
@@ -797,10 +797,10 @@ class WpTrivia_Controller_Quiz extends WpTrivia_Controller_Controller
             $statistics = new WpTrivia_Controller_Statistics();
             $statistics->save($quiz);
 
-            do_action('wp_pro_quiz_completed_quiz');
+            do_action('wp_trivia_completed_quiz');
 
             if ($is100P) {
-                do_action('wp_pro_quiz_completed_quiz_100_percent');
+                do_action('wp_trivia_completed_quiz_100_percent');
             }
 
             return json_encode(array());
@@ -829,10 +829,10 @@ class WpTrivia_Controller_Quiz extends WpTrivia_Controller_Controller
             $statistics = new WpTrivia_Controller_Statistics();
             $statistics->save($quiz);
 
-            do_action('wp_pro_quiz_completed_quiz');
+            do_action('wp_trivia_completed_quiz');
 
             if ($is100P) {
-                do_action('wp_pro_quiz_completed_quiz_100_percent');
+                do_action('wp_trivia_completed_quiz_100_percent');
             }
 
             if (get_current_user_id() == 0 && $quiz->isQuizRunOnceCookie()) {
