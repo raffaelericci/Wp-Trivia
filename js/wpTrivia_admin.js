@@ -1,4 +1,5 @@
-jQuery(document).ready(function ($) {
+jQuery(document).ready(function($) {
+
     /**
      * @memberOf $.fn
      */
@@ -185,16 +186,6 @@ jQuery(document).ready(function ($) {
             },
 
             resetLock: function () {
-                //var location = window.location.pathname + window.location.search;
-                //var url = location.replace('admin.php', 'admin-ajax.php');
-                //url = url.replace('action=edit', 'action=reset_lock');
-                //
-                //$.post(url, {
-                //    action: 'wp_trivia_reset_lock'
-                //}, function (data) {
-                //    $('#resetLockMsg').show('fast').delay(2000).hide('fast');
-                //});
-
                 ajaxPost('resetLock', {
                     quizId: $('input[name="ajax_quiz_id"]').val()
                 }, function () {
@@ -247,7 +238,6 @@ jQuery(document).ready(function ($) {
 
                 $('.emailFormVariables option[value="' + selected + '"]').prop('selected', true);
             }
-
         };
 
         var isEmpty = function (str) {
@@ -367,10 +357,8 @@ jQuery(document).ready(function ($) {
 
             $('input[name="showMaxQuestion"]').change(function () {
                 if (this.checked) {
-//					$('input[name="statisticsOn"]').removeAttr('checked').attr('disabled', 'disabled').change();
                     $('#wpTrivia_showMaxBox').show();
                 } else {
-//					$('input[name="statisticsOn"]').removeAttr('disabled');
                     $('#wpTrivia_showMaxBox').hide();
                 }
             });
@@ -877,19 +865,6 @@ jQuery(document).ready(function ($) {
                 elements.loadDataBox.show();
                 elements.content.hide();
 
-                //$.post(url, data, function (json) {
-                //    //methods.handleDataRequest(json.data);
-                //    th.handleDataRequest(json.data);
-                //
-                //    if (json.nav != undefined) {
-                //        //methods.handleNav(json.nav);
-                //        th.handleNav(json.nav);
-                //    }
-                //
-                //    elements.loadDataBox.hide();
-                //    elements.content.show();
-                //}, 'json');
-
                 ajaxPost('adminToplist', data, function (json) {
                     th.handleDataRequest(json.data);
 
@@ -1173,10 +1148,10 @@ jQuery(document).ready(function ($) {
         };
 
         var module = {
+
             /**
              * @memberOf WpTrivia_admin.module
              */
-
             gobalSettings: function () {
                 var methode = {
                     categoryDelete: function (id, type) {
@@ -1275,21 +1250,6 @@ jQuery(document).ready(function ($) {
                 };
 
                 var init = function () {
-//					$('.wpTrivia_tab').click(function() {
-//						var $this = $(this);
-//
-//						$('.wpTrivia_tab').removeClass('button-primary').addClass('button-secondary');
-//						$this.removeClass('button-secondary').addClass('button-primary');
-//
-//						$('#problemInfo, #problemContent, #globalContent').hide('fast');
-//
-//						if($this.attr('id') == 'globalTab') {
-//							$('#globalContent').show('fast');
-//						} else {
-//							$('#problemInfo, #problemContent').show('fast');
-//						}
-//					});
-
                     $('select[name="category"]').change(function () {
                         $('input[name="categoryEditText"]').val($(this).find(':selected').text());
                     }).change();
@@ -1409,7 +1369,8 @@ jQuery(document).ready(function ($) {
                 var elements = {
                     answerChildren: $('.answer_felder > div'),
                     pointsModus: $('input[name="answerPointsActivated"]'),
-                    gPoints: $('input[name="points"]')
+                    gPoints: $('input[name="points"]'),
+                    file_frame: null
                 };
 
                 methode = {
@@ -1530,6 +1491,30 @@ jQuery(document).ready(function ($) {
                         };
 
                         tb_show('', 'media-upload.php?type=image&TB_iframe=true');
+                    },
+
+                    attachImage: function() {
+                        event.preventDefault();
+                        // If the media frame already exists, reopen it.
+                        if (elements.file_frame) {
+                            elements.file_frame.open();
+                            return;
+                        }
+                        // Create the media frame.
+                        elements.file_frame = wp.media.frames.file_frame = wp.media({
+                            title: 'Select a image to upload',
+                            button: {
+                                text: 'Use this image',
+                            },
+                            multiple: false
+                        });
+                        // When an image is selected, run a callback.
+                        elements.file_frame.on('select', function() {
+                            attachment = elements.file_frame.state().get('selection').first().toJSON();
+                            $('#image-preview').attr('src', attachment.url).css('width', 'auto');
+                            $('#image_attachment_id').val(attachment.id);
+                        });
+                        elements.file_frame.open();
                     }
                 };
 
@@ -1762,11 +1747,14 @@ jQuery(document).ready(function ($) {
                             $templateName.hide();
                         }
                     }).change();
+
+                    $('#add_image_button').on('click', function(event) {
+                        methode.attachImage();
+                    });
                 };
 
                 var init = function () {
                     elements.answerChildren.hide();
-
                     formListener();
                 };
 
@@ -1798,51 +1786,6 @@ jQuery(document).ready(function ($) {
                         global.ajaxPost('statisticLoad', data, function (json) {
 
                         });
-                    },
-
-                    loadUsersStatistic: function () {
-                        //var userId = $('#userSelect').val();
-                        //
-                        //var data = {
-                        //    userId: userId,
-                        //    quizId: quizId,
-                        //    testId: $('#testSelect').val()
-                        //};
-                        //
-                        //methode.toggleLoadBox(false);
-                        //
-                        //global.ajaxPost('statisticLoad', data, function (json) {
-                        //    $.each(json.question, function () {
-                        //        var $tr = $('#wpTrivia_tr_' + this.questionId);
-                        //
-                        //        methode.setStatisticData($tr, this);
-                        //    });
-                        //
-                        //    $.each(json.category, function (i, v) {
-                        //        var $tr = $('#wpTrivia_ctr_' + i);
-                        //
-                        //        methode.setStatisticData($tr, v);
-                        //    });
-                        //
-                        //    $('#testSelect option:gt(0)').remove();
-                        //    var $testSelect = $('#testSelect');
-                        //
-                        //    $.each(json.tests, function () {
-                        //        var $option = $(document.createElement('option'));
-                        //
-                        //        $option.val(this.id);
-                        //        $option.text(this.date);
-                        //
-                        //        if (json.testId == this.id)
-                        //            $option.attr('selected', true);
-                        //
-                        //        $testSelect.append($option);
-                        //    });
-                        //
-                        //    methode.parseFormData(json.formData);
-                        //
-                        //    methode.toggleLoadBox(true);
-                        //});
                     },
 
                     loadUsersStatistic_: function (userId, testId) {

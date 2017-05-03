@@ -77,6 +77,7 @@ class WpTrivia_Model_QuestionMapper extends WpTrivia_Model_Mapper
                 $this->_table,
                 array(
                     'title' => $question->getTitle(),
+                    'image_id' => $question->getImageId(),
                     'points' => $question->getPoints(),
                     'question' => $question->getQuestion(),
                     'correct_msg' => $question->getCorrectMsg(),
@@ -93,7 +94,7 @@ class WpTrivia_Model_QuestionMapper extends WpTrivia_Model_Mapper
                     'disable_correct' => (int)$question->isDisableCorrect()
                 ),
                 array('id' => $question->getId()),
-                array('%s', '%d', '%s', '%s', '%s', '%d', '%d', '%s', '%s', '%d', '%d', '%s', '%d', '%d', '%d', '%d'),
+                array('%s', '%s', '%d', '%s', '%s', '%s', '%d', '%d', '%s', '%s', '%d', '%d', '%s', '%d', '%d', '%d', '%d'),
                 array('%d'));
         } else {
             $this->_wpdb->insert($this->_table, array(
@@ -101,6 +102,7 @@ class WpTrivia_Model_QuestionMapper extends WpTrivia_Model_Mapper
                 'online' => 1,
                 'sort' => $sort !== null ? $sort : ($this->getMaxSort($question->getQuizId()) + 1),
                 'title' => $question->getTitle(),
+                'image_id' => $question->getImageId(),
                 'points' => $question->getPoints(),
                 'question' => $question->getQuestion(),
                 'correct_msg' => $question->getCorrectMsg(),
@@ -120,6 +122,7 @@ class WpTrivia_Model_QuestionMapper extends WpTrivia_Model_Mapper
                     '%d',
                     '%d',
                     '%d',
+                    '%s',
                     '%s',
                     '%d',
                     '%s',

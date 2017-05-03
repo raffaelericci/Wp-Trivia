@@ -35,7 +35,7 @@ class WpTrivia_View_StyleManager extends WpTrivia_View_View
 
 
                                                 <li class="wpTrivia_listItem" style="display: list-item;">
-                                                    <div class="wpTrivia_question_page">
+                                                    <div class="wpTrivia_progress_header">
                                                         Frage <span>4</span> von <span>7</span>
                                                         <span style="float:right;">1 Punkte</span>
 
