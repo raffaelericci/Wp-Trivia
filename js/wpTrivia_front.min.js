@@ -52,61 +52,12 @@
             globalElements.check.show();
             //globalElements.next.show();
 
-            // TODO - Load questions
-            // plugin.methode.loadQuizData();
-
-            // TODO - Randomize sorting questions(?)
-            //plugin.methode.random($e.find('.wpTrivia_sortStringList'));
-            //plugin.methode.random($e.find('[data-type="sort_answer"]'));
-
-            /*
-            if (bitOptions.hideQuestionPositionOverview)
-                $e.find('.wpTrivia_progress_header').hide();
-            */
-
             var $listItem = globalElements.questionList.children();
 
             globalElements.listItems = $e.find('.wpTrivia_list > li');
 
             currentQuestion = $listItem.eq(0).show();
             currentQuestionId = currentQuestion.find(globalNames.questionList).data('question_id');
-
-
-            // FIXME - Essendo le domande di sorting visualizzate in modo random
-            // un utente potrebbe volere rispondere così come sono visualizzate
-            // in questo modo invece viene segnata la risposta come data solo dopo
-            // il primo drag
-            $e.find('.wpTrivia_sortable').parents('ul').sortable({
-                update: function (event, ui) {
-                    var $p = $(this).parents('.wpTrivia_listItem');
-
-                    $e.trigger({
-                        type: 'questionSolved',
-                        values: {
-                            item: $p,
-                            index: $p.index(),
-                            solved: true
-                        }
-                    });
-                }
-            }).disableSelection();
-
-            $e.find('.wpTrivia_sortStringList, .wpTrivia_maxtrixSortCriterion').sortable({
-                connectWith: '.wpTrivia_maxtrixSortCriterion:not(:has(li)), .wpTrivia_sortStringList',
-                placeholder: 'wpTrivia_placehold',
-                update: function (event, ui) {
-                    var $p = $(this).parents('.wpTrivia_listItem');
-
-                    $e.trigger({
-                        type: 'questionSolved',
-                        values: {
-                            item: $p,
-                            index: $p.index(),
-                            solved: true
-                        }
-                    });
-                }
-            }).disableSelection();
 
             quizSolved = [];
 
@@ -125,12 +76,6 @@
                     time: 0,
                     solved: 0
                 };
-            });
-
-            catResults = {};
-
-            $.each(options.catPoints, function (i, v) {
-                catResults[i] = 0;
             });
 
             globalElements.quizStartPage.hide();

@@ -660,27 +660,6 @@ class WpTrivia_Controller_Quiz extends WpTrivia_Controller_Controller
         return 'text/html';
     }
 
-    public static function ajaxLoadQuizData($data)
-    {
-        $quizId = (int)$data['quizId'];
-
-        $quizMapper = new WpTrivia_Model_QuizMapper();
-        $toplistController = new WpTrivia_Controller_Toplist();
-        $statisticController = new WpTrivia_Controller_Statistics();
-
-        $quiz = $quizMapper->fetch($quizId);
-        $data = array();
-
-        if ($quiz === null || $quiz->getId() <= 0) {
-            return json_encode(array());
-        }
-
-        $data['toplist'] = $toplistController->getAddToplist($quiz);
-        $data['averageResult'] = $statisticController->getAverageResult($quizId);
-
-        return json_encode($data);
-    }
-
     public static function ajaxQuizCheckLock()
     {
         // workaround ...

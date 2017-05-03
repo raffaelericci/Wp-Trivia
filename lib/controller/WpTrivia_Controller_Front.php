@@ -212,43 +212,4 @@ class WpTrivia_Controller_Front
 
         $this->_settings = $mapper->fetchAll();
     }
-
-    public static function ajaxQuizLoadData($data)
-    {
-        $id = $data['quizId'];
-
-        $view = new WpTrivia_View_FrontQuiz();
-
-        $quizMapper = new WpTrivia_Model_QuizMapper();
-        $questionMapper = new WpTrivia_Model_QuestionMapper();
-        $formMapper = new WpTrivia_Model_FormMapper();
-
-        $quiz = $quizMapper->fetch($id);
-
-        if ($quiz->isShowMaxQuestion() && $quiz->getShowMaxQuestionValue() > 0) {
-
-            $value = $quiz->getShowMaxQuestionValue();
-
-            if ($quiz->isShowMaxQuestionPercent()) {
-                $count = $questionMapper->count($id);
-
-                $value = ceil($count * $value / 100);
-            }
-
-            $question = $questionMapper->fetchAll($id, true, $value);
-
-        } else {
-            $question = $questionMapper->fetchAll($id);
-        }
-
-        if (empty($quiz) || empty($question)) {
-            return null;
-        }
-
-        $view->quiz = $quiz;
-        $view->question = $question;
-        $view->forms = $formMapper->fetch($quiz->getId());
-
-        return json_encode($view->getQuizData());
-    }
 }

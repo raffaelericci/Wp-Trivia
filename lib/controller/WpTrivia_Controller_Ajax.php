@@ -52,7 +52,6 @@ class WpTrivia_Controller_Ajax
             'statisticLoadOverviewNew' => array('WpTrivia_Controller_Statistics', 'ajaxLoadStatsticOverviewNew'),
             'templateEdit' => array('WpTrivia_Controller_Template', 'ajaxEditTemplate'),
             'templateDelete' => array('WpTrivia_Controller_Template', 'ajaxDeleteTemplate'),
-            'quizLoadData' => array('WpTrivia_Controller_Front', 'ajaxQuizLoadData'),
             'loadQuestionsSort' => array('WpTrivia_Controller_Question', 'ajaxLoadQuestionsSort'),
             'questionSaveSort' => array('WpTrivia_Controller_Question', 'ajaxSaveSort'),
             'questionaLoadCopyQuestion' => array('WpTrivia_Controller_Question', 'ajaxLoadCopyQuestion'),
@@ -60,7 +59,6 @@ class WpTrivia_Controller_Ajax
             // TODO - in progress
             'checkAnswer' => array('WpTrivia_Controller_Question', 'ajaxCheckAnswer'),
 
-            'loadQuizData' => array('WpTrivia_Controller_Quiz', 'ajaxLoadQuizData'),
             'resetLock' => array('WpTrivia_Controller_Quiz', 'ajaxResetLock'),
             'adminToplist' => array('WpTrivia_Controller_Toplist', 'ajaxAdminToplist'),
             'completedQuiz' => array('WpTrivia_Controller_Quiz', 'ajaxCompletedQuiz'),
@@ -71,8 +69,6 @@ class WpTrivia_Controller_Ajax
 
         //nopriv
         $this->_frontCallbacks = array(
-            'quizLoadData' => array('WpTrivia_Controller_Front', 'ajaxQuizLoadData'),
-            'loadQuizData' => array('WpTrivia_Controller_Quiz', 'ajaxLoadQuizData'),
             'completedQuiz' => array('WpTrivia_Controller_Quiz', 'ajaxCompletedQuiz'),
             'quizCheckLock' => array('WpTrivia_Controller_Quiz', 'ajaxQuizCheckLock'),
             'addInToplist' => array('WpTrivia_Controller_Toplist', 'ajaxAddInToplist'),

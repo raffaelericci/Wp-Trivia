@@ -208,21 +208,6 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
         <?php
     }
 
-    public function getQuizData()
-    {
-        ob_start();
-
-        $this->loadButtonNames();
-
-        $quizData = $this->showQuizBox(count($this->question));
-
-        $quizData['content'] = ob_get_contents();
-
-        ob_end_clean();
-
-        return $quizData;
-    }
-
     private function showQuizAnker()
     {
         ?>
