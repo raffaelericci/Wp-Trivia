@@ -19,14 +19,8 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
         ?>
         <div class="wrap wpTrivia_questionEdit">
             <h2 style="margin-bottom: 10px;"><?php echo $this->header; ?></h2>
-            <!-- <form action="admin.php?page=wpTrivia&module=question&action=show&quiz_id=<?php echo $this->quiz->getId(); ?>" method="POST"> -->
-            <form
-                action="admin.php?page=wpTrivia&module=question&action=addEdit&quiz_id=<?php echo $this->quiz->getId(); ?>&questionId=<?php echo $this->question->getId(); ?>"
-                method="POST">
-                <a style="float: left;" class="button-secondary"
-                   href="admin.php?page=wpTrivia&module=question&action=show&quiz_id=<?php echo $this->quiz->getId(); ?>"><?php _e('back to overview',
-                        'wp-trivia'); ?></a>
-
+            <form action="admin.php?page=wpTrivia&module=question&action=addEdit&quiz_id=<?php echo $this->quiz->getId(); ?>&questionId=<?php echo $this->question->getId(); ?>" method="POST">
+                <a style="float: left;" class="button-secondary" href="admin.php?page=wpTrivia&module=question&action=show&quiz_id=<?php echo $this->quiz->getId(); ?>"><?php _e('back to overview', 'wp-trivia'); ?></a>
                 <div style="float: right;">
                     <select name="templateLoadId">
                         <?php
@@ -39,8 +33,6 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
                            class="button-primary">
                 </div>
                 <div style="clear: both;"></div>
-                <!-- <input type="hidden" value="edit" name="hidden_action">
-		<input type="hidden" value="<?php echo $this->question->getId(); ?>" name="questionId">-->
                 <div id="poststuff">
                     <div class="postbox">
                         <h3 class="hndle"><?php _e('Title', 'wp-trivia'); ?><?php _e('(optional)',
@@ -53,6 +45,25 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
                             </p>
                             <input name="title" class="regular-text" value="<?php echo $this->question->getTitle(); ?>"
                                    type="text">
+                        </div>
+                    </div>
+                    <div class="postbox">
+                        <h3 class="hndle"><?php _e('Image', 'wp-trivia'); ?><?php _e('(optional)', 'wp-trivia'); ?></h3>
+                        <div class="inside">
+                            <p class="description">
+                                <?php _e('Optional image visualized along with the question.', 'wp-trivia'); ?>
+                            </p>
+
+
+                            <div class='image-preview-wrapper'>
+                                <img id='image-preview' src='<?php echo $this->question->getImageId() ? wp_get_attachment_url($this->question->getImageId()) : ''; ?>' width='100' height='100' style='max-height: 100px; width: 100px;'>
+                            </div>
+                            <input id="add_image_button" type="button" class="button" value="<?php _e( 'Add image', 'wp-trivia' ); ?>" />
+                            <input type="hidden" name="image_id" id="image_attachment_id">
+
+
+
+
                         </div>
                     </div>
                     <div class="postbox">
@@ -280,8 +291,7 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
                     </div>
 
                     <div style="float: left;">
-                        <input type="submit" name="submit" id="saveQuestion" class="button-primary"
-                               value="<?php _e('Save', 'wp-trivia'); ?>">
+                        <input type="submit" name="submit" id="saveQuestion" class="button-primary" value="<?php _e('Save', 'wp-trivia'); ?>">
                     </div>
                     <div style="float: right;">
                         <input type="text" placeholder="<?php _e('template name', 'wp-trivia'); ?>"

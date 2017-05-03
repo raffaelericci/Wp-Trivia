@@ -30,6 +30,8 @@ class WpTrivia_Model_Question extends WpTrivia_Model_Model
     protected $_answerPointsDiffModusActivated = false;
     protected $_disableCorrect = false;
 
+    protected $_imageId = 0;
+
     public function setId($_id)
     {
         $this->_id = (int)$_id;
@@ -278,5 +280,13 @@ class WpTrivia_Model_Question extends WpTrivia_Model_Model
     public function isDisableCorrect()
     {
         return $this->_disableCorrect;
+    }
+
+    public function getImageId() {
+        return $this->_imageId;
+    }
+
+    public function setImageId($imageId) {
+        $this->_imageId = $imageId;
     }
 }

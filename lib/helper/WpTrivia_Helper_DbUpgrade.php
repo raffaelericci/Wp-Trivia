@@ -162,6 +162,7 @@ class WpTrivia_Helper_DbUpgrade
 			  online tinyint(1) unsigned NOT NULL,
 			  sort smallint(5) unsigned NOT NULL,
 			  title varchar(200) NOT NULL,
+              image_id int(11) NOT NULL,
 			  points int(11) NOT NULL,
 			  question text NOT NULL,
 			  correct_msg text NOT NULL,

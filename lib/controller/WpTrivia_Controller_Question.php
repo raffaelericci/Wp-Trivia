@@ -350,12 +350,6 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
 
     public function clearPost($post)
     {
-        /* TODO - necessary?
-        if (isset($post['answerData']['none'])) {
-            unset($post['answerData']['none']);
-        }
-        */
-
         $answerData = array();
         $points = 0;
         $maxPoints = 0;
@@ -527,5 +521,28 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
         }
 
         return json_encode($data);
+    }
+
+    public static function ajaxCheckAnswer($data) {
+        $questionMapper = new WpTrivia_Model_QuestionMapper();
+        $correctAnswers = $questionMapper->fetch($data['questionId'])->getAnswerData();
+        $res = [
+            "isCorrect" => true,
+            "correctAnswers" => null
+        ];
+
+        switch($data['questionType']) {
+            case 'single':
+            case 'multi':
+                foreach($correctAnswers as $index => $a) {
+                    $res['correctAnswers'][] = $a->isCorrect();
+                    if ($data['answer'][$index] && ($data['answer'][$index] != $a->isCorrect())) {
+                        $res['isCorrect'] = false;
+                    }
+                }
+                break;
+            // TODO - Implementare altre tipologie
+        }
+        return json_encode($res);
     }
 }

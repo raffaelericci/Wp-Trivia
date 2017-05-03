@@ -82,8 +82,6 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
         <div class="wpTrivia_content" id="wpTrivia_<?php echo $this->quiz->getId(); ?>">
             <?php
 
-            echo '<h2>', $this->quiz->getName(), '</h2>';
-
             $this->showTimeLimitBox();
             $this->showCheckPageBox($question_count);
             $this->showInfoPageBox();
@@ -173,8 +171,6 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
         ?>
         <div class="wpTrivia_content" id="wpTrivia_<?php echo $this->quiz->getId(); ?>">
             <?php
-
-            echo '<h2>', $this->quiz->getName(), '</h2>';
 
             $this->showTimeLimitBox();
             $this->showCheckPageBox($question_count);
@@ -700,32 +696,29 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
 
                     ?>
                     <li class="wpTrivia_listItem" style="display: none;">
-                        <div
-                            class="wpTrivia_question_page" <?php $this->isDisplayNone(!$this->quiz->isHideQuestionPositionOverview()); ?> >
-                            <?php printf(__('Question %s of %s', 'wp-trivia'), '<span>' . $index . '</span>',
-                                '<span>' . $questionCount . '</span>'); ?>
+                        <div class="wpTrivia_progress_header" <?php $this->isDisplayNone(!$this->quiz->isHideQuestionPositionOverview()); ?> >
+                            <?php printf('<span>%d/%d</span> <span>TRIVIA:</span> <span>%s</span>', $index, $questionCount, $this->quiz->getName()); ?>
                         </div>
-                        <h5 style="<?php echo $this->quiz->isHideQuestionNumbering() ? 'display: none;' : 'display: inline-block;' ?>"
-                            class="wpTrivia_header">
-                            <span><?php echo $index; ?></span>. <?php _e('Question', 'wp-trivia'); ?>
-                        </h5>
-
                         <?php if ($this->quiz->isShowPoints()) { ?>
                             <span style="font-weight: bold; float: right;"><?php printf(__('%d points', 'wp-trivia'),
                                     $question->getPoints()); ?></span>
                             <div style="clear: both;"></div>
                         <?php } ?>
-
                         <?php if ($question->getCategoryId() && $this->quiz->isShowCategory()) { ?>
                             <div style="font-weight: bold; padding-top: 5px;">
                                 <?php printf(__('Category: %s', 'wp-trivia'),
                                     esc_html($question->getCategoryName())); ?>
                             </div>
                         <?php } ?>
-                        <div class="wpTrivia_question" style="margin: 10px 0 0 0;">
+                        <div class="wpTrivia_question">
                             <div class="wpTrivia_question_text">
                                 <?php echo do_shortcode(apply_filters('comment_text', $question->getQuestion())); ?>
                             </div>
+                            <?php if ($question->getImageId()) { ?>
+                                <div class="wpTrivia_question_image">
+                                    <img alt="question image" src="<?php echo wp_get_attachment_url($question->getImageId()); ?>">
+                                </div>
+                            <?php } ?>
                             <ul class="wpTrivia_questionList" data-question_id="<?php echo $question->getId(); ?>"
                                 data-type="<?php echo $question->getAnswerType(); ?>">
                                 <?php
@@ -744,18 +737,14 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
 
                                     ?>
 
-                                    <li class="wpTrivia_questionListItem" data-pos="<?php echo $answer_index; ?>">
-
+                                    <li class="wpTrivia_questionListItem">
                                         <?php if ($question->getAnswerType() === 'single' || $question->getAnswerType() === 'multiple') { ?>
-                                            <?php $json[$question->getId()]['correct'][] = (int)$v->isCorrect(); ?>
                                             <span <?php echo $this->quiz->isNumberedAnswer() ? '' : 'style="display:none;"' ?>></span>
-                                            <label>
-                                                <input class="wpTrivia_questionInput"
-                                                       type="<?php echo $question->getAnswerType() === 'single' ? 'radio' : 'checkbox'; ?>"
-                                                       name="question_<?php echo $this->quiz->getId(); ?>_<?php echo $question->getId(); ?>"
-                                                       value="<?php echo($answer_index + 1); ?>"> <?php echo $answer_text; ?>
-                                            </label>
-
+                                            <div class="wpTrivia_questionInput_singleMulti"
+                                                   name="question_<?php echo $this->quiz->getId(); ?>_<?php echo $question->getId(); ?>"
+                                                   value="<?php echo($answer_index + 1); ?>"
+                                                   data-pos="<?php echo $answer_index; ?>"> <?php echo $answer_text; ?>
+                                            </div>
                                         <?php } else {
                                             if ($question->getAnswerType() === 'sort_answer') { ?>
                                                 <?php $json[$question->getId()]['correct'][] = (int)$answer_index; ?>
@@ -849,8 +838,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                         <?php if ($question->isTipEnabled()) { ?>
                             <div class="wpTrivia_tipp" style="display: none; position: relative;">
                                 <div>
-                                    <h5 style="margin: 0 0 10px;" class="wpTrivia_header"><?php _e('Hint',
-                                            'wp-trivia'); ?></h5>
+                                    <h5 style="margin: 0 0 10px;" class="wpTrivia_header"><?php _e('Hint', 'wp-trivia'); ?></h5>
                                     <?php echo do_shortcode(apply_filters('comment_text', $question->getTipMsg())); ?>
                                 </div>
                             </div>
@@ -861,9 +849,6 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                                    class="wpTrivia_button wpTrivia_QuestionButton"
                                    style="float: left; margin-right: 10px !important;">
                         <?php } ?>
-                        <input type="button" name="back" value="<?php _e('Back', 'wp-trivia'); ?>"
-                               class="wpTrivia_button wpTrivia_QuestionButton"
-                               style="float: left !important; margin-right: 10px !important; display: none;">
                         <?php if ($question->isTipEnabled()) { ?>
                             <input type="button" name="tip" value="<?php _e('Hint', 'wp-trivia'); ?>"
                                    class="wpTrivia_button wpTrivia_QuestionButton wpTrivia_TipButton"
@@ -872,9 +857,8 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                         <input type="button" name="check" value="<?php _e('Check', 'wp-trivia'); ?>"
                                class="wpTrivia_button wpTrivia_QuestionButton"
                                style="float: right !important; margin-right: 10px !important; display: none;">
-                        <input type="button" name="next" value="<?php _e('Next', 'wp-trivia'); ?>"
+                        <input type="button" name="next" value="<?php echo ($this->question[count($this->question) - 1] === $question) ? $this->_buttonNames['finish_quiz'] : _e('Next', 'wp-trivia'); ?>"
                                class="wpTrivia_button wpTrivia_QuestionButton" style="float: right; display: none;">
-
                         <div style="clear: both;"></div>
                     </li>
                 <?php } ?>

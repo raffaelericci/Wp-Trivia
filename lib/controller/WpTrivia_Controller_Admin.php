@@ -57,8 +57,6 @@ class WpTrivia_Controller_Admin
             'dayNames' => array_values($wp_locale->weekday),
             'dayNamesShort' => array_values($wp_locale->weekday_abbrev),
             'dayNamesMin' => array_values($wp_locale->weekday_initial),
-//			'dateFormat'        => WpTrivia_Helper_Until::convertPHPDateFormatToJS(get_option('date_format', 'm/d/Y')),
-            //e.g. "9 de setembro de 2014" -> change to "hard" dateformat
             'dateFormat' => 'mm/dd/yy',
             'firstDay' => get_option('start_of_week'),
             'isRTL' => $isRtl

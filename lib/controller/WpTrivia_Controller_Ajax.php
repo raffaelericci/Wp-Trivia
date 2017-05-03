@@ -37,11 +37,10 @@ class WpTrivia_Controller_Ajax
             $r = call_user_func($calls[$func], $data, $func);
 
             if ($r !== null) {
-                echo $r;
+                wp_die($r);
             }
         }
-
-        exit;
+        wp_die(0);
     }
 
     private function initCallbacks()
@@ -65,6 +64,10 @@ class WpTrivia_Controller_Ajax
             'loadQuestionsSort' => array('WpTrivia_Controller_Question', 'ajaxLoadQuestionsSort'),
             'questionSaveSort' => array('WpTrivia_Controller_Question', 'ajaxSaveSort'),
             'questionaLoadCopyQuestion' => array('WpTrivia_Controller_Question', 'ajaxLoadCopyQuestion'),
+
+            // TODO - in progress
+            'checkAnswer' => array('WpTrivia_Controller_Question', 'ajaxCheckAnswer'),
+
             'loadQuizData' => array('WpTrivia_Controller_Quiz', 'ajaxLoadQuizData'),
             'resetLock' => array('WpTrivia_Controller_Quiz', 'ajaxResetLock'),
             'adminToplist' => array('WpTrivia_Controller_Toplist', 'ajaxAdminToplist'),
