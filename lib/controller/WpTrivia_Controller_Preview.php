@@ -38,7 +38,6 @@ class WpTrivia_Controller_Preview extends WpTrivia_Controller_Controller
 
         $quizMapper = new WpTrivia_Model_QuizMapper();
         $questionMapper = new WpTrivia_Model_QuestionMapper();
-        $categoryMapper = new WpTrivia_Model_CategoryMapper();
         $formMapper = new WpTrivia_Model_FormMapper();
 
         $quiz = $quizMapper->fetch($id);
@@ -61,7 +60,6 @@ class WpTrivia_Controller_Preview extends WpTrivia_Controller_Controller
 
         $view->quiz = $quiz;
         $view->question = $question;
-        $view->category = $categoryMapper->fetchByQuiz($quiz->getId());
         $view->forms = $formMapper->fetch($quiz->getId());
 
         $view->show(true);

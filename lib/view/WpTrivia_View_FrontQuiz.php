@@ -3,7 +3,6 @@
 /**
  * @property WpTrivia_Model_Quiz quiz
  * @property WpTrivia_Model_Question[] question
- * @property WpTrivia_Model_Category[] category
  * @property WpTrivia_Model_Form[] forms
  */
 class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
@@ -119,7 +118,6 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                     resultsGrade: <?php echo $resultsProzent; ?>,
                     bo: <?php echo $bo ?>,
                     qpp: <?php echo $this->quiz->getQuestionsPerPage(); ?>,
-                    catPoints: <?php echo json_encode($quizData['catPoints']); ?>,
                     formPos: <?php echo (int)$this->quiz->getFormShowPosition(); ?>,
                     lbn: <?php echo json_encode(($this->quiz->isShowReviewQuestion() && !$this->quiz->isQuizSummaryHide()) ? $this->_buttonNames['quiz_summary'] : $this->_buttonNames['finish_quiz']); ?>,
                     json: <?php echo json_encode($quizData['json']); ?>
@@ -146,7 +144,6 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
         $bo |= ((int)$this->quiz->isHideQuestionPositionOverview()) << 12;
         $bo |= ((int)$this->quiz->isFormActivated()) << 13;
         $bo |= ((int)$this->quiz->isShowMaxQuestion()) << 14;
-        $bo |= ((int)$this->quiz->isSortCategories()) << 15;
 
         return $bo;
     }
@@ -597,24 +594,6 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                     </table>
                 </div>
             <?php } ?>
-            <div class="wpTrivia_catOverview" <?php $this->isDisplayNone($this->quiz->isShowCategoryScore()); ?>>
-                <h4><?php _e('Categories', 'wp-trivia'); ?></h4>
-
-                <div style="margin-top: 10px;">
-                    <ol>
-                        <?php foreach ($this->category as $cat) {
-                            if (!$cat->getCategoryId()) {
-                                $cat->setCategoryName(__('Not categorized', 'wp-trivia'));
-                            }
-                            ?>
-                            <li data-category_id="<?php echo $cat->getCategoryId(); ?>">
-                                <span class="wpTrivia_catName"><?php echo $cat->getCategoryName(); ?></span>
-                                <span class="wpTrivia_catPercent">0%</span>
-                            </li>
-                        <?php } ?>
-                    </ol>
-                </div>
-            </div>
             <div>
                 <ul class="wpTrivia_resultsList">
                     <?php foreach ($result['text'] as $resultText) { ?>
@@ -658,7 +637,6 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
     {
         $globalPoints = 0;
         $json = array();
-        $catPoints = array();
         ?>
         <div style="display: none;" class="wpTrivia_quiz">
             <ol class="wpTrivia_list">
@@ -674,17 +652,10 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
 
                     $json[$question->getId()]['type'] = $question->getAnswerType();
                     $json[$question->getId()]['id'] = (int)$question->getId();
-                    $json[$question->getId()]['catId'] = (int)$question->getCategoryId();
 
                     if ($question->isAnswerPointsActivated() && $question->isAnswerPointsDiffModusActivated() && $question->isDisableCorrect()) {
                         $json[$question->getId()]['disCorrect'] = (int)$question->isDisableCorrect();
                     }
-
-                    if (!isset($catPoints[$question->getCategoryId()])) {
-                        $catPoints[$question->getCategoryId()] = 0;
-                    }
-
-                    $catPoints[$question->getCategoryId()] += $question->getPoints();
 
                     if (!$question->isAnswerPointsActivated()) {
                         $json[$question->getId()]['points'] = $question->getPoints();
@@ -703,12 +674,6 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                             <span style="font-weight: bold; float: right;"><?php printf(__('%d points', 'wp-trivia'),
                                     $question->getPoints()); ?></span>
                             <div style="clear: both;"></div>
-                        <?php } ?>
-                        <?php if ($question->getCategoryId() && $this->quiz->isShowCategory()) { ?>
-                            <div style="font-weight: bold; padding-top: 5px;">
-                                <?php printf(__('Category: %s', 'wp-trivia'),
-                                    esc_html($question->getCategoryName())); ?>
-                            </div>
                         <?php } ?>
                         <div class="wpTrivia_question">
                             <div class="wpTrivia_question_text">
@@ -866,7 +831,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
         </div>
         <?php
 
-        return array('globalPoints' => $globalPoints, 'json' => $json, 'catPoints' => $catPoints);
+        return array('globalPoints' => $globalPoints, 'json' => $json);
     }
 
     private function showLoadQuizBox()

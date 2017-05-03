@@ -4,32 +4,13 @@
  * @property WpTrivia_Model_Quiz quiz
  * @property  WpTrivia_Model_Question[] questionItems
  * @property  int questionCount
- * @property WpTrivia_Model_Category[] categoryItems
  * @property int perPage
  */
 class WpTrivia_View_QuestionOverall extends WpTrivia_View_View {
-	
+
 	public function show() {
 ?>
 <style>
-.wpTrivia_questionCopy, .wpTrivia_setQuestionCategoryList {
-	padding: 20px; 
-	background-color: rgb(223, 238, 255); 
-	border: 1px dotted;
-	margin-top: 10px;
-}
-.wpTrivia_setQuestionCategoryList ul {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-.wpTrivia_setQuestionCategoryList li {
-	float: left;
-	padding: 3px;
-	border: 1px solid #B3B3B3;
-	margin-right: 5px;
-	background-color: #F3F3F3;
-}
 .sortTable td {
 	cursor: move;
 }
@@ -51,68 +32,6 @@ class WpTrivia_View_QuestionOverall extends WpTrivia_View_View {
 
 			$.post(ajaxurl, d, success, 'json');
 		};
-
-		function initGlobal() {
-			var $setCategoryBox = $('#wpTrivia_setQuestionCategoryList_box > div');
-			var $categorySelect = $setCategoryBox.find('[name="category"]');
-
-			$categorySelect.change(function() {
-				$setCategoryBox.find('#categoryAddBox').toggle($(this).val() == "-1");
-			}).change();
-
-			$setCategoryBox.find('#categoryAddBtn').click(function () {
-				var name = $.trim($setCategoryBox.find('input[name="categoryAdd"]').val());
-
-				if(isEmpty(name)) {
-					return;
-				}
-
-				var data = {
-					categoryName: name,
-					type: 'question'
-				};
-
-				ajaxPost('categoryAdd', data, function(json) {
-					if(json.err) {
-						$('#categoryMsgBox').text(json.err).show('fast').delay(2000).hide('fast');
-						return;
-					}
-
-					var $option = $(document.createElement('option'))
-						.val(json.categoryId)
-						.text(json.categoryName)
-						.attr('selected', 'selected');
-
-					$categorySelect.append($option).change();
-
-				});
-			});
-
-			$setCategoryBox.find('#setCategoriesStart').click(function () {
-				var items = getCheckedItems();
-
-				if(!items || !items.length) {
-					alert(wpTriviaLocalize.no_selected_quiz);
-
-					return false;
-				}
-
-				var data = {
-					categoryId: $categorySelect.val(),
-					questionIds: items.map(function (i) {
-						return i.ID;
-					})
-				};
-
-				$('#ajaxLoad').show();
-
-				ajaxPost('setQuestionMultipleCategories', data, function(json) {
-					location.reload();
-				});
-			});
-		}
-
-		initGlobal();
 
 		function showWpTriviaModalBox(title, id, height) {
 			var width = Math.min($('.wpTrivia_questionOverall').width() - 50, 600);
@@ -141,31 +60,6 @@ class WpTrivia_View_QuestionOverall extends WpTrivia_View_View {
 			return items;
 		}
 
-		function handleSetCategoryAction() {
-			var items = getCheckedItems();
-
-			if(!items || !items.length)
-				return false;
-
-			var $setCategoryBox = $('.wpTrivia_setQuestionCategoryList');
-			var $hiddenBox = $setCategoryBox.find('#setCategoryHidden').empty();
-			var $ulBox = $setCategoryBox.find('ul').empty();
-
-			$.each(items, function (i, v) {
-				$ulBox.append(
-					$('<li>').text(v.name)
-				);
-
-				$hiddenBox.append(
-					$('<input type="hidden" name="exportIds[]">').val(v.ID)
-				);
-			});
-
-			showWpTriviaModalBox('', 'wpTrivia_setQuestionCategoryList_box');
-
-			return true;
-		}
-
 		function handleDeleteAction() {
 			var items = getCheckedItems();
 			var $form = $('#deleteForm').empty();
@@ -185,9 +79,6 @@ class WpTrivia_View_QuestionOverall extends WpTrivia_View_View {
 
 		function handleAction(action) {
 			switch (action) {
-				case 'set_category':
-					handleSetCategoryAction();
-					return false;
 				case 'delete':
 					handleDeleteAction();
 					return false;
@@ -289,8 +180,6 @@ class WpTrivia_View_QuestionOverall extends WpTrivia_View_View {
 
 		<?php
 			add_thickbox();
-
-			$this->showSetQuestionCategoryListBox();
 			$this->showSortQuestionBox();
 			$this->showCopyQuestionBox();
 		?>
@@ -331,7 +220,7 @@ class WpTrivia_View_QuestionOverall extends WpTrivia_View_View {
 			require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 		}
 
-		$table = new WpTrivia_View_QuestionOverallTable($this->questionItems, $this->questionCount, $this->categoryItems, $this->perPage);
+		$table = new WpTrivia_View_QuestionOverallTable($this->questionItems, $this->questionCount, $this->perPage);
 
 		$table->prepare_items();
 
@@ -373,57 +262,6 @@ class WpTrivia_View_QuestionOverall extends WpTrivia_View_View {
 		</div>
 
 		<?php
-	}
-
-	protected function showSetQuestionCategoryListBox() {
-		?>
-
-		<div id="wpTrivia_setQuestionCategoryList_box" style="display: none;">
-			<div class="wpTrivia_setQuestionCategoryList">
-				<form action="#" method="POST">
-					<h3 style="margin-top: 0;"><?php _e('Set Question Categories', 'wp-trivia'); ?></h3>
-					<p><?php _e('Sets multiple question categories', 'wp-trivia'); ?></p>
-					<div style="margin-bottom: 10px">
-					</div>
-					<ul></ul>
-					<div style="clear: both; margin-bottom: 10px;"></div>
-					<div id="setCategoryHidden"></div>
-
-					<div style="margin-bottom: 10px;">
-						<p class="description">
-							<?php _e('You can assign classify category for a question.', 'wp-trivia'); ?>
-						</p>
-						<p class="description">
-							<?php _e('You can manage categories in global settings.', 'wp-trivia'); ?>
-						</p>
-						<div>
-							<select name="category">
-								<option value="-1">--- <?php _e('Create new category', 'wp-trivia'); ?> ----</option>
-								<option value="0" selected="selected">--- <?php _e('No category', 'wp-trivia'); ?> ---</option>
-								<?php
-								foreach($this->categoryItems as $cat) {
-									echo '<option value="'.$cat->getCategoryId().'">'.$cat->getCategoryName().'</option>';
-								}
-								?>
-							</select>
-						</div>
-						<div style="display: none;" id="categoryAddBox">
-							<h4><?php _e('Create new category', 'wp-trivia'); ?></h4>
-							<input type="text" name="categoryAdd" value="">
-							<input type="button" class="button-secondary" name="" id="categoryAddBtn" value="<?php _e('Create', 'wp-trivia'); ?>">
-						</div>
-						<div id="categoryMsgBox" style="display:none; padding: 5px; border: 1px solid rgb(160, 160, 160); background-color: rgb(255, 255, 168); font-weight: bold; margin: 5px; ">
-							Kategorie gespeichert
-						</div>
-					</div>
-
-					<input class="button-primary" name="setCategoriesStart" id="setCategoriesStart" value="<?php _e('Save', 'wp-trivia'); ?>" type="button">
-					<img id="ajaxLoad" style="display: none;" alt="load" src="data:image/gif;base64,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">
-				</form>
-			</div>
-		</div>
-
-	<?php
 	}
 
 	protected function showSortQuestionBox() {

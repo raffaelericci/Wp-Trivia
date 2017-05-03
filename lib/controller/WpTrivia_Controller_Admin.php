@@ -46,7 +46,6 @@ class WpTrivia_Controller_Admin
             'no_data_available' => __('No data available', 'wp-trivia'),
             'no_sort_element_criterion' => __('No sort element in the criterion', 'wp-trivia'),
             'dif_points' => __('"Different points for every answer" is not possible at "Free" choice', 'wp-trivia'),
-            'category_no_name' => __('You must specify a name.', 'wp-trivia'),
             'confirm_delete_entry' => __('This entry should really be deleted?', 'wp-trivia'),
             'not_all_fields_completed' => __('Not all fields completed.', 'wp-trivia'),
             'temploate_no_name' => __('You must specify a template name.', 'wp-trivia'),

@@ -7,7 +7,6 @@
  * @property WpTrivia_Model_Template[] templates
  * @property array quizList
  * @property bool captchaIsInstalled
- * @property WpTrivia_Model_Category[] categories
  * @property string header
  */
 class WpTrivia_View_QuizEdit extends WpTrivia_View_View
@@ -53,46 +52,6 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                                    value="<?php echo htmlspecialchars($this->quiz->getName(), ENT_QUOTES); ?>">
                         </div>
                     </div>
-                    <div class="postbox">
-                        <h3 class="hndle"><?php _e('Category', 'wp-trivia'); ?><?php _e('(optional)',
-                                'wp-trivia'); ?></h3>
-
-                        <div class="inside">
-                            <p class="description">
-                                <?php _e('You can assign classify category for a quiz.', 'wp-trivia'); ?>
-                            </p>
-
-                            <p class="description">
-                                <?php _e('You can manage categories in global settings.', 'wp-trivia'); ?>
-                            </p>
-
-                            <div>
-                                <select name="category">
-                                    <option value="-1">--- <?php _e('Create new category', 'wp-trivia'); ?>----
-                                    </option>
-                                    <option
-                                        value="0" <?php echo $this->quiz->getCategoryId() == 0 ? 'selected="selected"' : ''; ?>>
-                                        --- <?php _e('No category', 'wp-trivia'); ?> ---
-                                    </option>
-                                    <?php
-                                    foreach ($this->categories as $cat) {
-                                        echo '<option ' . ($this->quiz->getCategoryId() == $cat->getCategoryId() ? 'selected="selected"' : '') . ' value="' . $cat->getCategoryId() . '">' . $cat->getCategoryName() . '</option>';
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                            <div style="display: none;" id="categoryAddBox">
-                                <h4><?php _e('Create new category', 'wp-trivia'); ?></h4>
-                                <input type="text" name="categoryAdd" value="">
-                                <input type="button" class="button-secondary" name="" id="categoryAddBtn"
-                                       value="<?php _e('Create', 'wp-trivia'); ?>">
-                            </div>
-                            <div id="categoryMsgBox"
-                                 style="display:none; padding: 5px; border: 1px solid rgb(160, 160, 160); background-color: rgb(255, 255, 168); font-weight: bold; margin: 5px; ">
-                                <?php _e('Category saved', 'wp-trivia'); ?>
-                            </div>
-                        </div>
-                    </div>
 
                     <?php do_action('wpTrivia_action_plugin_quizEdit', $this); ?>
 
@@ -102,23 +61,6 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                         <div class="inside">
                             <table class="form-table">
                                 <tbody>
-                                <tr>
-                                    <th scope="row">
-                                        <?php _e('Sort questions by category', 'wp-trivia'); ?>
-                                    </th>
-                                    <td>
-                                        <fieldset>
-                                            <legend class="screen-reader-text">
-                                                <span><?php _e('Sort questions by category', 'wp-trivia'); ?></span>
-                                            </legend>
-                                            <label>
-                                                <input type="checkbox" value="1"
-                                                       name="sortCategories" <?php $this->checked($this->quiz->isSortCategories()); ?> >
-                                                <?php _e('Activate', 'wp-trivia'); ?>
-                                            </label>
-                                        </fieldset>
-                                    </td>
-                                </tr>
                                 <tr>
                                     <th scope="row">
                                         <?php _e('Time limit', 'wp-trivia'); ?>
@@ -777,37 +719,6 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                     </tr>
                     <tr>
                         <th scope="row">
-                            <?php _e('Show category score', 'wp-trivia'); ?>
-                        </th>
-                        <td>
-                            <fieldset>
-                                <legend class="screen-reader-text">
-                                    <span><?php _e('Show category score', 'wp-trivia'); ?></span>
-                                </legend>
-                                <label>
-                                    <input type="checkbox" name="showCategoryScore"
-                                           value="1" <?php $this->checked($this->quiz->isShowCategoryScore()); ?>>
-                                    <?php _e('Activate', 'wp-trivia'); ?>
-                                </label>
-
-                                <p class="description">
-                                    <?php _e('If you enable this option, the results of each category is displayed on the results page.',
-                                        'wp-trivia'); ?>
-                                </p>
-                            </fieldset>
-
-                            <div class="wpTrivia_demoBox">
-                                <a href="#"><?php _e('Demo', 'wp-trivia'); ?></a>
-
-                                <div
-                                    style="z-index: 9999999; position: absolute; background-color: #E9E9E9; padding: 10px; box-shadow: 0px 0px 10px 4px rgb(44, 44, 44); display: none; ">
-                                    <img alt="" src="<?php echo WPPROQUIZ_URL . '/img/catOverview.png'; ?> ">
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
                             <?php _e('Hide correct questions - display', 'wp-trivia'); ?>
                         </th>
                         <td>
@@ -1116,37 +1027,6 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                                         style="z-index: 9999999; position: absolute; background-color: #E9E9E9; padding: 10px; box-shadow: 0px 0px 10px 4px rgb(44, 44, 44); display: none; ">
                                         <img alt=""
                                              src="<?php echo WPPROQUIZ_URL . '/img/hideQuestionNumbering.png'; ?> ">
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            <?php _e('Display category', 'wp-trivia'); ?>
-                        </th>
-                        <td>
-                            <fieldset>
-                                <legend class="screen-reader-text">
-                                    <span><?php _e('Display category', 'wp-trivia'); ?></span>
-                                </legend>
-                                <label>
-                                    <input type="checkbox" value="1"
-                                           name="showCategory" <?php $this->checked($this->quiz->isShowCategory()); ?>>
-                                    <?php _e('Activate', 'wp-trivia'); ?>
-                                </label>
-
-                                <p class="description">
-                                    <?php _e('If you enable this option, category will be displayed in the question.',
-                                        'wp-trivia'); ?>
-                                </p>
-
-                                <div class="wpTrivia_demoBox">
-                                    <a href="#"><?php _e('Demo', 'wp-trivia'); ?></a>
-
-                                    <div
-                                        style="z-index: 9999999; position: absolute; background-color: #E9E9E9; padding: 10px; box-shadow: 0px 0px 10px 4px rgb(44, 44, 44); display: none; ">
-                                        <img alt="" src="<?php echo WPPROQUIZ_URL . '/img/showCategory.png'; ?> ">
                                     </div>
                                 </div>
                             </fieldset>
@@ -1741,14 +1621,10 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                                                 </li>
                                                 <li><span>$quizname</span> - <?php _e('Quiz-Name', 'wp-trivia'); ?>
                                                 </li>
-                                                <li><span>$result</span> - <?php _e('Result in precent',
-                                                        'wp-trivia'); ?></li>
+                                                <li><span>$result</span> - <?php _e('Result in precent', 'wp-trivia'); ?></li>
                                                 <li><span>$points</span> - <?php _e('Reached points', 'wp-trivia'); ?>
                                                 </li>
-                                                <li><span>$ip</span> - <?php _e('IP-address of the user',
-                                                        'wp-trivia'); ?></li>
-                                                <li><span>$categories</span> - <?php _e('Category-Overview',
-                                                        'wp-trivia'); ?></li>
+                                                <li><span>$ip</span> - <?php _e('IP-address of the user', 'wp-trivia'); ?></li>
                                             </ul>
                                         </td>
                                         <td style="vertical-align: top;">
@@ -1893,14 +1769,10 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                                                 </li>
                                                 <li><span>$quizname</span> - <?php _e('Quiz-Name', 'wp-trivia'); ?>
                                                 </li>
-                                                <li><span>$result</span> - <?php _e('Result in precent',
-                                                        'wp-trivia'); ?></li>
+                                                <li><span>$result</span> - <?php _e('Result in precent', 'wp-trivia'); ?></li>
                                                 <li><span>$points</span> - <?php _e('Reached points', 'wp-trivia'); ?>
                                                 </li>
-                                                <li><span>$ip</span> - <?php _e('IP-address of the user',
-                                                        'wp-trivia'); ?></li>
-                                                <li><span>$categories</span> - <?php _e('Category-Overview',
-                                                        'wp-trivia'); ?></li>
+                                                <li><span>$ip</span> - <?php _e('IP-address of the user', 'wp-trivia'); ?></li>
                                             </ul>
                                         </td>
                                         <td style="vertical-align: top;">

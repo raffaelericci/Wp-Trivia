@@ -33,33 +33,6 @@ jQuery(document).ready(function($) {
         };
 
         var methode = {
-            addCategory: function () {
-                var name = $.trim($('input[name="categoryAdd"]').val());
-
-                if (isEmpty(name)) {
-                    return;
-                }
-
-                var data = {
-                    categoryName: name,
-                    type: 'quiz'
-                };
-
-                ajaxPost('categoryAdd', data, function (json) {
-                    if (json.err) {
-                        $('#categoryMsgBox').text(json.err).show('fast').delay(2000).hide('fast');
-                        return;
-                    }
-
-                    var $option = $(document.createElement('option'))
-                        .val(json.categoryId)
-                        .text(json.categoryName)
-                        .attr('selected', 'selected');
-
-                    $('select[name="category"]').append($option).change();
-
-                });
-            },
 
             addResult: function () {
                 $('#resultList').children().each(function () {
@@ -462,20 +435,6 @@ jQuery(document).ready(function($) {
 
             $('.formFieldName, select[name="form[][type]"]').change(function () {
                 methode.updateFormIds();
-            });
-
-            $('select[name="category"]').change(function () {
-                var $this = $(this);
-                var box = $('#categoryAddBox').hide();
-
-                if ($this.val() == "-1") {
-                    box.show();
-                }
-
-            }).change();
-
-            $('#categoryAddBtn').click(function () {
-                methode.addCategory();
             });
 
             $('input[name="emailNotification"]').change(function () {
@@ -1154,43 +1113,6 @@ jQuery(document).ready(function($) {
              */
             gobalSettings: function () {
                 var methode = {
-                    categoryDelete: function (id, type) {
-                        var data = {
-                            categoryId: id
-                        };
-
-                        global.ajaxPost('categoryDelete', data, function (json) {
-                            if (json.err) {
-
-                                return;
-                            }
-
-                            $('select[name="category' + type + '"] option[value="' + id + '"]').remove();
-                            $('select[name="category' + type + '"]').change();
-                        });
-                    },
-
-                    categoryEdit: function (id, name, type) {
-                        var data = {
-                            categoryId: id,
-                            categoryName: $.trim(name)
-                        };
-
-                        if (global.isEmpty(name)) {
-                            alert(wpTriviaLocalize.category_no_name);
-                            return;
-                        }
-
-                        global.ajaxPost('categoryEdit', data, function (json) {
-                            if (json.err) {
-
-                                return;
-                            }
-
-                            $('select[name="category' + type + '"] option[value="' + id + '"]').text(data.categoryName);
-                            $('select[name="category' + type + '"]').change();
-                        });
-                    },
 
                     changeTimeFormat: function (inputName, $select) {
                         if ($select.val() != "0")
@@ -1221,11 +1143,6 @@ jQuery(document).ready(function($) {
 
                     templateEdit: function (id, name, type) {
 
-                        if (global.isEmpty(name)) {
-                            alert(wpTriviaLocalize.category_no_name);
-                            return;
-                        }
-
                         var data = {
                             templateId: id,
                             name: $.trim(name),
@@ -1250,39 +1167,6 @@ jQuery(document).ready(function($) {
                 };
 
                 var init = function () {
-                    $('select[name="category"]').change(function () {
-                        $('input[name="categoryEditText"]').val($(this).find(':selected').text());
-                    }).change();
-
-                    $('input[name="categoryDelete"]').click(function () {
-                        var id = $('select[name="category"] option:selected').val();
-
-                        methode.categoryDelete(id, '');
-                    });
-
-                    $('input[name="categoryEdit"]').click(function () {
-                        var id = $('select[name="category"] option:selected').val();
-                        var text = $('input[name="categoryEditText"]').val();
-
-                        methode.categoryEdit(id, text, '');
-                    });
-
-                    $('select[name="categoryQuiz"]').change(function () {
-                        $('input[name="categoryQuizEditText"]').val($(this).find(':selected').text());
-                    }).change();
-
-                    $('input[name="categoryQuizDelete"]').click(function () {
-                        var id = $('select[name="categoryQuiz"] option:selected').val();
-
-                        methode.categoryDelete(id, 'Quiz');
-                    });
-
-                    $('input[name="categoryQuizEdit"]').click(function () {
-                        var id = $('select[name="categoryQuiz"] option:selected').val();
-                        var text = $('input[name="categoryQuizEditText"]').val();
-
-                        methode.categoryEdit(id, text, 'Quiz');
-                    });
 
                     $('#statistic_time_format_select').change(function () {
                         methode.changeTimeFormat('statisticTimeFormat', $(this));
@@ -1432,33 +1316,6 @@ jQuery(document).ready(function($) {
                         li.remove();
 
                         return false;
-                    },
-
-                    addCategory: function () {
-                        var name = $.trim($('input[name="categoryAdd"]').val());
-
-                        if (global.isEmpty(name)) {
-                            return;
-                        }
-
-                        var data = {
-                            categoryName: name
-                        };
-
-                        global.ajaxPost('categoryAdd', data, function (json) {
-                            if (json.err) {
-                                $('#categoryMsgBox').text(json.err).show('fast').delay(2000).hide('fast');
-                                return;
-                            }
-
-                            var $option = $(document.createElement('option'))
-                                .val(json.categoryId)
-                                .text(json.categoryName)
-                                .attr('selected', 'selected');
-
-                            $('select[name="category"]').append($option).change();
-
-                        });
                     },
 
                     addMediaClick: function () {
@@ -1690,20 +1547,6 @@ jQuery(document).ready(function($) {
                         }
                     }).change();
 
-                    $('select[name="category"]').change(function () {
-                        var $this = $(this);
-                        var box = $('#categoryAddBox').hide();
-
-                        if ($this.val() == "-1") {
-                            box.show();
-                        }
-
-                    }).change();
-
-                    $('#categoryAddBtn').click(function () {
-                        methode.addCategory();
-                    });
-
                     $('.addMedia').click(methode.addMediaClick);
 
                     $('input[name="answerPointsDiffModusActivated"]').change(function () {
@@ -1803,12 +1646,6 @@ jQuery(document).ready(function($) {
                                 var $tr = $('#wpTrivia_tr_' + this.questionId);
 
                                 methode.setStatisticData($tr, this);
-                            });
-
-                            $.each(json.category, function (i, v) {
-                                var $tr = $('#wpTrivia_ctr_' + i);
-
-                                methode.setStatisticData($tr, v);
                             });
 
                             $('#testSelect option:gt(0)').remove();

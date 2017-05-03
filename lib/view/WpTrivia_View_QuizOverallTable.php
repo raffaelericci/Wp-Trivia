@@ -8,15 +8,11 @@ class WpTrivia_View_QuizOverallTable extends WP_List_Table
     private $quizCount;
     private $perPage;
 
-    /** @var  WpTrivia_Model_Category[] */
-    private $categoryItems;
-
     public static function getColumnDefs()
     {
         $columns = array(
             'cb' => '<input type="checkbox" />',
             'name' => __('Name', 'wp-trivia'),
-            'category' => __('Category', 'wp-trivia'),
             'shortcode' => __('Shortcode', 'wp-trivia'),
             'shortcode_leaderboard' => __('Shortcode-Leaderboard', 'wp-trivia')
         );
@@ -24,7 +20,7 @@ class WpTrivia_View_QuizOverallTable extends WP_List_Table
         return $columns;
     }
 
-    function __construct($quizItems, $quizCount, $categoryItems, $perPage)
+    function __construct($quizItems, $quizCount, $perPage)
     {
         parent::__construct(array(
             'singular' => __('Quiz', 'wp-trivia'),
@@ -35,7 +31,6 @@ class WpTrivia_View_QuizOverallTable extends WP_List_Table
 
         $this->quizItems = $quizItems;
         $this->quizCount = $quizCount;
-        $this->categoryItems = $categoryItems;
         $this->perPage = $perPage;
     }
 
@@ -52,8 +47,7 @@ class WpTrivia_View_QuizOverallTable extends WP_List_Table
     function get_sortable_columns()
     {
         $sortable_columns = array(
-            'name' => array('name', false),
-            'category' => array('category', false),
+            'name' => array('name', false)
         );
 
         return $sortable_columns;
@@ -110,36 +104,7 @@ class WpTrivia_View_QuizOverallTable extends WP_List_Table
             $actions['export'] = __('Export', 'wp-trivia');
         }
 
-        if (current_user_can('wpTrivia_edit_quiz')) {
-            $actions['set_category'] = __('Set Category', 'wp-trivia');
-        }
-
         return $actions;
-    }
-
-    function extra_tablenav($which)
-    {
-        if ($which != 'top') {
-            return;
-        }
-        ?>
-
-        <div class="alignleft actions">
-            <label class="screen-reader-text" for="cat"><?php _e('Filter by category'); ?></label>
-            <select name="cat" id="cat" class="postform">
-                <option value="0"><?php _e('All categories'); ?> </option>
-                <?php
-                foreach ($this->categoryItems as $c) {
-                    $isSet = isset($_GET['cat']) && $_GET['cat'] == $c->getCategoryId();
-
-                    echo '<option class="level-0" value="' . $c->getCategoryId() . '" ' . ($isSet ? 'selected' : '') . '>' . $c->getCategoryName() . '</option>';
-                }
-                ?>
-            </select>
-            <?php submit_button(__('Filter'), 'button', 'filter_action', false, array('id' => 'post-query-submit')); ?>
-        </div>
-
-        <?php
     }
 
     function column_cb($item)
@@ -162,7 +127,6 @@ class WpTrivia_View_QuizOverallTable extends WP_List_Table
             $items[] = array(
                 'ID' => $q->getId(),
                 'name' => $q->getName(),
-                'category' => $q->getCategoryName(),
                 'shortcode' => '[WpTrivia ' . $q->getId() . ']',
                 'shortcode_leaderboard' => $q->isToplistActivated() ? '[WpTrivia_toplist ' . $q->getId() . ']' : ''
             );

@@ -1,7 +1,6 @@
 <?php
 
 /**
- * @property WpTrivia_Model_Category[] categories
  * @property WpTrivia_Model_Quiz quiz
  * @property WpTrivia_Model_Template[] templates
  * @property WpTrivia_Model_Question question
@@ -105,47 +104,6 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
                                     <?php _e('Show reached points in the correct- and incorrect message?',
                                         'wp-trivia'); ?>
                                 </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="postbox">
-                        <h3 class="hndle"><?php _e('Category', 'wp-trivia'); ?><?php _e('(optional)',
-                                'wp-trivia'); ?></h3>
-
-                        <div class="inside">
-                            <p class="description">
-                                <?php _e('You can assign classify category for a question. Categories are e.g. visible in statistics function.',
-                                    'wp-trivia'); ?>
-                            </p>
-
-                            <p class="description">
-                                <?php _e('You can manage categories in global settings.', 'wp-trivia'); ?>
-                            </p>
-
-                            <div>
-                                <select name="category">
-                                    <option value="-1">--- <?php _e('Create new category', 'wp-trivia'); ?>----
-                                    </option>
-                                    <option
-                                        value="0" <?php echo $this->question->getCategoryId() == 0 ? 'selected="selected"' : ''; ?>>
-                                        --- <?php _e('No category', 'wp-trivia'); ?> ---
-                                    </option>
-                                    <?php
-                                    foreach ($this->categories as $cat) {
-                                        echo '<option ' . ($this->question->getCategoryId() == $cat->getCategoryId() ? 'selected="selected"' : '') . ' value="' . $cat->getCategoryId() . '">' . $cat->getCategoryName() . '</option>';
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                            <div style="display: none;" id="categoryAddBox">
-                                <h4><?php _e('Create new category', 'wp-trivia'); ?></h4>
-                                <input type="text" name="categoryAdd" value="">
-                                <input type="button" class="button-secondary" name="" id="categoryAddBtn"
-                                       value="<?php _e('Create', 'wp-trivia'); ?>">
-                            </div>
-                            <div id="categoryMsgBox"
-                                 style="display:none; padding: 5px; border: 1px solid rgb(160, 160, 160); background-color: rgb(255, 255, 168); font-weight: bold; margin: 5px; ">
-                                Kategorie gespeichert
                             </div>
                         </div>
                     </div>

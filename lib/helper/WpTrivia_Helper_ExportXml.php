@@ -67,8 +67,6 @@ class WpTrivia_Helper_ExportXml
         $quizElement->appendChild($text = $dom->createElement('text'));
         $text->appendChild($dom->createCDATASection($quiz->getText()));
 
-        $quizElement->appendChild($dom->createElement('category', $quiz->getCategoryName()));
-
         if (is_array($quiz->getResultText())) {
             $resultArray = $quiz->getResultText();
             $result = $dom->createElement('resultText');
@@ -149,8 +147,6 @@ class WpTrivia_Helper_ExportXml
         $quizElement->appendChild($dom->createElement('emailNotification', $quiz->getEmailNotification()));
         $quizElement->appendChild($dom->createElement('userEmailNotification',
             $this->booleanToTrueOrFalse($quiz->isUserEmailNotification())));
-        $quizElement->appendChild($dom->createElement('showCategoryScore',
-            $this->booleanToTrueOrFalse($quiz->isShowCategoryScore())));
         $quizElement->appendChild($dom->createElement('hideResultCorrectQuestion',
             $this->booleanToTrueOrFalse($quiz->isHideResultCorrectQuestion())));
         $quizElement->appendChild($dom->createElement('hideResultQuizTime',
@@ -166,11 +162,6 @@ class WpTrivia_Helper_ExportXml
             $this->booleanToTrueOrFalse($quiz->isHideQuestionNumbering())));
 
         //0.27
-        $quizElement->appendChild($dom->createElement('sortCategories',
-            $this->booleanToTrueOrFalse($quiz->isSortCategories())));
-        $quizElement->appendChild($dom->createElement('showCategory',
-            $this->booleanToTrueOrFalse($quiz->isShowCategory())));
-
         $quizElement->appendChild($dom->createElement('startOnlyRegisteredUser',
             $this->booleanToTrueOrFalse($quiz->isStartOnlyRegisteredUser())));
 
@@ -265,8 +256,6 @@ class WpTrivia_Helper_ExportXml
         $qElement->appendChild($tipMsg = $dom->createElement('tipMsg'));
         $tipMsg->setAttribute('enabled', $this->booleanToTrueOrFalse($question->isTipEnabled()));
         $tipMsg->appendChild($dom->createCDATASection($question->getTipMsg()));
-
-        $qElement->appendChild($dom->createElement('category', $question->getCategoryName()));
 
         $qElement->appendChild($dom->createElement('correctSameText',
             $this->booleanToTrueOrFalse($question->isCorrectSameText())));

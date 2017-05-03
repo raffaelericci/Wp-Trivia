@@ -33,12 +33,9 @@ class WpTrivia_Model_QuizMapper extends WpTrivia_Model_Mapper
         $results = $this->_wpdb->get_row(
             $this->_wpdb->prepare(
                 "SELECT
-									m.*,
-									c.category_name
+									m.*
 								FROM
 									{$this->_table} AS m
-									LEFT JOIN {$this->_tableCategory} AS c
-										ON c.category_id = m.category_id
 								WHERE
 									id = %d",
                 $id),
@@ -62,12 +59,9 @@ class WpTrivia_Model_QuizMapper extends WpTrivia_Model_Mapper
         $results = $this->_wpdb->get_results(
             "
 				SELECT
-					m.*,
-					c.category_name
+					m.*
 				FROM
 					{$this->_table} AS m
-					LEFT JOIN {$this->_tableCategory} AS c
-						ON c.category_id = m.category_id
 			"
             , ARRAY_A);
 
@@ -98,9 +92,6 @@ class WpTrivia_Model_QuizMapper extends WpTrivia_Model_Mapper
         $r = array();
 
         switch ($orderBy) {
-            case 'category';
-                $_orderBy = 'c.category_name';
-                break;
             default:
                 $_orderBy = 'm.name';
                 break;
@@ -108,21 +99,12 @@ class WpTrivia_Model_QuizMapper extends WpTrivia_Model_Mapper
 
         $whereFilter = '';
 
-        if ($filter) {
-            if (isset($filter['cat']) && $filter['cat']) {
-                $whereFilter = ' AND m.category_id = ' . ((int)$filter['cat']);
-            }
-        }
-
         $results = $this->_wpdb->get_results($this->_wpdb->prepare(
             "
 				SELECT
-					m.*,
-					c.category_name
+					m.*
 				FROM
 					{$this->_table} AS m
-					LEFT JOIN {$this->_tableCategory} AS c
-						ON c.category_id = m.category_id
 				WHERE
 					m.name LIKE %s
 					{$whereFilter}
@@ -202,7 +184,6 @@ class WpTrivia_Model_QuizMapper extends WpTrivia_Model_Mapper
             'skip_question_disabled' => (int)$data->isSkipQuestionDisabled(),
             'email_notification' => $data->getEmailNotification(),
             'user_email_notification' => (int)$data->isUserEmailNotification(),
-            'show_category_score' => (int)$data->isShowCategoryScore(),
             'hide_result_correct_question' => (int)$data->isHideResultCorrectQuestion(),
             'hide_result_quiz_time' => (int)$data->isHideResultQuizTime(),
             'hide_result_points' => (int)$data->isHideResultPoints(),
@@ -214,9 +195,6 @@ class WpTrivia_Model_QuizMapper extends WpTrivia_Model_Mapper
             'form_show_position' => $data->getFormShowPosition(),
             'start_only_registered_user' => (int)$data->isStartOnlyRegisteredUser(),
             'questions_per_page' => $data->getQuestionsPerPage(),
-            'sort_categories' => (int)$data->isSortCategories(),
-            'show_category' => (int)$data->isShowCategory(),
-            'category_id' => (int)$data->getCategoryId(),
             'admin_email' => $data->getAdminEmail(true),
             'user_email' => $data->getUserEmail(true),
             'plugin_container' => $data->getPluginContainer(true)
@@ -417,18 +395,5 @@ class WpTrivia_Model_QuizMapper extends WpTrivia_Model_Mapper
 					m.id = %d"
                 , $quizId)
         );
-    }
-
-    public function setMultipeCategories($quizIds, $categoryId)
-    {
-        $quizIds = implode(', ', array_map('intval', (array)$quizIds));
-
-        return $this->_wpdb->query($this->_wpdb->prepare(
-            "UPDATE
-					{$this->_tableMaster}
-				SET
-					`category_id` = %d
-				WHERE id IN(" . $quizIds . ")"
-            , $categoryId));
     }
 }

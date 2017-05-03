@@ -46,7 +46,6 @@ class WpTrivia_Helper_DbUpgrade
 
     public function delete()
     {
-        $this->_wpdb->query('DROP TABLE IF EXISTS `' . $this->_wpdb->prefix . 'wp_trivia_category`');
         $this->_wpdb->query('DROP TABLE IF EXISTS `' . $this->_wpdb->prefix . 'wp_trivia_form`');
         $this->_wpdb->query('DROP TABLE IF EXISTS `' . $this->_wpdb->prefix . 'wp_trivia_lock`');
         $this->_wpdb->query('DROP TABLE IF EXISTS `' . $this->_wpdb->prefix . 'wp_trivia_master`');
@@ -71,13 +70,6 @@ class WpTrivia_Helper_DbUpgrade
         }
 
         dbDelta("
-			CREATE TABLE {$this->_wpdb->prefix}wp_trivia_category (
-			  category_id int(10) unsigned NOT NULL AUTO_INCREMENT,
-			  category_name varchar(200) NOT NULL,
-			  type enum('QUESTION','QUIZ') NOT NULL DEFAULT 'QUESTION',
-			  PRIMARY KEY  (category_id)
-			) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
-
 			CREATE TABLE {$this->_wpdb->prefix}wp_trivia_form (
 			  form_id int(11) NOT NULL AUTO_INCREMENT,
 			  quiz_id int(11) NOT NULL,
@@ -129,7 +121,6 @@ class WpTrivia_Helper_DbUpgrade
 			  skip_question_disabled tinyint(1) NOT NULL,
 			  email_notification tinyint(3) unsigned NOT NULL,
 			  user_email_notification tinyint(1) unsigned NOT NULL,
-			  show_category_score tinyint(1) unsigned NOT NULL,
 			  hide_result_correct_question tinyint(1) unsigned NOT NULL DEFAULT '0',
 			  hide_result_quiz_time tinyint(1) unsigned NOT NULL DEFAULT '0',
 			  hide_result_points tinyint(1) unsigned NOT NULL DEFAULT '0',
@@ -141,9 +132,6 @@ class WpTrivia_Helper_DbUpgrade
 			  form_show_position tinyint(3) unsigned NOT NULL,
 			  start_only_registered_user tinyint(1) unsigned NOT NULL,
 			  questions_per_page tinyint(3) unsigned NOT NULL,
-			  sort_categories tinyint(1) unsigned NOT NULL,
-			  show_category tinyint(1) unsigned NOT NULL,
-			  category_id int(10) unsigned NOT NULL,
 			  admin_email text NOT NULL,
   			  user_email text NOT NULL,
 			  plugin_container text,
@@ -174,12 +162,10 @@ class WpTrivia_Helper_DbUpgrade
 			  show_points_in_box tinyint(1) NOT NULL,
 			  answer_points_activated tinyint(1) NOT NULL,
 			  answer_data longtext NOT NULL,
-			  category_id int(10) unsigned NOT NULL,
 			  answer_points_diff_modus_activated tinyint(1) unsigned NOT NULL,
 			  disable_correct tinyint(1) unsigned NOT NULL,
 			  PRIMARY KEY  (id),
-			  KEY quiz_id (quiz_id),
-			  KEY category_id (category_id)
+			  KEY quiz_id (quiz_id)
 			) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 			CREATE TABLE {$this->_wpdb->prefix}wp_trivia_statistic (

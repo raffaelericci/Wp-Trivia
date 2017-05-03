@@ -21,20 +21,17 @@ class WpTrivia_Model_StatisticUserMapper extends WpTrivia_Model_Mapper
 					q.title AS question_name,
 					q.answer_data AS question_answer_data,
 					q.answer_type,
-					SUM(q.points * (s.correct_count + s.incorrect_count)) AS g_points,
-					c.category_id,
-					c.category_name
+					SUM(q.points * (s.correct_count + s.incorrect_count)) AS g_points
 				FROM
 					{$this->_tableStatisticRef} AS sf
 			        INNER JOIN {$this->_tableStatistic} AS s ON(s.statistic_ref_id = sf.statistic_ref_id)
 			        INNER JOIN {$this->_tableQuestion} AS q ON(q.id = s.question_id)
-			        LEFT JOIN {$this->_tableCategory} AS c ON(c.category_id = q.category_id)
 				WHERE
 					{$where} AND sf.quiz_id = %d
 				GROUP BY
 					s.question_id
 				ORDER BY
-					ISNULL(c.category_name), c.category_name, q.sort",
+					q.sort",
                 $refIdUserId, $quizId), ARRAY_A);
 
         $r = array();

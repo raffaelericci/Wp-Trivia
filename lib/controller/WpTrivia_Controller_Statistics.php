@@ -325,19 +325,7 @@ class WpTrivia_Controller_Statistics extends WpTrivia_Controller_Controller
 
         foreach ($statisticUsers as $statistic) {
             /* @var $statistic WpTrivia_Model_StatisticUser */
-
-            if (!isset($output[$statistic->getCategoryId()])) {
-                $output[$statistic->getCategoryId()] = array(
-                    'questions' => array(),
-                    'categoryId' => $statistic->getCategoryId(),
-                    'categoryName' => $statistic->getCategoryId() ? $statistic->getCategoryName() : __('No category',
-                        'wp-trivia')
-                );
-            }
-
-            $o = &$output[$statistic->getCategoryId()];
-
-            $o['questions'][] = array(
+            $output['questions'][] = array(
                 'correct' => $statistic->getCorrectCount(),
                 'incorrect' => $statistic->getIncorrectCount(),
                 'hintCount' => $statistic->getIncorrectCount(),

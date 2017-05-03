@@ -16,7 +16,6 @@ class WpTrivia_Controller_GlobalSettings extends WpTrivia_Controller_Controller
         }
 
         $mapper = new WpTrivia_Model_GlobalSettingsMapper();
-        $categoryMapper = new WpTrivia_Model_CategoryMapper();
         $templateMapper = new WpTrivia_Model_TemplateMapper();
 
         $view = new WpTrivia_View_GobalSettings();
@@ -51,8 +50,6 @@ class WpTrivia_Controller_GlobalSettings extends WpTrivia_Controller_Controller
 
         $view->settings = $mapper->fetchAll();
         $view->isRaw = !preg_match('[raw]', apply_filters('the_content', '[raw]a[/raw]'));
-        $view->category = $categoryMapper->fetchAll();
-        $view->categoryQuiz = $categoryMapper->fetchAll(WpTrivia_Model_Category::CATEGORY_TYPE_QUIZ);
         $view->email = $mapper->getEmailSettings();
         $view->userEmail = $mapper->getUserEmailSettings();
         $view->templateQuiz = $templateMapper->fetchAll(WpTrivia_Model_Template::TEMPLATE_TYPE_QUIZ, false);

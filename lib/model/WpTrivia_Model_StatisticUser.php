@@ -11,8 +11,6 @@ class WpTrivia_Model_StatisticUser extends WpTrivia_Model_Model
     protected $_questionId = 0;
     protected $_questionName = '';
     protected $_gPoints = 0;
-    protected $_categoryId = 0;
-    protected $_categoryName = '';
     protected $_statisticAnswerData = null;
     protected $_questionAnswerData = null;
     protected $_answerType = '';
@@ -112,30 +110,6 @@ class WpTrivia_Model_StatisticUser extends WpTrivia_Model_Model
     public function getGPoints()
     {
         return $this->_gPoints;
-    }
-
-    public function setCategoryId($_categoryId)
-    {
-        $this->_categoryId = (int)$_categoryId;
-
-        return $this;
-    }
-
-    public function getCategoryId()
-    {
-        return $this->_categoryId;
-    }
-
-    public function setCategoryName($_categoryName)
-    {
-        $this->_categoryName = (string)$_categoryName;
-
-        return $this;
-    }
-
-    public function getCategoryName()
-    {
-        return $this->_categoryName;
     }
 
     public function setStatisticAnswerData($_statisticAnswerData)

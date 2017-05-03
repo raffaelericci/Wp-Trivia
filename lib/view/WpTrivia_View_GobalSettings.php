@@ -3,8 +3,6 @@
 /**
  * @property WpTrivia_Model_GlobalSettings settings
  * @property bool isRaw
- * @property WpTrivia_Model_Category[] category
- * @property WpTrivia_Model_Category[] categoryQuiz
  * @property array email
  * @property array userEmail
  * @property WpTrivia_Model_Template[] templateQuiz
@@ -27,8 +25,6 @@ class WpTrivia_View_GobalSettings extends WpTrivia_View_View
             <div class="wpTrivia_tab_wrapper" style="padding: 10px 0px;">
                 <a class="button-primary" href="#" data-tab="#globalContent"><?php _e('Global settings',
                         'wp-trivia'); ?></a>
-                <!-- <a class="button-secondary" href="#" data-tab="#emailSettingsTab"><?php //_e('E-Mail settings', 'wp-trivia');
-                ?></a> -->
                 <a class="button-secondary" href="#" data-tab="#problemContent"><?php _e('Settings in case of problems',
                         'wp-trivia'); ?></a>
             </div>
@@ -168,65 +164,6 @@ class WpTrivia_View_GobalSettings extends WpTrivia_View_View
                             </fieldset>
                         </td>
                     </tr>
-
-                    <tr>
-                        <th scope="row">
-                            <?php _e('Category management', 'wp-trivia'); ?>
-                        </th>
-                        <td>
-                            <fieldset>
-                                <legend class="screen-reader-text">
-                                    <span><?php _e('Category management', 'wp-trivia'); ?></span>
-                                </legend>
-                                <select name="category">
-                                    <?php foreach ($this->category as $cat) {
-                                        echo '<option value="' . $cat->getCategoryId() . '">' . $cat->getCategoryName() . '</option>';
-
-                                    } ?>
-                                </select>
-
-                                <div style="padding-top: 5px;">
-                                    <input type="text" value="" name="categoryEditText">
-                                </div>
-                                <div style="padding-top: 5px;">
-                                    <input type="button" value="<?php _e('Delete', 'wp-trivia'); ?>"
-                                           name="categoryDelete" class="button-secondary">
-                                    <input type="button" value="<?php _e('Edit', 'wp-trivia'); ?>" name="categoryEdit"
-                                           class="button-secondary">
-                                </div>
-                            </fieldset>
-                        </td>
-                    </tr>
-                    <tr>
-
-                        <th scope="row">
-                            <?php _e('Quiz Category management', 'wp-trivia'); ?>
-                        </th>
-                        <td>
-                            <fieldset>
-                                <legend class="screen-reader-text">
-                                    <span><?php _e('Quiz Category management', 'wp-trivia'); ?></span>
-                                </legend>
-                                <select name="categoryQuiz">
-                                    <?php foreach ($this->categoryQuiz as $cat) {
-                                        echo '<option value="' . $cat->getCategoryId() . '">' . $cat->getCategoryName() . '</option>';
-
-                                    } ?>
-                                </select>
-
-                                <div style="padding-top: 5px;">
-                                    <input type="text" value="" name="categoryQuizEditText">
-                                </div>
-                                <div style="padding-top: 5px;">
-                                    <input type="button" value="<?php _e('Delete', 'wp-trivia'); ?>"
-                                           name="categoryQuizDelete" class="button-secondary">
-                                    <input type="button" value="<?php _e('Edit', 'wp-trivia'); ?>"
-                                           name="categoryQuizEdit" class="button-secondary">
-                                </div>
-                            </fieldset>
-                        </td>
-                    </tr>
-
                     <tr>
                         <th scope="row">
                             <?php _e('Quiz template management', 'wp-trivia'); ?>
@@ -373,7 +310,6 @@ class WpTrivia_View_GobalSettings extends WpTrivia_View_View
                                     <li><span>$result</span> - <?php _e('Result in precent', 'wp-trivia'); ?></li>
                                     <li><span>$points</span> - <?php _e('Reached points', 'wp-trivia'); ?></li>
                                     <li><span>$ip</span> - <?php _e('IP-address of the user', 'wp-trivia'); ?></li>
-                                    <li><span>$categories</span> - <?php _e('Category-Overview', 'wp-trivia'); ?></li>
                                 </ul>
                             </div>
 
@@ -449,7 +385,6 @@ class WpTrivia_View_GobalSettings extends WpTrivia_View_View
                                     <li><span>$result</span> - <?php _e('Result in precent', 'wp-trivia'); ?></li>
                                     <li><span>$points</span> - <?php _e('Reached points', 'wp-trivia'); ?></li>
                                     <li><span>$ip</span> - <?php _e('IP-address of the user', 'wp-trivia'); ?></li>
-                                    <li><span>$categories</span> - <?php _e('Category-Overview', 'wp-trivia'); ?></li>
                                 </ul>
                             </div>
 

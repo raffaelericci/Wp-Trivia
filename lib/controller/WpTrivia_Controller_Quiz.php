@@ -77,7 +77,6 @@ class WpTrivia_Controller_Quiz extends WpTrivia_Controller_Controller
         $quizMapper = new WpTrivia_Model_QuizMapper();
         $formMapper = new WpTrivia_Model_FormMapper();
         $templateMapper = new WpTrivia_Model_TemplateMapper();
-        $categoryMapper = new WpTrivia_Model_CategoryMapper();
 
         $quiz = new WpTrivia_Model_Quiz();
         $forms = null;
@@ -111,8 +110,6 @@ class WpTrivia_Controller_Quiz extends WpTrivia_Controller_Controller
                 if (isset($this->_post['resultGradeEnabled'])) {
                     $this->_post['result_text'] = $this->filterResultTextGrade($this->_post);
                 }
-
-                $this->_post['categoryId'] = $this->_post['category'] > 0 ? $this->_post['category'] : 0;
 
                 $this->_post['adminEmail'] = new WpTrivia_Model_Email($this->_post['adminEmail']);
                 $this->_post['userEmail'] = new WpTrivia_Model_Email($this->_post['userEmail']);
@@ -171,7 +168,6 @@ class WpTrivia_Controller_Quiz extends WpTrivia_Controller_Controller
         $view->templates = $templateMapper->fetchAll(WpTrivia_Model_Template::TEMPLATE_TYPE_QUIZ, false);
         $view->quizList = $quizMapper->fetchAllAsArray(array('id', 'name'), $quizId ? array($quizId) : array());
         $view->captchaIsInstalled = class_exists('ReallySimpleCaptcha');
-        $view->categories = $categoryMapper->fetchAll(WpTrivia_Model_Category::CATEGORY_TYPE_QUIZ);
 
         $view->header = $quizId ? __('Edit quiz', 'wp-trivia') : __('Create quiz', 'wp-trivia');
 
@@ -272,7 +268,6 @@ class WpTrivia_Controller_Quiz extends WpTrivia_Controller_Controller
         $view = new WpTrivia_View_QuizOverall();
 
         $m = new WpTrivia_Model_QuizMapper();
-        $categoryMapper = new WpTrivia_Model_CategoryMapper();
 
         $per_page = (int)get_user_option('wp_trivia_quiz_overview_per_page');
         if (empty($per_page) || $per_page < 1) {
@@ -295,7 +290,6 @@ class WpTrivia_Controller_Quiz extends WpTrivia_Controller_Controller
 
         $view->quizItems = $result['quiz'];
         $view->quizCount = $result['count'];
-        $view->categoryItems = $categoryMapper->fetchAll(WpTrivia_Model_Category::CATEGORY_TYPE_QUIZ);;
         $view->perPage = $per_page;
 
         $view->show();
@@ -308,8 +302,6 @@ class WpTrivia_Controller_Quiz extends WpTrivia_Controller_Controller
         if (isset($this->_post['resultGradeEnabled'])) {
             $this->_post['result_text'] = $this->filterResultTextGrade($this->_post);
         }
-
-        $this->_post['categoryId'] = $this->_post['category'] > 0 ? $this->_post['category'] : 0;
 
         $this->_post['adminEmail'] = new WpTrivia_Model_Email($this->_post['adminEmail']);
         $this->_post['userEmail'] = new WpTrivia_Model_Email($this->_post['userEmail']);
@@ -556,11 +548,10 @@ class WpTrivia_Controller_Quiz extends WpTrivia_Controller_Controller
     /**
      * @param WpTrivia_Model_Quiz $quiz
      * @param $result
-     * @param WpTrivia_Model_Category[] $categories
      * @param WpTrivia_Model_Form[] $forms
      * @param $inputForms
      */
-    private function emailNote(WpTrivia_Model_Quiz $quiz, $result, $categories, $forms, $inputForms)
+    private function emailNote(WpTrivia_Model_Quiz $quiz, $result, $forms, $inputForms)
     {
         $user = wp_get_current_user();
 
@@ -570,8 +561,7 @@ class WpTrivia_Controller_Quiz extends WpTrivia_Controller_Controller
             '$quizname' => $quiz->getName(),
             '$result' => $result['result'] . '%',
             '$points' => $result['points'],
-            '$ip' => filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP),
-            '$categories' => empty($result['cats']) ? '' : $this->setCategoryOverview($result['cats'], $categories)
+            '$ip' => filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP)
         );
 
         if ($quiz->isFormActivated() && $forms !== null) {
@@ -670,46 +660,6 @@ class WpTrivia_Controller_Quiz extends WpTrivia_Controller_Controller
         return 'text/html';
     }
 
-    private function setCategoryOverview($catArray, $categories)
-    {
-        $cats = array();
-
-        foreach ($categories as $cat) {
-            /* @var $cat WpTrivia_Model_Category */
-
-            if (!$cat->getCategoryId()) {
-                $cat->setCategoryName(__('Not categorized', 'wp-trivia'));
-            }
-
-            $cats[$cat->getCategoryId()] = $cat->getCategoryName();
-        }
-
-        $a = __('Categories', 'wp-trivia') . ":\n";
-
-        foreach ($catArray as $id => $value) {
-            if (!isset($cats[$id])) {
-                continue;
-            }
-
-            $a .= '* ' . str_pad($cats[$id], 35, '.') . ((float)$value) . "%\n";
-        }
-
-        return $a;
-    }
-
-    public static function ajaxSetQuizMultipleCategories($data)
-    {
-        if (!current_user_can('wpTrivia_edit_quiz')) {
-            return json_encode(array());
-        }
-
-        $quizMapper = new WpTrivia_Model_QuizMapper();
-
-        $quizMapper->setMultipeCategories($data['quizIds'], $data['categoryId']);
-
-        return json_encode(array());
-    }
-
     public static function ajaxLoadQuizData($data)
     {
         $quizId = (int)$data['quizId'];
@@ -774,7 +724,6 @@ class WpTrivia_Controller_Quiz extends WpTrivia_Controller_Controller
 
         $lockMapper = new WpTrivia_Model_LockMapper();
         $quizMapper = new WpTrivia_Model_QuizMapper();
-        $categoryMapper = new WpTrivia_Model_CategoryMapper();
         $formMapper = new WpTrivia_Model_FormMapper();
 
         $is100P = $data['results']['comp']['result'] == 100;
@@ -785,13 +734,11 @@ class WpTrivia_Controller_Quiz extends WpTrivia_Controller_Controller
             return json_encode(array());
         }
 
-        $categories = $categoryMapper->fetchByQuiz($quiz->getId());
         $forms = $formMapper->fetch($quiz->getId());
 
         $ctr->setResultCookie($quiz);
 
-        $ctr->emailNote($quiz, $data['results']['comp'], $categories, $forms,
-            isset($data['forms']) ? $data['forms'] : array());
+        $ctr->emailNote($quiz, $data['results']['comp'], $forms, isset($data['forms']) ? $data['forms'] : array());
 
         if (!$ctr->isPreLockQuiz($quiz)) {
             $statistics = new WpTrivia_Controller_Statistics();

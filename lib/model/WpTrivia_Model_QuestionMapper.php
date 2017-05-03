@@ -89,12 +89,11 @@ class WpTrivia_Model_QuestionMapper extends WpTrivia_Model_Mapper
                     'show_points_in_box' => (int)$question->isShowPointsInBox(),
                     'answer_points_activated' => (int)$question->isAnswerPointsActivated(),
                     'answer_data' => $question->getAnswerData(true),
-                    'category_id' => $question->getCategoryId(),
                     'answer_points_diff_modus_activated' => (int)$question->isAnswerPointsDiffModusActivated(),
                     'disable_correct' => (int)$question->isDisableCorrect()
                 ),
                 array('id' => $question->getId()),
-                array('%s', '%s', '%d', '%s', '%s', '%s', '%d', '%d', '%s', '%s', '%d', '%d', '%s', '%d', '%d', '%d', '%d'),
+                array('%s', '%s', '%d', '%s', '%s', '%s', '%d', '%d', '%s', '%s', '%d', '%d', '%s', '%d', '%d', '%d'),
                 array('%d'));
         } else {
             $this->_wpdb->insert($this->_table, array(
@@ -114,7 +113,6 @@ class WpTrivia_Model_QuestionMapper extends WpTrivia_Model_Mapper
                 'show_points_in_box' => (int)$question->isShowPointsInBox(),
                 'answer_points_activated' => (int)$question->isAnswerPointsActivated(),
                 'answer_data' => $question->getAnswerData(true),
-                'category_id' => $question->getCategoryId(),
                 'answer_points_diff_modus_activated' => (int)$question->isAnswerPointsDiffModusActivated(),
                 'disable_correct' => (int)$question->isDisableCorrect()
             ),
@@ -135,7 +133,6 @@ class WpTrivia_Model_QuestionMapper extends WpTrivia_Model_Mapper
                     '%d',
                     '%d',
                     '%s',
-                    '%d',
                     '%d',
                     '%d',
                     '%d'
@@ -226,12 +223,9 @@ class WpTrivia_Model_QuestionMapper extends WpTrivia_Model_Mapper
         $results = $this->_wpdb->get_results(
             $this->_wpdb->prepare(
                 'SELECT
-								q.*,
-								c.category_name
+								q.*
 							FROM
 								' . $this->_table . ' AS q
-								LEFT JOIN ' . $this->_tableCategory . ' AS c
-									ON c.category_id = q.category_id
 							WHERE
 								quiz_id = %d AND q.online = 1
 							' . $orderBy . '
@@ -263,9 +257,6 @@ class WpTrivia_Model_QuestionMapper extends WpTrivia_Model_Mapper
         $r = array();
 
         switch ($orderBy) {
-            case 'category';
-                $_orderBy = 'c.category_name';
-                break;
             case 'name':
                 $_orderBy = 'q.title';
                 break;
@@ -277,20 +268,11 @@ class WpTrivia_Model_QuestionMapper extends WpTrivia_Model_Mapper
 
         $whereFilter = '';
 
-        if ($filter) {
-            if (isset($filter['cat']) && $filter['cat']) {
-                $whereFilter = ' AND q.category_id = ' . ((int)$filter['cat']);
-            }
-        }
-
         $results = $this->_wpdb->get_results($this->_wpdb->prepare("
 				SELECT
-					q.*,
-					c.category_name
+					q.*
 				FROM
 					{$this->_table} AS q
-					LEFT JOIN {$this->_tableCategory} AS c
-						ON c.category_id = q.category_id
 				WHERE
 					quiz_id = %d AND q.online = 1 AND
 					q.title LIKE %s
@@ -364,38 +346,5 @@ class WpTrivia_Model_QuestionMapper extends WpTrivia_Model_Mapper
     {
         return $this->_wpdb->get_var($this->_wpdb->prepare("SELECT COUNT(*) FROM {$this->_table} WHERE id = %d AND online = 1",
             $id));
-    }
-
-    public function fetchCategoryPoints($quizId)
-    {
-        $results = $this->_wpdb->get_results(
-            $this->_wpdb->prepare(
-                'SELECT SUM( points ) AS sum_points , category_id
-						FROM ' . $this->_tableQuestion . '
-						WHERE quiz_id = %d AND online = 1
-						GROUP BY category_id', $quizId));
-
-        $a = array();
-
-        foreach ($results as $result) {
-            $a[$result['category_id']] = $result['sum_points'];
-        }
-
-        return $a;
-    }
-
-    public function setMultipeCategories($questionIds, $categoryId)
-    {
-        $categoryId = $categoryId < 0 ? 0 : $categoryId;
-
-        $questionIds = implode(', ', array_map('intval', (array)$questionIds));
-
-        return $this->_wpdb->query($this->_wpdb->prepare(
-            "UPDATE
-					{$this->_table}
-				SET
-					`category_id` = %d
-				WHERE id IN(" . $questionIds . ")"
-            , $categoryId));
     }
 }

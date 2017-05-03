@@ -72,7 +72,6 @@ class WpTrivia_Model_Quiz extends WpTrivia_Model_Model
 
     //0.24
     protected $_userEmailNotification = false;
-    protected $_showCategoryScore = false;
     protected $_hideResultCorrectQuestion = false;
     protected $_hideResultQuizTime = false;
     protected $_hideResultPoints = false;
@@ -88,12 +87,8 @@ class WpTrivia_Model_Quiz extends WpTrivia_Model_Model
     protected $_formShowPosition = 0;
     protected $_startOnlyRegisteredUser = false;
     protected $_questionsPerPage = 0;
-    protected $_sortCategories = false;
-    protected $_showCategory = false;
 
     //0.29
-    protected $_categoryId = 0;
-    protected $_categoryName = '';
     protected $_adminEmail = null;
     protected $_userEmail = null;
 
@@ -564,18 +559,6 @@ class WpTrivia_Model_Quiz extends WpTrivia_Model_Model
         return $this->_userEmailNotification;
     }
 
-    public function setShowCategoryScore($_showCategoryScore)
-    {
-        $this->_showCategoryScore = (bool)$_showCategoryScore;
-
-        return $this;
-    }
-
-    public function isShowCategoryScore()
-    {
-        return $this->_showCategoryScore;
-    }
-
     public function setHideResultCorrectQuestion($_hideResultCorrectQuestion)
     {
         $this->_hideResultCorrectQuestion = (bool)$_hideResultCorrectQuestion;
@@ -706,54 +689,6 @@ class WpTrivia_Model_Quiz extends WpTrivia_Model_Model
     public function getQuestionsPerPage()
     {
         return $this->_questionsPerPage;
-    }
-
-    public function setSortCategories($_sortCategories)
-    {
-        $this->_sortCategories = (bool)$_sortCategories;
-
-        return $this;
-    }
-
-    public function isSortCategories()
-    {
-        return $this->_sortCategories;
-    }
-
-    public function setShowCategory($_showCategory)
-    {
-        $this->_showCategory = (bool)$_showCategory;
-
-        return $this;
-    }
-
-    public function isShowCategory()
-    {
-        return $this->_showCategory;
-    }
-
-    public function setCategoryId($_categoryId)
-    {
-        $this->_categoryId = (int)$_categoryId;
-
-        return $this;
-    }
-
-    public function getCategoryId()
-    {
-        return $this->_categoryId;
-    }
-
-    public function setCategoryName($_categoryName)
-    {
-        $this->_categoryName = (string)$_categoryName;
-
-        return $this;
-    }
-
-    public function getCategoryName()
-    {
-        return $this->_categoryName;
     }
 
     public function setAdminEmail($_adminEmail)

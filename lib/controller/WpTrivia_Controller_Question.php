@@ -99,7 +99,6 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
 
         $quizMapper = new WpTrivia_Model_QuizMapper();
         $questionMapper = new WpTrivia_Model_QuestionMapper();
-        $categoryMapper = new WpTrivia_Model_CategoryMapper();
         $templateMapper = new WpTrivia_Model_TemplateMapper();
 
         if ($questionId && $questionMapper->existsAndWritable($questionId) == 0) {
@@ -144,7 +143,6 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
         }
 
         $view = new WpTrivia_View_QuestionEdit();
-        $view->categories = $categoryMapper->fetchAll();
         $view->quiz = $quizMapper->fetch($quizId);
         $view->templates = $templateMapper->fetchAll(WpTrivia_Model_Template::TEMPLATE_TYPE_QUESTION, false);
         $view->question = $question;
@@ -208,8 +206,6 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
                 $post['points'] = $clearPost['points'];
             }
         }
-
-        $post['categoryId'] = $post['category'] > 0 ? $post['category'] : 0;
 
         return new WpTrivia_Model_Question($post);
     }
@@ -410,7 +406,6 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
 
         $m = new WpTrivia_Model_QuizMapper();
         $mm = new WpTrivia_Model_QuestionMapper();
-        $categoryMapper = new WpTrivia_Model_CategoryMapper();
 
         $view = new WpTrivia_View_QuestionOverall();
         $view->quiz = $m->fetch($this->_quizId);
@@ -436,23 +431,9 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
 
         $view->questionItems = $result['questions'];
         $view->questionCount = $result['count'];
-        $view->categoryItems = $categoryMapper->fetchAll(WpTrivia_Model_Category::CATEGORY_TYPE_QUESTION);
         $view->perPage = $per_page;
 
         $view->show();
-    }
-
-    public static function ajaxSetQuestionMultipleCategories($data)
-    {
-        if (!current_user_can('wpTrivia_edit_quiz')) {
-            return json_encode(array());
-        }
-
-        $quizMapper = new WpTrivia_Model_QuestionMapper();
-
-        $quizMapper->setMultipeCategories($data['questionIds'], $data['categoryId']);
-
-        return json_encode(array());
     }
 
     public static function ajaxLoadQuestionsSort($data)

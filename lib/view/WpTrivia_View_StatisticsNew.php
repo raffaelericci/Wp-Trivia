@@ -19,10 +19,6 @@ class WpTrivia_View_StatisticsNew extends WpTrivia_View_View
                 margin-top: 10px;
             }
 
-            .categoryTr th {
-                background-color: #F1F1F1;
-            }
-
             .wpTrivia_modal_backdrop {
                 background: #000;
                 opacity: 0.7;

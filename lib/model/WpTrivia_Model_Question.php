@@ -20,12 +20,6 @@ class WpTrivia_Model_Question extends WpTrivia_Model_Model
     protected $_answerPointsActivated = false;
     protected $_answerData = null;
 
-    //0.23
-    protected $_categoryId = 0;
-
-    //0.24
-    protected $_categoryName = '';
-
     //0.25
     protected $_answerPointsDiffModusActivated = false;
     protected $_disableCorrect = false;
@@ -232,30 +226,6 @@ class WpTrivia_Model_Question extends WpTrivia_Model_Model
         }
 
         return $this->_answerData;
-    }
-
-    public function setCategoryId($_categoryId)
-    {
-        $this->_categoryId = (int)$_categoryId;
-
-        return $this;
-    }
-
-    public function getCategoryId()
-    {
-        return $this->_categoryId;
-    }
-
-    public function setCategoryName($_categoryName)
-    {
-        $this->_categoryName = (string)$_categoryName;
-
-        return $this;
-    }
-
-    public function getCategoryName()
-    {
-        return $this->_categoryName;
     }
 
     public function setAnswerPointsDiffModusActivated($_answerPointsDiffModusActivated)

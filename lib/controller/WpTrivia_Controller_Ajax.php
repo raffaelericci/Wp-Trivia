@@ -46,9 +46,6 @@ class WpTrivia_Controller_Ajax
     private function initCallbacks()
     {
         $this->_adminCallbacks = array(
-            'categoryAdd' => array('WpTrivia_Controller_Category', 'ajaxAddCategory'),
-            'categoryDelete' => array('WpTrivia_Controller_Category', 'ajaxDeleteCategory'),
-            'categoryEdit' => array('WpTrivia_Controller_Category', 'ajaxEditCategory'),
             'statisticLoadHistory' => array('WpTrivia_Controller_Statistics', 'ajaxLoadHistory'),
             'statisticLoadUser' => array('WpTrivia_Controller_Statistics', 'ajaxLoadStatisticUser'),
             'statisticResetNew' => array('WpTrivia_Controller_Statistics', 'ajaxRestStatistic'),
@@ -56,11 +53,6 @@ class WpTrivia_Controller_Ajax
             'templateEdit' => array('WpTrivia_Controller_Template', 'ajaxEditTemplate'),
             'templateDelete' => array('WpTrivia_Controller_Template', 'ajaxDeleteTemplate'),
             'quizLoadData' => array('WpTrivia_Controller_Front', 'ajaxQuizLoadData'),
-            'setQuizMultipleCategories' => array('WpTrivia_Controller_Quiz', 'ajaxSetQuizMultipleCategories'),
-            'setQuestionMultipleCategories' => array(
-                'WpTrivia_Controller_Question',
-                'ajaxSetQuestionMultipleCategories'
-            ),
             'loadQuestionsSort' => array('WpTrivia_Controller_Question', 'ajaxLoadQuestionsSort'),
             'questionSaveSort' => array('WpTrivia_Controller_Question', 'ajaxSaveSort'),
             'questionaLoadCopyQuestion' => array('WpTrivia_Controller_Question', 'ajaxLoadCopyQuestion'),

@@ -90,12 +90,9 @@ class WpTrivia_Helper_ImportXml
     {
         $quizMapper = new WpTrivia_Model_QuizMapper();
         $questionMapper = new WpTrivia_Model_QuestionMapper();
-        $categoryMapper = new WpTrivia_Model_CategoryMapper();
         $formMapper = new WpTrivia_Model_FormMapper();
 
         $data = $this->getImportData();
-        $categoryArray = $categoryMapper->getCategoryArrayForImport();
-        $categoryArrayQuiz = $categoryMapper->getCategoryArrayForImport(WpTrivia_Model_Category::CATEGORY_TYPE_QUIZ);
 
         foreach ($data['master'] as $quiz) {
             /** @var WpTrivia_Model_Quiz $quiz */
@@ -111,23 +108,6 @@ class WpTrivia_Helper_ImportXml
             }
 
             $quiz->setId(0);
-            $quiz->setCategoryId(0);
-
-            if (trim($quiz->getCategoryName()) != '') {
-                if (isset($categoryArrayQuiz[strtolower($quiz->getCategoryName())])) {
-                    $quiz->setCategoryId($categoryArrayQuiz[strtolower($quiz->getCategoryName())]);
-                } else {
-                    $categoryModel = new WpTrivia_Model_Category();
-                    $categoryModel->setCategoryName($quiz->getCategoryName());
-                    $categoryModel->setType(WpTrivia_Model_Category::CATEGORY_TYPE_QUIZ);
-
-                    $categoryMapper->save($categoryModel);
-
-                    $quiz->setCategoryId($categoryModel->getCategoryId());
-
-                    $categoryArrayQuiz[strtolower($quiz->getCategoryName())] = $categoryModel->getCategoryId();
-                }
-            }
 
             $quizMapper->save($quiz);
 
@@ -154,20 +134,6 @@ class WpTrivia_Helper_ImportXml
                 $question->setQuizId($quiz->getId());
                 $question->setId(0);
                 $question->setSort($sort++);
-                $question->setCategoryId(0);
-                if (trim($question->getCategoryName()) != '') {
-                    if (isset($categoryArray[strtolower($question->getCategoryName())])) {
-                        $question->setCategoryId($categoryArray[strtolower($question->getCategoryName())]);
-                    } else {
-                        $categoryModel = new WpTrivia_Model_Category();
-                        $categoryModel->setCategoryName($question->getCategoryName());
-                        $categoryMapper->save($categoryModel);
-
-                        $question->setCategoryId($categoryModel->getCategoryId());
-
-                        $categoryArray[strtolower($question->getCategoryName())] = $categoryModel->getCategoryId();
-                    }
-                }
 
                 $questionMapper->save($question);
             }
@@ -229,8 +195,6 @@ class WpTrivia_Helper_ImportXml
 
         $model->setResultText($xml->resultText);
         $model->setResultGradeEnabled($xml->resultText);
-
-        $model->setCategoryName(trim($xml->category));
 
         if (isset($xml->resultText)) {
             $attr = $xml->resultText->attributes();
@@ -308,7 +272,6 @@ class WpTrivia_Helper_ImportXml
         $model->setSkipQuestionDisabled($xml->skipQuestionDisabled == 'true');
         $model->setEmailNotification($xml->emailNotification);
         $model->setUserEmailNotification($xml->userEmailNotification == 'true');
-        $model->setShowCategoryScore($xml->showCategoryScore == 'true');
         $model->setHideResultCorrectQuestion($xml->hideResultCorrectQuestion == 'true');
         $model->setHideResultQuizTime($xml->hideResultQuizTime == 'true');
         $model->setHideResultPoints($xml->hideResultPoints == 'true');
@@ -319,8 +282,6 @@ class WpTrivia_Helper_ImportXml
 
         //0.27
         $model->setStartOnlyRegisteredUser($xml->startOnlyRegisteredUser == 'true');
-        $model->setSortCategories($xml->sortCategories == 'true');
-        $model->setShowCategory($xml->showCategory == 'true');
 
         if (isset($xml->forms)) {
             $attr = $xml->forms->attributes();
@@ -392,7 +353,6 @@ class WpTrivia_Helper_ImportXml
         $model->setAnswerPointsActivated($xml->answerPointsActivated == 'true');
         $model->setAnswerPointsDiffModusActivated($xml->answerPointsDiffModusActivated == 'true');
         $model->setDisableCorrect($xml->disableCorrect == 'true');
-        $model->setCategoryName(trim($xml->category));
 
         $answerData = array();
 

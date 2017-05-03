@@ -20,10 +20,6 @@ class WpTrivia_View_Statistics extends WpTrivia_View_View
                 border: 1px dotted;
                 margin-top: 10px;
             }
-
-            .categoryTr th {
-                background-color: #F1F1F1;
-            }
         </style>
 
 
@@ -137,14 +133,6 @@ class WpTrivia_View_Statistics extends WpTrivia_View_View
                     $cPoints = 0;
                     ?>
 
-                    <tr class="categoryTr">
-                        <th colspan="9">
-                            <span><?php _e('Category', 'wp-trivia'); ?>:</span>
-                            <span
-                                style="font-weight: bold;"><?php echo $this->categoryList[$k]->getCategoryName(); ?></span>
-                        </th>
-                    </tr>
-
                     <?php foreach ($ql as $q) {
                         $gPoints += $q->getPoints();
                         $cPoints += $q->getPoints();
@@ -161,20 +149,7 @@ class WpTrivia_View_Statistics extends WpTrivia_View_View
                             <th></th>
                         </tr>
                     <?php } ?>
-
-                    <tr class="categoryTr" id="wpTrivia_ctr_<?php echo $k; ?>">
-                        <th colspan="2">
-                            <span><?php _e('Sub-Total: ', 'wp-trivia'); ?></span>
-                        </th>
-                        <th class="wpTrivia_points"><?php echo $cPoints; ?></th>
-                        <th class="wpTrivia_cCorrect" style="color: green;"></th>
-                        <th class="wpTrivia_cIncorrect" style="color: red;"></th>
-                        <th class="wpTrivia_cTip"></th>
-                        <th class="wpTrivia_cTime"></th>
-                        <th class="wpTrivia_cPoints"></th>
-                        <th class="wpTrivia_cResult" style="font-weight: bold;"></th>
-                    </tr>
-
+                    
                     <tr>
                         <th colspan="9"></th>
                     </tr>

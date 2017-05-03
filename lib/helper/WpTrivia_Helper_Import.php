@@ -116,11 +116,7 @@ class WpTrivia_Helper_Import
     {
         $quizMapper = new WpTrivia_Model_QuizMapper();
         $questionMapper = new WpTrivia_Model_QuestionMapper();
-        $categoryMapper = new WpTrivia_Model_CategoryMapper();
         $formMapper = new WpTrivia_Model_FormMapper();
-
-        $categoryArray = $categoryMapper->getCategoryArrayForImport();
-        $categoryArrayQuiz = $categoryMapper->getCategoryArrayForImport(WpTrivia_Model_Category::CATEGORY_TYPE_QUIZ);
 
         foreach ($o['master'] as $master) {
             /** @var WpTrivia_Model_Quiz $master */
@@ -138,24 +134,6 @@ class WpTrivia_Helper_Import
             }
 
             $master->setId(0);
-
-            $master->setCategoryId(0);
-
-            if (trim($master->getCategoryName()) != '') {
-                if (isset($categoryArrayQuiz[strtolower($master->getCategoryName())])) {
-                    $master->setCategoryId($categoryArrayQuiz[strtolower($master->getCategoryName())]);
-                } else {
-                    $categoryModel = new WpTrivia_Model_Category();
-                    $categoryModel->setCategoryName($master->getCategoryName());
-                    $categoryModel->setType(WpTrivia_Model_Category::CATEGORY_TYPE_QUIZ);
-
-                    $categoryMapper->save($categoryModel);
-
-                    $master->setCategoryId($categoryModel->getCategoryId());
-
-                    $categoryArrayQuiz[strtolower($master->getCategoryName())] = $categoryModel->getCategoryId();
-                }
-            }
 
             $quizMapper->save($master);
 
@@ -182,21 +160,6 @@ class WpTrivia_Helper_Import
                 $question->setQuizId($master->getId());
                 $question->setId(0);
                 $question->setSort($sort++);
-                $question->setCategoryId(0);
-
-                if (trim($question->getCategoryName()) != '') {
-                    if (isset($categoryArray[strtolower($question->getCategoryName())])) {
-                        $question->setCategoryId($categoryArray[strtolower($question->getCategoryName())]);
-                    } else {
-                        $categoryModel = new WpTrivia_Model_Category();
-                        $categoryModel->setCategoryName($question->getCategoryName());
-                        $categoryMapper->save($categoryModel);
-
-                        $question->setCategoryId($categoryModel->getCategoryId());
-
-                        $categoryArray[strtolower($question->getCategoryName())] = $categoryModel->getCategoryId();
-                    }
-                }
 
                 $questionMapper->save($question);
             }
