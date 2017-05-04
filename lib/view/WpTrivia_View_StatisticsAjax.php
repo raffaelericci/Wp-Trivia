@@ -109,7 +109,7 @@ class WpTrivia_View_StatisticsAjax extends WpTrivia_View_View
         ?>
 
         <style>
-            .wpTrivia_questionList {
+            .wpTrivia_answersList {
                 margin-bottom: 10px !important;
                 background: #F8FAF5 !important;
                 border: 1px solid #C3D1A3 !important;
@@ -117,7 +117,7 @@ class WpTrivia_View_StatisticsAjax extends WpTrivia_View_View
                 list-style: none !important;
             }
 
-            .wpTrivia_questionList > li {
+            .wpTrivia_answersList > li {
                 padding: 3px !important;
                 margin-bottom: 5px !important;
                 background-image: none !important;
@@ -141,14 +141,14 @@ class WpTrivia_View_StatisticsAjax extends WpTrivia_View_View
                 background-color: #F8FAF5 !important;
             }
 
-            .wpTrivia_questionList table {
+            .wpTrivia_answersList table {
                 border-collapse: collapse !important;
                 margin: 0 !important;
                 padding: 0 !important;
                 width: 100%;
             }
 
-            .wpTrivia_questionList table {
+            .wpTrivia_answersList table {
                 border-collapse: collapse !important;
             }
 
@@ -337,7 +337,7 @@ class WpTrivia_View_StatisticsAjax extends WpTrivia_View_View
     private function showUserAnswer($qAnswerData, $sAnswerData, $anserType)
     {
         ?>
-        <ul class="wpTrivia_questionList">
+        <ul class="wpTrivia_answersList">
             <?php for ($i = 0; $i < count($qAnswerData); $i++) {
                 $answerText = $qAnswerData[$i]->isHtml() ? $qAnswerData[$i]->getAnswer() : esc_html($qAnswerData[$i]->getAnswer());
                 $correct = '';

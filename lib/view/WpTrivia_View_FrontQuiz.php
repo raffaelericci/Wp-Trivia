@@ -16,7 +16,6 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
         }
 
         $names = array(
-            'start_quiz' => __('Start quiz', 'wp-trivia'),
             'quiz_summary' => __('Quiz-summary', 'wp-trivia'),
             'finish_quiz' => __('Finish quiz', 'wp-trivia'),
             'quiz_is_loading' => __('Quiz is loading...', 'wp-trivia'),
@@ -84,7 +83,6 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
             $this->showTimeLimitBox();
             $this->showCheckPageBox($question_count);
             $this->showInfoPageBox();
-            $this->showStartQuizBox();
             $this->showLockBox();
             $this->showLoadQuizBox();
             $this->showStartOnlyRegisteredUserBox();
@@ -113,14 +111,12 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                 id: '#wpTrivia_<?php echo $this->quiz->getId(); ?>',
                 init: {
                     quizId: <?php echo (int)$this->quiz->getId(); ?>,
-                    globalPoints: <?php echo (int)$quizData['globalPoints']; ?>,
                     timelimit: <?php echo (int)$this->quiz->getTimeLimit(); ?>,
                     resultsGrade: <?php echo $resultsProzent; ?>,
                     bo: <?php echo $bo ?>,
                     qpp: <?php echo $this->quiz->getQuestionsPerPage(); ?>,
                     formPos: <?php echo (int)$this->quiz->getFormShowPosition(); ?>,
-                    lbn: <?php echo json_encode(($this->quiz->isShowReviewQuestion() && !$this->quiz->isQuizSummaryHide()) ? $this->_buttonNames['quiz_summary'] : $this->_buttonNames['finish_quiz']); ?>,
-                    json: <?php echo json_encode($quizData['json']); ?>
+                    lbn: <?php echo json_encode(($this->quiz->isShowReviewQuestion() && !$this->quiz->isQuizSummaryHide()) ? $this->_buttonNames['quiz_summary'] : $this->_buttonNames['finish_quiz']); ?>
                 }
             });
         </script>
@@ -139,7 +135,6 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
         $bo |= ((int)$this->quiz->isShowReviewQuestion()) << 7;
         $bo |= ((int)$this->quiz->isQuizSummaryHide()) << 8;
         $bo |= ((int)(!$this->quiz->isSkipQuestionDisabled() && $this->quiz->isShowReviewQuestion())) << 9;
-        $bo |= ((int)$this->quiz->isAutostart()) << 10;
         $bo |= ((int)$this->quiz->isForcingQuestionSolve()) << 11;
         $bo |= ((int)$this->quiz->isHideQuestionPositionOverview()) << 12;
         $bo |= ((int)$this->quiz->isFormActivated()) << 13;
@@ -172,7 +167,6 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
             $this->showTimeLimitBox();
             $this->showCheckPageBox($question_count);
             $this->showInfoPageBox();
-            $this->showStartQuizBox();
             $this->showLockBox();
             $this->showLoadQuizBox();
             $this->showStartOnlyRegisteredUserBox();
@@ -471,28 +465,6 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
         <?php
     }
 
-    private function showStartQuizBox()
-    {
-        ?>
-        <div class="wpTrivia_text">
-            <p>
-                <?php echo do_shortcode(apply_filters('comment_text', $this->quiz->getText())); ?>
-            </p>
-
-            <?php
-            if ($this->quiz->isFormActivated() && $this->quiz->getFormShowPosition() == WpTrivia_Model_Quiz::QUIZ_FORM_POSITION_START) {
-                $this->showFormBox();
-            }
-            ?>
-
-            <div>
-                <input class="wpTrivia_button" type="button" value="<?php echo $this->_buttonNames['start_quiz']; ?>"
-                       name="startQuiz">
-            </div>
-        </div>
-        <?php
-    }
-
     private function showTimeLimitBox()
     {
         ?>
@@ -618,205 +590,175 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
         <?php
     }
 
+    /**
+     * Prints quiz's html structure and the first question
+     *
+     * @param  {int} $questionCount
+     */
     private function showQuizBox($questionCount)
     {
-        $globalPoints = 0;
-        $json = array();
         ?>
         <div style="display: none;" class="wpTrivia_quiz">
             <ol class="wpTrivia_list">
                 <?php
-                $index = 0;
-                foreach ($this->question as $question) {
-                    $index++;
+                $question = $this->question[0];
 
-                    /* @var $answerArray WpTrivia_Model_AnswerTypes[] */
-                    $answerArray = $question->getAnswerData();
+                /* @var $answerArray WpTrivia_Model_AnswerTypes[] */
+                $answerArray = $question->getAnswerData();
 
-                    $globalPoints += $question->getPoints();
-
-                    $json[$question->getId()]['type'] = $question->getAnswerType();
-                    $json[$question->getId()]['id'] = (int)$question->getId();
-
-                    if ($question->isAnswerPointsActivated() && $question->isAnswerPointsDiffModusActivated() && $question->isDisableCorrect()) {
-                        $json[$question->getId()]['disCorrect'] = (int)$question->isDisableCorrect();
-                    }
-
-                    if (!$question->isAnswerPointsActivated()) {
-                        $json[$question->getId()]['points'] = $question->getPoints();
-                    }
-
-                    if ($question->isAnswerPointsActivated() && $question->isAnswerPointsDiffModusActivated()) {
-                        $json[$question->getId()]['diffMode'] = 1;
-                    }
-
-                    ?>
-                    <li class="wpTrivia_listItem" style="display: none;">
-                        <div class="wpTrivia_progress_header" <?php $this->isDisplayNone(!$this->quiz->isHideQuestionPositionOverview()); ?> >
-                            <?php printf('<span>%d/%d</span> <span>TRIVIA:</span> <span>%s</span>', $index, $questionCount, $this->quiz->getName()); ?>
+                ?>
+                <li class="wpTrivia_listItem" style="display: none;">
+                    <div class="wpTrivia_progress_header" <?php $this->isDisplayNone(!$this->quiz->isHideQuestionPositionOverview()); ?> >
+                        <?php printf('<span>1/%d</span> <span>TRIVIA:</span> <span>%s</span>', $questionCount, $this->quiz->getName()); ?>
+                    </div>
+                    <div class="wpTrivia_question">
+                        <div class="wpTrivia_question_text">
+                            <?php echo do_shortcode(apply_filters('comment_text', $question->getQuestion())); ?>
                         </div>
-                        <?php if ($this->quiz->isShowPoints()) { ?>
-                            <span style="font-weight: bold; float: right;"><?php printf(__('%d points', 'wp-trivia'),
-                                    $question->getPoints()); ?></span>
-                            <div style="clear: both;"></div>
-                        <?php } ?>
-                        <div class="wpTrivia_question">
-                            <div class="wpTrivia_question_text">
-                                <?php echo do_shortcode(apply_filters('comment_text', $question->getQuestion())); ?>
+                        <?php if ($question->getImageId()) { ?>
+                            <div class="wpTrivia_question_image">
+                                <img alt="question image" src="<?php echo wp_get_attachment_url($question->getImageId()); ?>">
                             </div>
-                            <?php if ($question->getImageId()) { ?>
-                                <div class="wpTrivia_question_image">
-                                    <img alt="question image" src="<?php echo wp_get_attachment_url($question->getImageId()); ?>">
-                                </div>
-                            <?php } ?>
-                            <ul class="wpTrivia_questionList" data-question_id="<?php echo $question->getId(); ?>"
-                                data-type="<?php echo $question->getAnswerType(); ?>">
-                                <?php
-                                $answer_index = 0;
+                        <?php } ?>
+                        <ul class="wpTrivia_answersList" data-question_id="<?php echo $question->getId(); ?>" data-type="<?php echo $question->getAnswerType(); ?>">
+                            <?php
+                            $answer_index = 0;
 
-                                foreach ($answerArray as $v) {
-                                    $answer_text = $v->isHtml() ? $v->getAnswer() : esc_html($v->getAnswer());
+                            foreach ($answerArray as $v) {
+                                $answer_text = $v->isHtml() ? $v->getAnswer() : esc_html($v->getAnswer());
 
-                                    if ($answer_text == '') {
-                                        continue;
-                                    }
-
-                                    if ($question->isAnswerPointsActivated()) {
-                                        $json[$question->getId()]['points'][] = $v->getPoints();
-                                    }
-
-                                    ?>
-
-                                    <li class="wpTrivia_questionListItem">
-                                        <?php if ($question->getAnswerType() === 'single' || $question->getAnswerType() === 'multiple') { ?>
-                                            <span <?php echo $this->quiz->isNumberedAnswer() ? '' : 'style="display:none;"' ?>></span>
-                                            <div class="wpTrivia_questionInput_singleMulti"
-                                                   name="question_<?php echo $this->quiz->getId(); ?>_<?php echo $question->getId(); ?>"
-                                                   value="<?php echo($answer_index + 1); ?>"
-                                                   data-pos="<?php echo $answer_index; ?>"> <?php echo $answer_text; ?>
-                                            </div>
-                                        <?php } else {
-                                            if ($question->getAnswerType() === 'sort_answer') { ?>
-                                                <?php $json[$question->getId()]['correct'][] = (int)$answer_index; ?>
-                                                <div class="wpTrivia_sortable">
-                                                    <?php echo $answer_text; ?>
-                                                </div>
-                                            <?php } else {
-                                                if ($question->getAnswerType() === 'free_answer') { ?>
-                                                    <?php $json[$question->getId()]['correct'] = $this->getFreeCorrect($v); ?>
-                                                    <label>
-                                                        <input class="wpTrivia_questionInput" type="text"
-                                                               name="question_<?php echo $this->quiz->getId(); ?>_<?php echo $question->getId(); ?>"
-                                                               style="width: 300px;">
-                                                    </label>
-                                                <?php }
-                                            }
-                                        } ?>
-                                    </li>
-                                    <?php
-                                    $answer_index++;
+                                if ($answer_text == '') {
+                                    continue;
                                 }
                                 ?>
-                            </ul>
-                        </div>
-                        <?php if (!$this->quiz->isHideAnswerMessageBox()) { ?>
-                            <div class="wpTrivia_response" style="display: none;">
-                                <div style="display: none;" class="wpTrivia_correct">
-                                    <?php if ($question->isShowPointsInBox() && $question->isAnswerPointsActivated()) { ?>
-                                        <div>
-									<span style="float: left;" class="wpTrivia_respone_span">
-										<?php _e('Correct', 'wp-trivia'); ?>
-									</span>
-                                            <span
-                                                style="float: right;"><?php echo $question->getPoints() . ' / ' . $question->getPoints(); ?> <?php _e('Points',
-                                                    'wp-trivia'); ?></span>
 
-                                            <div style="clear: both;"></div>
+                                <li class="wpTrivia_answersListItem">
+                                    <?php if ($question->getAnswerType() === 'single' || $question->getAnswerType() === 'multiple') { ?>
+                                        <span <?php echo $this->quiz->isNumberedAnswer() ? '' : 'style="display:none;"' ?>></span>
+                                        <div class="wpTrivia_questionInput_singleMulti"
+                                               name="question_<?php echo $this->quiz->getId(); ?>_<?php echo $question->getId(); ?>"
+                                               value="<?php echo($answer_index + 1); ?>"
+                                               data-pos="<?php echo $answer_index; ?>"> <?php echo $answer_text; ?>
                                         </div>
-                                    <?php } else { ?>
-                                        <span class="wpTrivia_respone_span">
+                                    <?php } else {
+                                        if ($question->getAnswerType() === 'sort_answer') { ?>
+                                            <?php $json[$question->getId()]['correct'][] = (int)$answer_index; ?>
+                                            <div class="wpTrivia_sortable">
+                                                <?php echo $answer_text; ?>
+                                            </div>
+                                        <?php } else {
+                                            if ($question->getAnswerType() === 'free_answer') { ?>
+                                                <?php $json[$question->getId()]['correct'] = $this->getFreeCorrect($v); ?>
+                                                <label>
+                                                    <input class="wpTrivia_questionInput" type="text"
+                                                           name="question_<?php echo $this->quiz->getId(); ?>_<?php echo $question->getId(); ?>"
+                                                           style="width: 300px;">
+                                                </label>
+                                            <?php }
+                                        }
+                                    } ?>
+                                </li>
+                                <?php
+                                $answer_index++;
+                            }
+                            ?>
+                        </ul>
+                    </div>
+                    <?php if (!$this->quiz->isHideAnswerMessageBox()) { ?>
+                        <div class="wpTrivia_response" style="display: none;">
+                            <div style="display: none;" class="wpTrivia_correct">
+                                <?php if ($question->isShowPointsInBox() && $question->isAnswerPointsActivated()) { ?>
+                                    <div>
+								<span style="float: left;" class="wpTrivia_respone_span">
 									<?php _e('Correct', 'wp-trivia'); ?>
-								</span><br>
-                                    <?php }
-                                    $_correctMsg = trim(do_shortcode(apply_filters('comment_text',
-                                        $question->getCorrectMsg())));
+								</span>
+                                        <span
+                                            style="float: right;"><?php echo $question->getPoints() . ' / ' . $question->getPoints(); ?> <?php _e('Points',
+                                                'wp-trivia'); ?></span>
 
-                                    if (strpos($_correctMsg, '<p') === 0) {
-                                        echo $_correctMsg;
-                                    } else {
-                                        echo '<p>', $_correctMsg, '</p>';
-                                    }
-                                    ?>
-                                </div>
-                                <div style="display: none;" class="wpTrivia_incorrect">
-                                    <?php if ($question->isShowPointsInBox() && $question->isAnswerPointsActivated()) { ?>
-                                        <div>
-									<span style="float: left;" class="wpTrivia_respone_span">
-										<?php _e('Incorrect', 'wp-trivia'); ?>
-									</span>
-                                            <span style="float: right;"><span
-                                                    class="wpTrivia_responsePoints"></span> / <?php echo $question->getPoints(); ?> <?php _e('Points',
-                                                    'wp-trivia'); ?></span>
+                                        <div style="clear: both;"></div>
+                                    </div>
+                                <?php } else { ?>
+                                    <span class="wpTrivia_respone_span">
+								<?php _e('Correct', 'wp-trivia'); ?>
+							</span><br>
+                                <?php }
+                                $_correctMsg = trim(do_shortcode(apply_filters('comment_text', $question->getCorrectMsg())));
 
-                                            <div style="clear: both;"></div>
-                                        </div>
-                                    <?php } else { ?>
-                                        <span class="wpTrivia_respone_span">
+                                if (strpos($_correctMsg, '<p') === 0) {
+                                    echo $_correctMsg;
+                                } else {
+                                    echo '<p>', $_correctMsg, '</p>';
+                                }
+                                ?>
+                            </div>
+                            <div style="display: none;" class="wpTrivia_incorrect">
+                                <?php if ($question->isShowPointsInBox() && $question->isAnswerPointsActivated()) { ?>
+                                    <div>
+								<span style="float: left;" class="wpTrivia_respone_span">
 									<?php _e('Incorrect', 'wp-trivia'); ?>
-								</span><br>
-                                    <?php }
+								</span>
+                                        <span style="float: right;"><span
+                                                class="wpTrivia_responsePoints"></span> / <?php echo $question->getPoints(); ?> <?php _e('Points',
+                                                'wp-trivia'); ?></span>
 
-                                    if ($question->isCorrectSameText()) {
-                                        $_incorrectMsg = do_shortcode(apply_filters('comment_text',
-                                            $question->getCorrectMsg()));
-                                    } else {
-                                        $_incorrectMsg = do_shortcode(apply_filters('comment_text',
-                                            $question->getIncorrectMsg()));
-                                    }
+                                        <div style="clear: both;"></div>
+                                    </div>
+                                <?php } else { ?>
+                                    <span class="wpTrivia_respone_span">
+								<?php _e('Incorrect', 'wp-trivia'); ?>
+							</span><br>
+                                <?php }
 
-                                    if (strpos($_incorrectMsg, '<p') === 0) {
-                                        echo $_incorrectMsg;
-                                    } else {
-                                        echo '<p>', $_incorrectMsg, '</p>';
-                                    }
+                                if ($question->isCorrectSameText()) {
+                                    $_incorrectMsg = do_shortcode(apply_filters('comment_text', $question->getCorrectMsg()));
+                                } else {
+                                    $_incorrectMsg = do_shortcode(apply_filters('comment_text', $question->getIncorrectMsg()));
+                                }
 
-                                    ?>
-                                </div>
+                                if (strpos($_incorrectMsg, '<p') === 0) {
+                                    echo $_incorrectMsg;
+                                } else {
+                                    echo '<p>', $_incorrectMsg, '</p>';
+                                }
+
+                                ?>
                             </div>
-                        <?php } ?>
+                        </div>
+                    <?php } ?>
 
-                        <?php if ($question->isTipEnabled()) { ?>
-                            <div class="wpTrivia_tipp" style="display: none; position: relative;">
-                                <div>
-                                    <h5 style="margin: 0 0 10px;" class="wpTrivia_header"><?php _e('Hint', 'wp-trivia'); ?></h5>
-                                    <?php echo do_shortcode(apply_filters('comment_text', $question->getTipMsg())); ?>
-                                </div>
+                    <?php if ($question->isTipEnabled()) { ?>
+                        <div class="wpTrivia_tipp" style="display: none; position: relative;">
+                            <div>
+                                <h5 style="margin: 0 0 10px;" class="wpTrivia_header"><?php _e('Hint', 'wp-trivia'); ?></h5>
+                                <?php echo do_shortcode(apply_filters('comment_text', $question->getTipMsg())); ?>
                             </div>
-                        <?php } ?>
+                        </div>
+                    <?php } ?>
 
-                        <?php if (!$this->quiz->isSkipQuestionDisabled() && $this->quiz->isShowReviewQuestion()) { ?>
-                            <input type="button" name="skip" value="<?php _e('Skip question', 'wp-trivia'); ?>"
-                                   class="wpTrivia_button wpTrivia_QuestionButton"
-                                   style="float: left; margin-right: 10px !important;">
-                        <?php } ?>
-                        <?php if ($question->isTipEnabled()) { ?>
-                            <input type="button" name="tip" value="<?php _e('Hint', 'wp-trivia'); ?>"
-                                   class="wpTrivia_button wpTrivia_QuestionButton wpTrivia_TipButton"
-                                   style="float: left !important; display: inline-block; margin-right: 10px !important;">
-                        <?php } ?>
-                        <input type="button" name="check" value="<?php _e('Check', 'wp-trivia'); ?>"
-                               class="wpTrivia_button wpTrivia_QuestionButton"
-                               style="float: right !important; margin-right: 10px !important; display: none;">
-                        <input type="button" name="next" value="<?php echo ($this->question[count($this->question) - 1] === $question) ? $this->_buttonNames['finish_quiz'] : _e('Next', 'wp-trivia'); ?>"
-                               class="wpTrivia_button wpTrivia_QuestionButton" style="float: right; display: none;">
-                        <div style="clear: both;"></div>
-                    </li>
-                <?php } ?>
+                    <?php if (!$this->quiz->isSkipQuestionDisabled() && $this->quiz->isShowReviewQuestion()) { ?>
+                        <input type="button" name="skip" value="<?php _e('Skip question', 'wp-trivia'); ?>"
+                               class="wpTrivia_button"
+                               style="float: left; margin-right: 10px !important;">
+                    <?php } ?>
+                    <?php if ($question->isTipEnabled()) { ?>
+                        <input type="button" name="tip" value="<?php _e('Hint', 'wp-trivia'); ?>"
+                               class="wpTrivia_button wpTrivia_TipButton"
+                               style="float: left !important; display: inline-block; margin-right: 10px !important;">
+                    <?php } ?>
+                    <input type="button" name="check" value="<?php _e('Check', 'wp-trivia'); ?>"
+                           class="wpTrivia_button">
+                    <div class="wpTrivia_button prev">
+                        <img src="<?php echo WPPROQUIZ_URL . '/img/arrow-left.png'; ?>" alt="Prev">
+                    </div>
+                    <div class="wpTrivia_button next">
+                        <img src="<?php echo WPPROQUIZ_URL . '/img/arrow-right.png'; ?>" alt="Next">
+                    </div>
+                    <div style="clear: both;"></div>
+                </li>
             </ol>
         </div>
         <?php
-
-        return array('globalPoints' => $globalPoints, 'json' => $json);
     }
 
     private function showLoadQuizBox()

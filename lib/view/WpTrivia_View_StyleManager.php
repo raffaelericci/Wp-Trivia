@@ -47,22 +47,22 @@ class WpTrivia_View_StyleManager extends WpTrivia_View_View
                                                         <div class="wpTrivia_question_text">
                                                             <p>Frage3</p>
                                                         </div>
-                                                        <ul class="wpTrivia_questionList">
+                                                        <ul class="wpTrivia_answersList">
 
 
-                                                            <li class="wpTrivia_questionListItem" style="">
+                                                            <li class="wpTrivia_answersListItem" style="">
                                                                 <label>
                                                                     <input class="wpTrivia_questionInput"
                                                                            type="checkbox" name="question_5_26"
                                                                            value="2"> Test </label>
                                                             </li>
-                                                            <li class="wpTrivia_questionListItem" style="">
+                                                            <li class="wpTrivia_answersListItem" style="">
                                                                 <label>
                                                                     <input class="wpTrivia_questionInput"
                                                                            type="checkbox" name="question_5_26"
                                                                            value="1"> Test </label>
                                                             </li>
-                                                            <li class="wpTrivia_questionListItem" style="">
+                                                            <li class="wpTrivia_answersListItem" style="">
                                                                 <label>
                                                                     <input class="wpTrivia_questionInput"
                                                                            type="checkbox" name="question_5_26"

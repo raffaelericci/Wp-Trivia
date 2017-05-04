@@ -187,7 +187,6 @@ class WpTrivia_Model_QuizMapper extends WpTrivia_Model_Mapper
             'hide_result_correct_question' => (int)$data->isHideResultCorrectQuestion(),
             'hide_result_quiz_time' => (int)$data->isHideResultQuizTime(),
             'hide_result_points' => (int)$data->isHideResultPoints(),
-            'autostart' => (int)$data->isAutostart(),
             'forcing_question_solve' => (int)$data->isForcingQuestionSolve(),
             'hide_question_position_overview' => (int)$data->isHideQuestionPositionOverview(),
             'hide_question_numbering' => (int)$data->isHideQuestionNumbering(),

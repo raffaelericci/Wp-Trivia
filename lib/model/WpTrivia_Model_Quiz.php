@@ -77,7 +77,6 @@ class WpTrivia_Model_Quiz extends WpTrivia_Model_Model
     protected $_hideResultPoints = false;
 
     //0.25
-    protected $_autostart = false;
     protected $_forcingQuestionSolve = false;
     protected $_hideQuestionPositionOverview = false;
     protected $_hideQuestionNumbering = false;
@@ -593,18 +592,6 @@ class WpTrivia_Model_Quiz extends WpTrivia_Model_Model
     public function isHideResultPoints()
     {
         return $this->_hideResultPoints;
-    }
-
-    public function setAutostart($_autostart)
-    {
-        $this->_autostart = (bool)$_autostart;
-
-        return $this;
-    }
-
-    public function isAutostart()
-    {
-        return $this->_autostart;
     }
 
     public function setForcingQuestionSolve($_forcingQuestionSolve)

@@ -1,15 +1,18 @@
 /** TODO - Work in progress: complete style rewrite **/
 
 /** General **/
+.wpTrivia_content {
+    font-family: Helvetica;
+}
 .wpTrivia_content .wpTrivia_quiz .wpTrivia_list {
     list-style: none;
     padding: 0;
     width: 80%;
     margin: 0 auto;
 }
-/** \\General **/
+/** //General **/
 
-/** Question **/
+/** Questions **/
 .wpTrivia_content .wpTrivia_progress_header {
     text-transform: uppercase;
     font-size: 14px;
@@ -24,447 +27,76 @@
     font-weight: 700;
     text-align: center;
 }
-
-
-
-.wpTrivia_content .wpTrivia_questionList {
+.wpTrivia_content .wpTrivia_question_image {
+    border: 1px solid #dbdbdb;
+    margin-top: 30px;
+}
+.wpTrivia_content .wpTrivia_question_image img {
+    margin: 0;
+}
+.wpTrivia_content .wpTrivia_answersList {
     padding-left: 0;
     padding-top: 20px;
     padding-bottom: 20px;
 }
-.wpTrivia_content .wpTrivia_questionListItem {
+.wpTrivia_content .wpTrivia_answersListItem {
     list-style-type: none;
     margin: 10px 0 0 0;
     padding: 0;
 }
-.wpTrivia_content .wpTrivia_questionListItem .wpTrivia_questionInput_singleMulti {
+.wpTrivia_content .wpTrivia_answersListItem .wpTrivia_questionInput_singleMulti {
     width: 100%;
     text-align: center;
-    background: #000;
-    cursor: pointer;
-    height: 50px;
-    line-height: 50px;
-    text-transform: uppercase;
-    color: #fff;
 }
-.wpTrivia_content .wpTrivia_questionListItem .wpTrivia_questionInput_singleMulti.selected {
+.wpTrivia_content .wpTrivia_answersListItem .wpTrivia_questionInput_singleMulti.selected {
     background: #c8c721;
 }
-.wpTrivia_content .wpTrivia_questionListItem .wpTrivia_questionInput_singleMulti.correct {
+.wpTrivia_content .wpTrivia_answersListItem .wpTrivia_questionInput_singleMulti.correct {
     background: #32c769;
 }
-.wpTrivia_content .wpTrivia_questionListItem .wpTrivia_questionInput_singleMulti.wrong {
+.wpTrivia_content .wpTrivia_answersListItem .wpTrivia_questionInput_singleMulti.wrong {
     background: #e40038;
 }
-
-.wpTrivia_content .wpTrivia_questionListItem .wpTrivia_questionInput_singleMulti:hover {
-    opacity: .6;
-}
-
-/*
-.wpTrivia_content .wpTrivia_questionListItem li {
-    float: left;
-    margin: 0 5px 0 0;
-    width: 100px;
-    height: 40px;
-    position: relative;
-}
-
-.wpTrivia_content .wpTrivia_questionListItem label, .wpTrivia_content .wpTrivia_questionListItem input {
-    display: block;
-}
-
-.wpTrivia_content .wpTrivia_questionListItem input[type="radio"] {
-    display: none;
-}
-
-.wpTrivia_content .wpTrivia_questionListItem input[type="radio"]:checked {
-    background: yellow;
-}
-
-.wpTrivia_content .wpTrivia_questionListItem label {
-    padding: 5px;
-    border: 1px solid #CCC;
+.wpTrivia_content .wpTrivia_questionInput_singleMulti, .wpTrivia_content .wpTrivia_button {
     cursor: pointer;
-    z-index: 90;
-}
-
-.wpTrivia_content .wpTrivia_questionListItem label:hover {
-    background: #DDD;
-}
-*/
-/** \\Question **/
-
-
-
-
-
-
-
-
-
-
-
-.wpTrivia_answerCorrect {
-
-}
-
-.wpTrivia_answerCorrect label {
-
-}
-
-.wpTrivia_answerIncorrect {
-
-}
-
-.wpTrivia_content {
-
-}
-
-.wpTrivia_content h2 {
-
-}
-
-* + html .wpTrivia_button, * + html .wpTrivia_button:hover {
-
-}
-
-.wpTrivia_button, .wpTrivia_button:hover {
-
-}
-
-.wpTrivia_progress_header {
-
-}
-
-.wpTrivia_progress_header span {
-
-}
-
-.wpTrivia_questionListItem:last-child, .wpTrivia_questionListItemLastChildIE {
-
-}
-
-.wpTrivia_questionListItem {
-
-}
-
-.wpTrivia_questionListItem > table {
-
-}
-
-.wpTrivia_questionListItem > table .alt {
-
-}
-
-.wpTrivia_questionListItem > table td {
-
-}
-
-.wpTrivia_list, .wpTrivia_listItem, .wpTrivia_questionList, .wpTrivia_sortStringList, .wpTrivia_sortStringList, .wpTrivia_maxtrixSortCriterion, .wpTrivia_resultsList, .wpTrivia_catOverview ol {
-
-}
-
-.wpTrivia_list {
-
-}
-
-.wpTrivia_questionList {
-
-}
-
-.wpTrivia_listItem {
-
-}
-
-.wpTrivia_response {
-
-}
-
-.wpTrivia_response span {
-
-}
-
-.wpTrivia_sort {
-
-}
-
-.wpTrivia_results h3 {
-
-}
-
-.wpTrivia_sort_correct_answer {
-
-}
-
-.wpTrivia_sortable, .wpTrivia_sortStringItem {
-
-}
-
-.wpTrivia_time_limit .time {
-
-}
-
-.wpTrivia_time_limit .wpTrivia_progress {
-
-}
-
-.wpTrivia_time_limit_expired {
-
-}
-
-.wpTrivia_tipp > div {
-
-}
-
-.wpTrivia_sortStringList {
-
-}
-
-.wpTrivia_sortStringList > li {
-
-}
-
-.wpTrivia_sortStringItem {
-
-}
-
-.wpTrivia_maxtrixSortCriterion {
-
-}
-
-.wpTrivia_placehold {
-
-}
-
-.wpTrivia_maxtrixSortText {
-
-}
-
-.wpTrivia_mextrixTr > td {
-
-}
-
-.wpTrivia_points {
-
-}
-
-.wpTrivia_questionListItem input, .wpTrivia_questionListItem label {
-
-}
-
-.wpTrivia_questionListItem label {
-
-}
-
-.wpTrivia_questionListItem input {
-
-}
-
-.wpTrivia_resultsList {
-
-}
-
-.wpTrivia_resultsList > li {
-
-}
-
-.wpTrivia_lock, .wpTrivia_prerequisite, .wpTrivia_startOnlyRegisteredUser, .wpTrivia_loadQuiz {
-
-}
-
-.wpTrivia_lock p, .wpTrivia_prerequisite p, .wpTrivia_startOnlyRegisteredUser p, .wpTrivia_loadQuiz p {
-
-}
-
-.wpTrivia_toplistTable {
-
-}
-
-.wpTrivia_toplistTable caption {
-
-}
-
-.wpTrivia_toplistTable thead tr {
-
-}
-
-.wpTrivia_toplistTable tbody td:FIRST-CHILD {
-
-}
-
-.wpTrivia_toplistTable td, .wpTrivia_toplistTable th {
-
-}
-
-.wpTrivia_toplistTable th {
-
-}
-
-.wpTrivia_toplistTrOdd {
-
-}
-
-.wpTrivia_addToplist {
-
-}
-
-.wpTrivia_addToplistMessage {
-
-}
-
-.wpTrivia_resultTable {
-
-}
-
-.wpTrivia_resultTable table {
-
-}
-
-.wpTrivia_resultTable table td {
-
-}
-
-.wpTrivia_resultTable .alt {
-
-}
-
-.wpTrivia_resultName {
-
-}
-
-.wpTrivia_resultValue {
-
-}
-
-.wpTrivia_resultValue div {
-
-}
-
-.wpTrivia_addBox label {
-
-}
-
-.wpTrivia_addBox input[type="text"] {
-
-}
-
-.wpTrivia_reviewQuestion {
-
-}
-
-.wpTrivia_box {
-
-}
-
-.wpTrivia_checkPage h3 {
-
-}
-
-.wpTrivia_reviewQuestion ol, .wpTrivia_checkPage ol {
-
-}
-
-.wpTrivia_reviewQuestion ol:after {
-
-}
-
-.wpTrivia_reviewQuestionTarget {
-
-}
-
-.wpTrivia_reviewQuestion li, .wpTrivia_checkPage li {
-
-}
-
-.wpTrivia_reviewQuestion div {
-
-}
-
-.wpTrivia_reviewLegend {
-
-}
-
-.wpTrivia_reviewLegend ol {
-
-}
-
-.wpTrivia_reviewLegend li {
-
-}
-
-.wpTrivia_reviewColor {
-
-}
-
-.wpTrivia_button2 {
-
-}
-
-.wpTrivia_button2:hover {
-
-}
-
-.wpTrivia_reviewDiv {
-
-}
-
-.wpTrivia_header {
-
-}
-
-.wpTrivia_catOverview {
-
-}
-
-.wpTrivia_catOverview li {
-
-}
-
-.wpTrivia_catOverview span {
-
-}
-
-span.wpTrivia_catPercent {
-
-}
-
-.wpTrivia_forms {
-
-}
-
-.wpTrivia_required {
-
-}
-
-.wpTrivia_invalidate {
-
-}
-
-.wpTrivia_forms table {
-
-}
-
-.wpTrivia_forms table .alt {
-
-}
-
-.wpTrivia_forms table td {
-
-}
-
-.wpTrivia_forms td {
-
-}
-
-.wpTrivia_forms input, .wpTrivia_forms textarea, .wpTrivia_forms label, .wpTrivia_forms select {
-
-}
-
-.wpTrivia_forms select {
-
-}
-
-.wpTrivia_resultForm {
-
-}
+    background: #000;
+    height: 48px;
+    line-height: 46px;
+    color: #fff;
+    text-transform: uppercase;
+    border: 2px solid #000;
+    font-size: 15px;
+}
+.wpTrivia_content .wpTrivia_questionInput_singleMulti:hover, .wpTrivia_content .wpTrivia_button:hover {
+    color: #000;
+    background: #FFF;
+}
+.wpTrivia_content input[name='check'] {
+    display: block;
+    margin: 0 auto;
+    min-width: 150px;
+}
+.wpTrivia_content .wpTrivia_button.prev, .wpTrivia_content .wpTrivia_button.next {
+    width: 50px;
+    height: 50px;
+}
+.wpTrivia_content .wpTrivia_button.prev {
+    /* display: none; */
+    top: calc(50% - 50px);
+    position: absolute;
+    left: 20px;
+}
+.wpTrivia_content .wpTrivia_button.next {
+    /* display: none; */
+    top: calc(50% - 50px);
+    position: absolute;
+    right: 20px;
+}
+.wpTrivia_content .wpTrivia_button.prev img, .wpTrivia_content .wpTrivia_button.next img {
+    width: 12px;
+    margin: calc(50% - 10px) auto auto;
+}
+.wpTrivia_content .wpTrivia_button.prev:hover img, .wpTrivia_content .wpTrivia_button.next:hover img {
+    filter: invert(100%);
+}
+/** //Questions **/

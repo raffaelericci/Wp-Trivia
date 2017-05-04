@@ -124,7 +124,6 @@ class WpTrivia_Helper_DbUpgrade
 			  hide_result_correct_question tinyint(1) unsigned NOT NULL DEFAULT '0',
 			  hide_result_quiz_time tinyint(1) unsigned NOT NULL DEFAULT '0',
 			  hide_result_points tinyint(1) unsigned NOT NULL DEFAULT '0',
-			  autostart tinyint(1) unsigned NOT NULL DEFAULT '0',
 			  forcing_question_solve tinyint(1) unsigned NOT NULL DEFAULT '0',
 			  hide_question_position_overview tinyint(1) unsigned NOT NULL DEFAULT '0',
 			  hide_question_numbering tinyint(1) unsigned NOT NULL DEFAULT '0',

@@ -153,7 +153,6 @@ class WpTrivia_Helper_ExportXml
             $this->booleanToTrueOrFalse($quiz->isHideResultQuizTime())));
         $quizElement->appendChild($dom->createElement('hideResultPoints',
             $this->booleanToTrueOrFalse($quiz->isHideResultPoints())));
-        $quizElement->appendChild($dom->createElement('autostart', $this->booleanToTrueOrFalse($quiz->isAutostart())));
         $quizElement->appendChild($dom->createElement('forcingQuestionSolve',
             $this->booleanToTrueOrFalse($quiz->isForcingQuestionSolve())));
         $quizElement->appendChild($dom->createElement('hideQuestionPositionOverview',

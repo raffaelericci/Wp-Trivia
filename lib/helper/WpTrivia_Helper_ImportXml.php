@@ -275,7 +275,6 @@ class WpTrivia_Helper_ImportXml
         $model->setHideResultCorrectQuestion($xml->hideResultCorrectQuestion == 'true');
         $model->setHideResultQuizTime($xml->hideResultQuizTime == 'true');
         $model->setHideResultPoints($xml->hideResultPoints == 'true');
-        $model->setAutostart($xml->autostart == 'true');
         $model->setForcingQuestionSolve($xml->forcingQuestionSolve == 'true');
         $model->setHideQuestionPositionOverview($xml->hideQuestionPositionOverview == 'true');
         $model->setHideQuestionNumbering($xml->hideQuestionNumbering == 'true');
