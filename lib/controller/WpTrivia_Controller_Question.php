@@ -511,7 +511,6 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
             "isCorrect" => true,
             "correctAnswers" => null
         ];
-
         switch($data['questionType']) {
             case 'single':
             case 'multi':

@@ -52,19 +52,19 @@ class WpTrivia_View_StyleManager extends WpTrivia_View_View
 
                                                             <li class="wpTrivia_answersListItem" style="">
                                                                 <label>
-                                                                    <input class="wpTrivia_questionInput"
+                                                                    <input class="wpTrivia_answerInput"
                                                                            type="checkbox" name="question_5_26"
                                                                            value="2"> Test </label>
                                                             </li>
                                                             <li class="wpTrivia_answersListItem" style="">
                                                                 <label>
-                                                                    <input class="wpTrivia_questionInput"
+                                                                    <input class="wpTrivia_answerInput"
                                                                            type="checkbox" name="question_5_26"
                                                                            value="1"> Test </label>
                                                             </li>
                                                             <li class="wpTrivia_answersListItem" style="">
                                                                 <label>
-                                                                    <input class="wpTrivia_questionInput"
+                                                                    <input class="wpTrivia_answerInput"
                                                                            type="checkbox" name="question_5_26"
                                                                            value="3"> Test </label>
                                                             </li>

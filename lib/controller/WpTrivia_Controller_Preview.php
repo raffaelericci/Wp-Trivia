@@ -17,8 +17,6 @@ class WpTrivia_Controller_Preview extends WpTrivia_Controller_Controller
             'ajaxurl' => admin_url('admin-ajax.php'),
             'loadData' => __('Loading', 'wp-trivia'),
             'questionNotSolved' => __('You must answer this question.', 'wp-trivia'),
-            'questionsNotSolved' => __('You must answer all questions before you can completed the quiz.',
-                'wp-trivia'),
             'fieldsNotFilled' => __('All fields have to be filled.', 'wp-trivia')
         ));
 

@@ -52,17 +52,11 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
                             <p class="description">
                                 <?php _e('Optional image visualized along with the question.', 'wp-trivia'); ?>
                             </p>
-
-
                             <div class='image-preview-wrapper'>
                                 <img id='image-preview' src='<?php echo $this->question->getImageId() ? wp_get_attachment_url($this->question->getImageId()) : ''; ?>' width='100' height='100' style='max-height: 100px; width: 100px;'>
                             </div>
                             <input id="add_image_button" type="button" class="button" value="<?php _e( 'Add image', 'wp-trivia' ); ?>" />
-                            <input type="hidden" name="image_id" id="image_attachment_id">
-
-
-
-
+                            <input type="hidden" name="image_id" id="image_attachment_id" value="<?php echo $this->question->getImageId(); ?>">
                         </div>
                     </div>
                     <div class="postbox">

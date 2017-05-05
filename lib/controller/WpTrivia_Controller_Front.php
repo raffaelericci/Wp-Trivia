@@ -51,9 +51,8 @@ class WpTrivia_Controller_Front
                 'ajaxurl' => admin_url('admin-ajax.php'),
                 'loadData' => __('Loading', 'wp-trivia'),
                 'questionNotSolved' => __('You must answer this question.', 'wp-trivia'),
-                'questionsNotSolved' => __('You must answer all questions before you can completed the quiz.',
-                    'wp-trivia'),
-                'fieldsNotFilled' => __('All fields have to be filled.', 'wp-trivia')
+                'fieldsNotFilled' => __('All fields have to be filled.', 'wp-trivia'),
+                'connectionError' => __('Connection error. Please check your connection and try again.')
             ));
         }
 
@@ -71,8 +70,6 @@ class WpTrivia_Controller_Front
                     'ajaxurl' => admin_url('admin-ajax.php'),
                     'loadData' => __('Loading', 'wp-trivia'),
                     'questionNotSolved' => __('You must answer this question.', 'wp-trivia'),
-                    'questionsNotSolved' => __('You must answer all questions before you can completed the quiz.',
-                        'wp-trivia'),
                     'fieldsNotFilled' => __('All fields have to be filled.', 'wp-trivia')
                 ));
             }

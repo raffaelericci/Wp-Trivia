@@ -18,19 +18,26 @@
         var wpTriviaFront = this;
         var $e = $(element);
         var startTime = 0;
+        var questionIndex = 0;
+        var currentAnswersList = null;
         var currentQuestion = null;
         var currentQuestionId = 0;
+        var currentAnswerType = '';
+        var results = {};
 
         var globalNames = {
-            questionList: '.wpTrivia_list'
+            answersList: '.wpTrivia_answersList',
+            inputTypes: {
+                'singleMulti': '.wpTrivia_answerInput_singleMulti'
+            }
         };
 
         var globalElements = {
-            answersList: $e.find('.wpTrivia_answersList'),
             questionList: $e.find('.wpTrivia_list'),
             listItems: $e.find('.wpTrivia_list > li'),
             check: $e.find('input[name="check"]'),
-            next: $e.find('input[name="next"]'),
+            prev: $e.find('.wpTrivia_button.prev'),
+            next: $e.find('.wpTrivia_button.next'),
             quiz: $e.find('.wpTrivia_quiz'),
 
             results: $e.find('.wpTrivia_results'),
@@ -38,59 +45,46 @@
             toplistShowInButton: $e.find('.wpTrivia_toplistShowInButton')
         };
 
-        this.startQuiz = function(loadData) {
-
+        this.init = function() {
             startTime = Date.now();
 
             var $listItem = globalElements.questionList.children();
-            currentQuestion = $listItem.eq(0).show();
-            currentQuestionId = currentQuestion.find(globalNames.questionList).data('question_id');
-
-            quizSolved = [];
-
-            results = {
-                comp: {
-                    points: 0,
-                    correctQuestions: 0,
-                    quizTime: 0
-                }
-            };
-
-            $e.find('.wpTrivia_answersList').each(function () {
-                var questionId = $(this).data('question_id');
-
-                results[questionId] = {
-                    time: 0,
-                    solved: 0
-                };
-            });
+            currentQuestion = $listItem.eq(questionIndex).show();
+            currentAnswersList = currentQuestion.find(globalNames.answersList);
+            currentQuestionId = currentAnswersList.data('question_id');
+            currentAnswerType = currentAnswersList.data('type');
 
             $e.find('.wpTrivia_loadQuiz').hide();
+            globalElements.next.hide();
+            if (!results.length) {
+                globalElements.prev.hide();
+            }
             globalElements.quiz.show();
-            this.setHandlers();
+            wpTriviaFront.setHandlers();
         };
 
         /**
          * Get the user answer for the current question.
          *
-         * @param  {String} questionType
          * @return {Object[]} answer
          */
-        this.getUserAnswer = function(questionType) {
+        this.getUserAnswer = function() {
+            var answered = false;
             var answer = [];
-            switch (questionType) {
+            switch (currentAnswerType) {
                 case 'single':
                 case 'multi':
-                    var input = globalElements.questionList.find('.wpTrivia_questionInput');
-                    input.each(function(i) {
-                        var checked = input.eq(i).is(':checked');
-                        if (checked) {
+                    var inputs = currentAnswersList.find(globalNames.inputTypes.singleMulti);
+                    inputs.each(function(index, el) {
+                        var selected = $(el).hasClass('selected');
+                        if (selected) {
+                            answered = true;
                             answer.push(1);
                         } else {
                             answer.push(0);
                         }
                     });
-                break;
+                    break;
                 // TODO - Implementare altre tipologie
                 /*
                 case 'sort_answer':
@@ -128,7 +122,7 @@
                 break;
                 case 'free_answer':
                     var $li = globalElements.questionList.children();
-                    var value = $li.find('.wpTrivia_questionInput').attr('disabled', 'disabled').val();
+                    var value = $li.find('.wpTrivia_answerInput').attr('disabled', 'disabled').val();
 
                     if ($.inArray($.trim(value).toLowerCase(), data.correct) >= 0) {
                         plugin.methode.marker($li, true);
@@ -139,52 +133,70 @@
                 break;
                 */
             }
-            return answer;
+            return answered ? answer : [];
         };
 
         /* Handlers */
         this.setHandlers = function() {
 
-            var questionType = globalElements.answersList.data('type');
-            var inputType = '';
-            switch(questionType) {
-                case 'single':
-                case 'multi':
-                    inputType = '.wpTrivia_questionInput_singleMulti';
-                    break;
+            // [Single and multi answer types] answer selection
+            if (currentAnswerType == 'single' || currentAnswerType == 'multi') {
+                currentAnswersList.find(globalNames.inputTypes.singleMulti).click(function() {
+                    switch(currentAnswerType) {
+                        case 'single':
+                            currentAnswersList.find(globalNames.inputTypes.singleMulti).removeClass('selected');
+                            $(this).addClass('selected');
+                            break;
+                        case 'multi':
+                            // TODO
+                            break;
+                    }
+                });
             }
-            globalElements.answersList.find('> li ' + inputType).click(function() {
-                console.log("wewe");
-            });
 
+            // Answer check
             globalElements.check.click(function() {
-                // TODO -
-                var questionType = globalElements.answersList.data('type');
-                var userAnswer = wpTriviaFront.getUserAnswer(questionType);
-                // TODO - localizzare e capire come mostrare errori di questo tipo
-                if (!userAnswer.length) alert('Non hai risposto alla domanda');
+                var userAnswer = wpTriviaFront.getUserAnswer();
+                // TODO - Ragionare a come/dove mostrare gli errori
+                if (!userAnswer.length) {
+                    alert(WpTriviaGlobal.questionNotSolved);
+                    return;
+                }
                 $.post(WpTriviaGlobal.ajaxurl, {
                     action: "wp_trivia_admin_ajax",
                     func: "checkAnswer",
                     data: {
                         questionId: currentQuestionId,
-                        questionType: questionType,
+                        questionType: currentAnswerType,
                         answer: userAnswer
                     }
                 }, function(res) {
-                    // TODO - colorare
-                    if (res.isCorrect) {
-
-                    } else {
-
+                    res = JSON.parse(res);
+                    var inputs = currentAnswersList.find(globalNames.inputTypes.singleMulti);
+                    for (var r in res.correctAnswers) {
+                        if (res.correctAnswers[r]) {
+                            inputs.eq(r).addClass('correct');
+                        } else if (!res.correctAnswers[r] && inputs.eq(r).hasClass('selected')) {
+                            inputs.eq(r).addClass('wrong');
+                        }
+                        inputs.eq(r).removeClass('selected');
                     }
+                    globalElements.check.hide();
+                    globalElements.next.show();
                 }).fail(function(err) {
                     console.log(err);
+                    alert(WpTriviaGlobal.connectionError);
                 });
             });
 
             globalElements.next.click(function() {
                 // TODO - Passa alla prossima domanda
+                /* aggiornare var globali
+                questionIndex++;
+                currentQuestion = $listItem.eq(questionIndex).show();
+                currentQuestionId = currentQuestion.find(globalNames.questionList).data('question_id');
+                currentAnswerType = globalElements.answersList.data('type');
+                */
                 /*
                 if (bitOptions.forcingQuestionSolve
                     && !quizSolved[currentQuestion.index()]
@@ -197,8 +209,8 @@
             });
         };
 
-        /* Init */
-        wpTriviaFront.startQuiz();
+        /* Initialize question */
+        wpTriviaFront.init();
     };
 
     $.fn.wpTriviaFront = function(options) {

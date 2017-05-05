@@ -635,7 +635,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                                 <li class="wpTrivia_answersListItem">
                                     <?php if ($question->getAnswerType() === 'single' || $question->getAnswerType() === 'multiple') { ?>
                                         <span <?php echo $this->quiz->isNumberedAnswer() ? '' : 'style="display:none;"' ?>></span>
-                                        <div class="wpTrivia_questionInput_singleMulti"
+                                        <div class="wpTrivia_answerInput_singleMulti"
                                                name="question_<?php echo $this->quiz->getId(); ?>_<?php echo $question->getId(); ?>"
                                                value="<?php echo($answer_index + 1); ?>"
                                                data-pos="<?php echo $answer_index; ?>"> <?php echo $answer_text; ?>
@@ -650,7 +650,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                                             if ($question->getAnswerType() === 'free_answer') { ?>
                                                 <?php $json[$question->getId()]['correct'] = $this->getFreeCorrect($v); ?>
                                                 <label>
-                                                    <input class="wpTrivia_questionInput" type="text"
+                                                    <input class="wpTrivia_answerInput" type="text"
                                                            name="question_<?php echo $this->quiz->getId(); ?>_<?php echo $question->getId(); ?>"
                                                            style="width: 300px;">
                                                 </label>
