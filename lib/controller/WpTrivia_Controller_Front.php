@@ -21,6 +21,9 @@ class WpTrivia_Controller_Front
     {
         wp_enqueue_script('jquery');
 
+        wp_enqueue_script('wpTrivia_front_slick', plugins_url('js/slick/slick.min.js', WPPROQUIZ_FILE), array('jquery'));
+        wp_enqueue_style('wpTrivia_front_slick', plugins_url('js/slick/slick.css', WPPROQUIZ_FILE));
+
         $data = array(
             'src' => plugins_url('css/wpTrivia_front' . (WPPROQUIZ_DEV ? '' : '.min') . '.css', WPPROQUIZ_FILE),
             'deps' => array(),

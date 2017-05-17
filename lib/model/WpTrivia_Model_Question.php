@@ -1,7 +1,7 @@
 <?php
 
-class WpTrivia_Model_Question extends WpTrivia_Model_Model
-{
+class WpTrivia_Model_Question extends WpTrivia_Model_Model {
+
     protected $_id = 0;
     protected $_quizId = 0;
     protected $_sort = 0;
@@ -15,187 +15,154 @@ class WpTrivia_Model_Question extends WpTrivia_Model_Model
     protected $_tipMsg = '';
     protected $_points = 1;
     protected $_showPointsInBox = false;
-
-    //0.19
     protected $_answerPointsActivated = false;
     protected $_answerData = null;
-
-    //0.25
     protected $_answerPointsDiffModusActivated = false;
     protected $_disableCorrect = false;
 
     protected $_imageId = 0;
 
-    public function setId($_id)
-    {
+    public function setId($_id) {
         $this->_id = (int)$_id;
 
         return $this;
     }
 
-    public function getId()
-    {
+    public function getId() {
         return $this->_id;
     }
 
-    public function setQuizId($_quizId)
-    {
+    public function setQuizId($_quizId) {
         $this->_quizId = (int)$_quizId;
 
         return $this;
     }
 
-    public function getQuizId()
-    {
+    public function getQuizId() {
         return $this->_quizId;
     }
 
-    public function setSort($_sort)
-    {
+    public function setSort($_sort) {
         $this->_sort = (int)$_sort;
 
         return $this;
     }
 
-    public function getSort()
-    {
+    public function getSort() {
         return $this->_sort;
     }
 
-    public function setTitle($_title)
-    {
+    public function setTitle($_title) {
         $this->_title = (string)$_title;
 
         return $this;
     }
 
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->_title;
     }
 
-    public function setQuestion($_question)
-    {
+    public function setQuestion($_question) {
         $this->_question = (string)$_question;
 
         return $this;
     }
 
-    public function getQuestion()
-    {
+    public function getQuestion() {
         return $this->_question;
     }
 
-    public function setCorrectMsg($_correctMsg)
-    {
+    public function setCorrectMsg($_correctMsg) {
         $this->_correctMsg = (string)$_correctMsg;
 
         return $this;
     }
 
-    public function getCorrectMsg()
-    {
+    public function getCorrectMsg() {
         return $this->_correctMsg;
     }
 
-    public function setIncorrectMsg($_incorrectMsg)
-    {
+    public function setIncorrectMsg($_incorrectMsg) {
         $this->_incorrectMsg = (string)$_incorrectMsg;
 
         return $this;
     }
 
-    public function getIncorrectMsg()
-    {
+    public function getIncorrectMsg() {
         return $this->_incorrectMsg;
     }
 
-    public function setAnswerType($_answerType)
-    {
+    public function setAnswerType($_answerType) {
         $this->_answerType = (string)$_answerType;
 
         return $this;
     }
 
-    public function getAnswerType()
-    {
+    public function getAnswerType() {
         return $this->_answerType;
     }
 
-    public function setCorrectSameText($_correctSameText)
-    {
+    public function setCorrectSameText($_correctSameText) {
         $this->_correctSameText = (bool)$_correctSameText;
 
         return $this;
     }
 
-    public function isCorrectSameText()
-    {
+    public function isCorrectSameText() {
         return $this->_correctSameText;
     }
 
-    public function setTipEnabled($_tipEnabled)
-    {
+    public function setTipEnabled($_tipEnabled) {
         $this->_tipEnabled = (bool)$_tipEnabled;
 
         return $this;
     }
 
-    public function isTipEnabled()
-    {
+    public function isTipEnabled() {
         return $this->_tipEnabled;
     }
 
-    public function setTipMsg($_tipMsg)
-    {
+    public function setTipMsg($_tipMsg) {
         $this->_tipMsg = (string)$_tipMsg;
 
         return $this;
     }
 
-    public function getTipMsg()
-    {
+    public function getTipMsg() {
         return $this->_tipMsg;
     }
 
-    public function setPoints($_points)
-    {
+    public function setPoints($_points) {
         $this->_points = (int)$_points;
 
         return $this;
     }
 
-    public function getPoints()
-    {
+    public function getPoints() {
         return $this->_points;
     }
 
-    public function setShowPointsInBox($_showPointsInBox)
-    {
+    public function setShowPointsInBox($_showPointsInBox) {
         $this->_showPointsInBox = (bool)$_showPointsInBox;
 
         return $this;
     }
 
-    public function isShowPointsInBox()
-    {
+    public function isShowPointsInBox() {
         return $this->_showPointsInBox;
     }
 
-    public function setAnswerPointsActivated($_answerPointsActivated)
-    {
+    public function setAnswerPointsActivated($_answerPointsActivated) {
         $this->_answerPointsActivated = (bool)$_answerPointsActivated;
 
         return $this;
     }
 
-    public function isAnswerPointsActivated()
-    {
+    public function isAnswerPointsActivated() {
         return $this->_answerPointsActivated;
     }
 
-    public function setAnswerData($_answerData)
-    {
+    public function setAnswerData($_answerData) {
         $this->_answerData = $_answerData;
 
         return $this;
@@ -205,8 +172,7 @@ class WpTrivia_Model_Question extends WpTrivia_Model_Model
      * @param bool|false $serialize
      * @return WpTrivia_Model_AnswerTypes[]|null|string
      */
-    public function getAnswerData($serialize = false)
-    {
+    public function getAnswerData($serialize = false) {
         if ($this->_answerData === null) {
             return null;
         }
@@ -228,27 +194,23 @@ class WpTrivia_Model_Question extends WpTrivia_Model_Model
         return $this->_answerData;
     }
 
-    public function setAnswerPointsDiffModusActivated($_answerPointsDiffModusActivated)
-    {
+    public function setAnswerPointsDiffModusActivated($_answerPointsDiffModusActivated) {
         $this->_answerPointsDiffModusActivated = (bool)$_answerPointsDiffModusActivated;
 
         return $this;
     }
 
-    public function isAnswerPointsDiffModusActivated()
-    {
+    public function isAnswerPointsDiffModusActivated() {
         return $this->_answerPointsDiffModusActivated;
     }
 
-    public function setDisableCorrect($_disableCorrect)
-    {
+    public function setDisableCorrect($_disableCorrect) {
         $this->_disableCorrect = (bool)$_disableCorrect;
 
         return $this;
     }
 
-    public function isDisableCorrect()
-    {
+    public function isDisableCorrect() {
         return $this->_disableCorrect;
     }
 
@@ -257,6 +219,32 @@ class WpTrivia_Model_Question extends WpTrivia_Model_Model
     }
 
     public function setImageId($imageId) {
-        $this->_imageId = $imageId;
+        $this->_imageId = (int)$imageId;
+        return $this;
+    }
+
+    /**
+     * Creates a json representing the public part of the question (for FE)
+     *
+     * @return {json}
+     */
+    public function getPublicJson() {
+        $pj = [
+            "quizId" => $this->getQuizId(),
+            "questionId" => $this->getId(),
+            "index" => $this->getSort() + 1,
+            "title" => $this->getTitle(),
+            "image" => $this->getImageId() ? wp_get_attachment_url($this->getImageId()) : null,
+            "question" => $this->getQuestion(),
+            "answers" => [
+                "type" => $this->getAnswerType(),
+                "list" => []
+            ],
+            "ended" => false
+        ];
+        foreach($this->getAnswerData() as $ad) {
+            $pj['answers']['list'][] = $ad->getAnswer();
+        }
+        return json_encode($pj);
     }
 }

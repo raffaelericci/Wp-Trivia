@@ -58,6 +58,7 @@ class WpTrivia_Controller_Ajax
 
             // TODO - in progress
             'checkAnswer' => array('WpTrivia_Controller_Question', 'ajaxCheckAnswer'),
+            'loadNextQuestion' => array('WpTrivia_Controller_Question', 'ajaxLoadNextQuestion'),
 
             'resetLock' => array('WpTrivia_Controller_Quiz', 'ajaxResetLock'),
             'adminToplist' => array('WpTrivia_Controller_Toplist', 'ajaxAdminToplist'),

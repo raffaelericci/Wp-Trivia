@@ -84,7 +84,6 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
             $this->showCheckPageBox($question_count);
             $this->showInfoPageBox();
             $this->showLockBox();
-            $this->showLoadQuizBox();
             $this->showStartOnlyRegisteredUserBox();
             $this->showPrerequisiteBox();
             $this->showResultBox($result, $question_count);
@@ -168,7 +167,6 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
             $this->showCheckPageBox($question_count);
             $this->showInfoPageBox();
             $this->showLockBox();
-            $this->showLoadQuizBox();
             $this->showStartOnlyRegisteredUserBox();
             $this->showPrerequisiteBox();
             $this->showResultBox($result, $question_count);
@@ -598,7 +596,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
     private function showQuizBox($questionCount)
     {
         ?>
-        <div style="display: none;" class="wpTrivia_quiz">
+        <div class="wpTrivia_quiz">
             <ol class="wpTrivia_list">
                 <?php
                 $question = $this->question[0];
@@ -607,9 +605,9 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                 $answerArray = $question->getAnswerData();
 
                 ?>
-                <li class="wpTrivia_listItem" style="display: none;">
+                <li class="wpTrivia_listItem">
                     <div class="wpTrivia_progress_header" <?php $this->isDisplayNone(!$this->quiz->isHideQuestionPositionOverview()); ?> >
-                        <?php printf('<span>1/%d</span> <span>TRIVIA:</span> <span>%s</span>', $questionCount, $this->quiz->getName()); ?>
+                        <?php printf('<span>1/<span id="questionCount">%d</span></span> <span>TRIVIA:</span> <span><span id="quizName">%s</span></span>', $questionCount, $this->quiz->getName()); ?>
                     </div>
                     <div class="wpTrivia_question">
                         <div class="wpTrivia_question_text">
@@ -746,28 +744,16 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                                class="wpTrivia_button wpTrivia_TipButton"
                                style="float: left !important; display: inline-block; margin-right: 10px !important;">
                     <?php } ?>
-                    <input type="button" name="check" value="<?php _e('Check', 'wp-trivia'); ?>"
-                           class="wpTrivia_button">
-                    <div class="wpTrivia_button prev">
-                        <img src="<?php echo WPPROQUIZ_URL . '/img/arrow-left.png'; ?>" alt="Prev">
-                    </div>
-                    <div class="wpTrivia_button next">
-                        <img src="<?php echo WPPROQUIZ_URL . '/img/arrow-right.png'; ?>" alt="Next">
-                    </div>
                     <div style="clear: both;"></div>
                 </li>
             </ol>
-        </div>
-        <?php
-    }
-
-    private function showLoadQuizBox()
-    {
-        ?>
-        <div style="display: none;" class="wpTrivia_loadQuiz">
-            <p>
-                <?php echo $this->_buttonNames['quiz_is_loading']; ?>
-            </p>
+            <input type="button" class="wpTrivia_button check" value="<?php _e('Check', 'wp-trivia'); ?>">
+            <div class="wpTrivia_button prev">
+                <img src="<?php echo WPPROQUIZ_URL . '/img/arrow-left.png'; ?>" alt="Prev">
+            </div>
+            <div class="wpTrivia_button next">
+                <img src="<?php echo WPPROQUIZ_URL . '/img/arrow-right.png'; ?>" alt="Next">
+            </div>
         </div>
         <?php
     }

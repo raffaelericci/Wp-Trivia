@@ -166,6 +166,45 @@ class WpTrivia_Model_QuestionMapper extends WpTrivia_Model_Mapper
     }
 
     /**
+     * TODO
+     * @param  {int} $id | current question id
+     * @return {WpTrivia_Model_Question || null} $model | Next question or null (quiz ended)
+     */
+    public function fetchNext($id) {
+
+        $currentQuestion = $this->_wpdb->get_row(
+            $this->_wpdb->prepare(
+                "
+                SELECT  quiz_id, sort
+                FROM    " . $this->_table . "
+                WHERE   id = %d AND online = 1
+                ",
+                $id
+            ),
+            ARRAY_A
+        );
+
+        $nextQuestion = $this->_wpdb->get_row(
+            $this->_wpdb->prepare(
+                "
+                SELECT  *
+                FROM    " . $this->_table . "
+                WHERE   quiz_id = %d AND sort = %d AND online = 1
+                ",
+                $currentQuestion['quiz_id'],
+                $currentQuestion['sort'] + 1
+            ),
+            ARRAY_A
+        );
+
+        if (!$nextQuestion) {
+            return null;
+        }
+
+        return new WpTrivia_Model_Question($nextQuestion);
+    }
+
+    /**
      * @param $id
      * @return WpTrivia_Model_Question|WpTrivia_Model_Question[]|null
      */

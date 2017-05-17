@@ -49,12 +49,15 @@
     text-align: center;
 }
 .wpTrivia_content .wpTrivia_answersListItem .wpTrivia_answerInput_singleMulti.selected {
+    border: 2px solid #c8c721;
     background: #c8c721;
 }
 .wpTrivia_content .wpTrivia_answersListItem .wpTrivia_answerInput_singleMulti.correct {
+    border: 2px solid #32c769;
     background: #32c769;
 }
 .wpTrivia_content .wpTrivia_answersListItem .wpTrivia_answerInput_singleMulti.wrong {
+    border: 2px solid #e40038;
     background: #e40038;
 }
 .wpTrivia_content .wpTrivia_answerInput_singleMulti, .wpTrivia_content .wpTrivia_button {
@@ -67,27 +70,26 @@
     border: 2px solid #000;
     font-size: 15px;
 }
-.wpTrivia_content .wpTrivia_answerInput_singleMulti:hover, .wpTrivia_content .wpTrivia_button:hover {
+.wpTrivia_content .wpTrivia_answersList:not(.solved) .wpTrivia_answerInput_singleMulti:not(.selected):hover {
     color: #000;
-    background: #FFF;
+    background: #fff;
 }
-.wpTrivia_content input[name='check'] {
+.wpTrivia_content .wpTrivia_button.check {
     display: block;
     margin: 0 auto;
     min-width: 150px;
 }
 .wpTrivia_content .wpTrivia_button.prev, .wpTrivia_content .wpTrivia_button.next {
+    display: none;
     width: 50px;
     height: 50px;
 }
 .wpTrivia_content .wpTrivia_button.prev {
-    /* display: none; */
     top: calc(50% - 50px);
     position: absolute;
     left: 20px;
 }
 .wpTrivia_content .wpTrivia_button.next {
-    /* display: none; */
     top: calc(50% - 50px);
     position: absolute;
     right: 20px;
@@ -95,6 +97,9 @@
 .wpTrivia_content .wpTrivia_button.prev img, .wpTrivia_content .wpTrivia_button.next img {
     width: 12px;
     margin: calc(50% - 10px) auto auto;
+}
+.wpTrivia_content .wpTrivia_button.prev:hover, .wpTrivia_content .wpTrivia_button.next:hover {
+    background-color: #fff;
 }
 .wpTrivia_content .wpTrivia_button.prev:hover img, .wpTrivia_content .wpTrivia_button.next:hover img {
     filter: invert(100%);
