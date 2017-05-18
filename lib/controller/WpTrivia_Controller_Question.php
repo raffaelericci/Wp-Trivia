@@ -505,7 +505,7 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
     }
 
     /**
-     * Checks the user answer
+     * Checks the user answer and calls "wptrivia_after_answer" action
      *
      * @param  {array} $data | questionId, questionType, array answer
      * @return {array} $res  | isCorrect, array correctAnswer
@@ -530,6 +530,7 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
                 break;
             // TODO - Implement other question types
         }
+        do_action('wptrivia_after_answer', $data, $res);
         return json_encode($res);
     }
 
