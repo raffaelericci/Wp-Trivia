@@ -522,7 +522,7 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
             case 'multiple':
                 foreach($correctAnswers as $index => $a) {
                     $res['correctAnswer'][] = $a->isCorrect();
-                    if ($data['answer'][$index] && ($data['answer'][$index] != $a->isCorrect())) {
+                    if ($data['answer'][$index] != $a->isCorrect()) {
                         $res['isCorrect'] = false;
                     }
                 }
