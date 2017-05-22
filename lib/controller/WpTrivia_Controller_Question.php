@@ -534,11 +534,11 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
     }
 
     /**
-     * TODO - End quiz callback
-     * Load next question
+     * Loads next question.
+     * If quiz is ended fetches final page and calls "wptrivia_quiz_ended" action
      *
      * @param  {array} $data | questionId
-     * @return
+     * @return {array} $pageData | question or final page
      */
     public static function ajaxLoadNextQuestion($data) {
         $questionMapper = new WpTrivia_Model_QuestionMapper();
@@ -547,6 +547,7 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
             // Quiz ended. Fetch final page
             $quizMapper = new WpTrivia_Model_QuizMapper();
             $quiz = $quizMapper->fetch($data['quizId']);
+            do_action('wptrivia_quiz_ended', $data['quizId']);
             return json_encode([
                 "ended" => true,
                 "final_text" => $quiz->getFinalText()
