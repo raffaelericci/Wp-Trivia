@@ -25,27 +25,21 @@ class WpTrivia_Model_QuizMapper extends WpTrivia_Model_Mapper
     }
 
     /**
-     * @param $id
-     * @return WpTrivia_Model_Quiz
-     */
-    public function fetch($id)
-    {
+    * @param $id
+    * @return WpTrivia_Model_Quiz
+    */
+    public function fetch($id) {
         $results = $this->_wpdb->get_row(
             $this->_wpdb->prepare(
-                "SELECT
-									m.*
-								FROM
-									{$this->_table} AS m
-								WHERE
-									id = %d",
-                $id),
+                "
+                SELECT  m.*
+                FROM    {$this->_table} AS m
+                WHERE   id = %d
+                ",
+                $id
+            ),
             ARRAY_A
         );
-
-        if ($results['result_grade_enabled']) {
-            $results['result_text'] = unserialize($results['result_text']);
-        }
-
         return new WpTrivia_Model_Quiz($results);
     }
 
@@ -66,11 +60,6 @@ class WpTrivia_Model_QuizMapper extends WpTrivia_Model_Mapper
             , ARRAY_A);
 
         foreach ($results as $row) {
-
-            if ($row['result_grade_enabled']) {
-                $row['result_text'] = unserialize($row['result_text']);
-            }
-
             $r[] = new WpTrivia_Model_Quiz($row);
         }
 
@@ -119,11 +108,6 @@ class WpTrivia_Model_QuizMapper extends WpTrivia_Model_Mapper
             )), ARRAY_A);
 
         foreach ($results as $row) {
-
-            if ($row['result_grade_enabled']) {
-                $row['result_text'] = unserialize($row['result_text']);
-            }
-
             $r[] = new WpTrivia_Model_Quiz($row);
         }
 
@@ -147,23 +131,15 @@ class WpTrivia_Model_QuizMapper extends WpTrivia_Model_Mapper
         );
     }
 
-    public function save(WpTrivia_Model_Quiz $data)
-    {
-
-        if ($data->isResultGradeEnabled()) {
-            $resultText = serialize($data->getResultText());
-        } else {
-            $resultText = $data->getResultText();
-        }
+    public function save(WpTrivia_Model_Quiz $data) {
 
         $set = array(
             'name' => $data->getName(),
             'text' => $data->getText(),
-            'result_text' => $resultText,
+            'final_text' => $data->getFinalText(),
             'time_limit' => (int)$data->getTimeLimit(),
             'statistics_on' => (int)$data->isStatisticsOn(),
             'statistics_ip_lock' => (int)$data->getStatisticsIpLock(),
-            'result_grade_enabled' => (int)$data->isResultGradeEnabled(),
             'show_points' => (int)$data->isShowPoints(),
             'quiz_run_once' => (int)$data->isQuizRunOnce(),
             'quiz_run_once_type' => $data->getQuizRunOnceType(),

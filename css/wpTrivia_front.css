@@ -70,7 +70,7 @@
     border: 2px solid #000;
     font-size: 15px;
 }
-.wpTrivia_content .wpTrivia_answersList:not(.solved) .wpTrivia_answerInput_singleMulti:not(.selected):hover {
+.wpTrivia_content .wpTrivia_listItem:not(.solved) .wpTrivia_answersList .wpTrivia_answerInput_singleMulti:not(.selected):hover {
     color: #000;
     background: #fff;
 }
@@ -105,3 +105,12 @@
     filter: invert(100%);
 }
 /** //Questions **/
+
+/** Final Page **/
+.wpTrivia_content .wpTrivia_finalPage {
+    min-height: 200px;
+}
+.wpTrivia_content .wpTrivia_finalPage img {
+    width: auto;
+}
+/** //Final Page **/

@@ -193,27 +193,13 @@ class WpTrivia_Helper_ImportXml
 
         $model->setTimeLimit($xml->timeLimit);
 
-        $model->setResultText($xml->resultText);
-        $model->setResultGradeEnabled($xml->resultText);
+        $model->setFinalText($xml->finalText);
 
-        if (isset($xml->resultText)) {
-            $attr = $xml->resultText->attributes();
+        if (isset($xml->finalText)) {
+            $attr = $xml->finalText->attributes();
 
             if ($attr !== null) {
-                $model->setResultGradeEnabled($attr->gradeEnabled == 'true');
-
-                if ($model->isResultGradeEnabled()) {
-                    $resultArray = array('text' => array(), 'prozent' => array());
-
-                    foreach ($xml->resultText->text as $result) {
-                        $resultArray['text'][] = trim((string)$result);
-                        $resultArray['prozent'][] = $result->attributes() === null ? 0 : (int)$result->attributes()->prozent;
-                    }
-
-                    $model->setResultText($resultArray);
-                } else {
-                    $model->setResultText(trim((string)$xml->resultText));
-                }
+                $model->setFinalText(trim((string)$xml->finalText));
             }
         }
 

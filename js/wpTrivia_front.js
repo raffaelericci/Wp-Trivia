@@ -22,6 +22,7 @@
         var wtf = this;
         wtf._e = $(element);
         wtf.started = false;
+        wtf.quizId = options.quizId;
         wtf.currentQuestion = null;
         wtf.currentQuestionId = 0;
         wtf.currentAnswersList = null;
@@ -34,7 +35,10 @@
         };
         wtf.globalElements = {};
 
-        wtf.updateRefs = function() {
+        /**
+         * Updates elements references
+         */
+        wtf.updateRefs = function(questionIdx) {
             wtf.globalElements = {
                 questionList: wtf._e.find('.wpTrivia_list'),
                 listItems: wtf._e.find('.wpTrivia_list .wpTrivia_listItem'),
@@ -49,27 +53,29 @@
                 toplistShowInButton: wtf._e.find('.wpTrivia_toplistShowInButton')
                 */
             };
+            wtf.currentQuestion = wtf.globalElements.listItems.eq(questionIdx);
+            wtf.currentAnswersList = wtf.currentQuestion.find(wtf.globalNames.answersList);
+            wtf.currentQuestionId = wtf.currentAnswersList.data('question_id');
+            wtf.currentAnswerType = wtf.currentAnswersList.data('type');
         };
 
+        /**
+         * Sets the handlers for the answers selection.
+         * The handler namespace is the current question id
+         */
         wtf.setAnswersHandlers = function() {
-            // [Single and multi answer types] answer selection
             switch(wtf.currentAnswerType) {
                 case 'single':
-                case 'multi':
-                    wtf.currentAnswersList.find(wtf.globalNames.inputTypes.singleMulti).click(function() {
+                case 'multiple':
+                    wtf.currentAnswersList.find(wtf.globalNames.inputTypes.singleMulti).on("click." + wtf.currentQuestionId, function() {
                         if (wtf.currentAnswerType == 'single') {
-                            if (!wtf.currentAnswersList.hasClass('solved')) {
-                                wtf.currentAnswersList.find(wtf.globalNames.inputTypes.singleMulti).removeClass('selected');
-                                $(this).addClass('selected');
-                            }
+                            wtf.currentAnswersList.find(wtf.globalNames.inputTypes.singleMulti).removeClass('selected');
+                            $(this).addClass('selected');
                         } else {
-                            // TODO - To test
-                            if (!wtf.currentAnswersList.hasClass('solved')) {
-                                if ($(this).hasClass('selected')) {
-                                    $(this).removeClass('selected');
-                                } else {
-                                    $(this).addClass('selected');
-                                }
+                            if ($(this).hasClass('selected')) {
+                                $(this).removeClass('selected');
+                            } else {
+                                $(this).addClass('selected');
                             }
                         }
                     });
@@ -78,9 +84,24 @@
             }
         };
 
+        /**
+         * Unsets the handlers for the answers selection (by its namespace)
+         */
+        wtf.unsetAnswersHandlers = function() {
+            switch(wtf.currentAnswerType) {
+                case 'single':
+                case 'multiple':
+                    wtf.currentAnswersList.find(wtf.globalNames.inputTypes.singleMulti).off("click." + wtf.currentQuestionId);
+                    break;
+            }
+        };
+
+        /**
+         * Initializes the current question
+         */
         wtf.initQuestion = function(questionIdx) {
 
-            wtf.updateRefs();
+            wtf.updateRefs(questionIdx);
 
             if (!wtf.started) {
                 wtf.started = true;
@@ -90,17 +111,27 @@
                     prevArrow: wtf.globalElements.prev,
                     nextArrow: wtf.globalElements.next
                 });
+                wtf.setAnswersHandlers();
+            } else {
+                if (questionIdx > 0) {
+                    wtf.globalElements.prev.show();
+                } else {
+                    wtf.globalElements.prev.hide();
+                }
+                if (wtf.currentQuestion.hasClass('solved')) {
+                    wtf.globalElements.next.show();
+                    wtf.globalElements.check.hide();
+                } else if (wtf.currentQuestion.hasClass('finalPage')) {
+                    wtf.globalElements.next.hide();
+                    wtf.globalElements.check.hide();
+                } else {
+                    wtf.globalElements.check.show();
+                    wtf.globalElements.next.hide();
+                    wtf.setAnswersHandlers();
+                }
             }
-
-            wtf.currentQuestion = wtf.globalElements.listItems.eq(questionIdx);
-            wtf.currentAnswersList = wtf.currentQuestion.find(wtf.globalNames.answersList);
-            wtf.currentQuestionId = wtf.currentAnswersList.data('question_id');
-            wtf.currentAnswerType = wtf.currentAnswersList.data('type');
-
-            wtf.setAnswersHandlers();
         };
-
-        /* Initialize first question */
+        // First question
         wtf.initQuestion(0);
 
         /**
@@ -113,7 +144,7 @@
             var answer = [];
             switch (wtf.currentAnswerType) {
                 case 'single':
-                case 'multi':
+                case 'multiple':
                     var inputs = wtf.currentAnswersList.find(wtf.globalNames.inputTypes.singleMulti);
                     inputs.each(function(index, el) {
                         var selected = $(el).hasClass('selected');
@@ -172,7 +203,7 @@
             + '        <ul class="wpTrivia_answersList" data-question_id="' + question.questionId + '" data-type="' + question.answers.type + '">';
             switch(question.answers.type) {
                 case "single":
-                case "multi":
+                case "multiple":
                     for (var i in question.answers.list) {
                         answers += ''
                         + '            <li class="wpTrivia_answersListItem">'
@@ -188,6 +219,22 @@
         };
 
         /**
+         * Draw final page html
+         *
+         * @param  {Question} question
+         * @return {HTML}
+         */
+        wtf.drawFinalPage = function(finalText) {
+            var html = ''
+            + '<li class="wpTrivia_listItem finalPage">'
+            + '    <div class="wpTrivia_finalPage">'
+            +          finalText
+            + '    </div>'
+            + '</li>';
+            return html;
+        };
+
+        /**
          * Retrieve and append next question
          */
         wtf.loadNextQuestion = function() {
@@ -195,18 +242,19 @@
                 action: "wp_trivia_admin_ajax",
                 func: "loadNextQuestion",
                 data: {
+                    quizId: wtf.quizId,
                     questionId: wtf.currentQuestionId
                 }
             }, function(question) {
                 var html = '';
                 question = JSON.parse(question);
                 if (question.ended) {
-                    // TODO - Load/Draw final page
-                    // html = wtf.drawFinalPage()
-                    alert('TODO - Load/Draw final page');
+                    html = wtf.drawFinalPage(question.final_text);
                 } else {
                     html = wtf.drawQuestion(question);
                 }
+                wtf.globalElements.check.hide();
+                wtf.globalElements.next.show();
                 wtf.globalElements.questionList.slick('slickAdd', html);
             }).fail(function(err) {
                 console.log(err);
@@ -214,7 +262,9 @@
             });
         };
 
-        /* Check button */
+        /**
+         * Check button handler
+         */
         wtf.globalElements.check.click(function() {
             var userAnswer = wtf.getUserAnswer();
             if (!userAnswer.length) {
@@ -240,9 +290,7 @@
                     }
                     inputs.eq(r).removeClass('selected');
                 }
-                wtf.currentAnswersList.addClass('solved');
-                wtf.globalElements.check.hide();
-                wtf.globalElements.next.show();
+                wtf.currentQuestion.addClass('solved');
                 wtf.loadNextQuestion();
             }).fail(function(err) {
                 console.log(err);
@@ -250,14 +298,11 @@
             });
         });
 
-        /* Slide change handler */
+        /**
+         * Slide change handler
+         */
         $(wtf.globalElements.questionList).on('beforeChange', function(event, slick, currentSlide, nextSlide){
-            wtf.globalElements.check.show();
-            if (nextSlide > 0) wtf.globalElements.prev.show();
-            if (nextSlide == slick.rowCount) wtf.globalElements.next.hide();
-            if (wtf.currentAnswersList.hasClass('solved')) {
-                wtf.globalElements.next.show();
-            }
+            wtf.unsetAnswersHandlers();
             wtf.initQuestion(nextSlide);
         });
     };

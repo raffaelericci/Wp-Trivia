@@ -102,9 +102,7 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
                         </div>
                     </div>
                     <div class="postbox">
-                        <h3 class="hndle"><?php _e('Question', 'wp-trivia'); ?><?php _e('(required)',
-                                'wp-trivia'); ?></h3>
-
+                        <h3 class="hndle"><?php _e('Question', 'wp-trivia'); ?><?php _e('(required)', 'wp-trivia'); ?></h3>
                         <div class="inside">
                             <?php
                             wp_editor($this->question->getQuestion(), "question", array('textarea_rows' => 5));
@@ -186,10 +184,7 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
                         <h3 class="hndle"><?php _e('Answer type', 'wp-trivia'); ?></h3>
 
                         <div class="inside">
-                            <?php
-                            $type = $this->question->getAnswerType();
-                            $type = $type === null ? 'single' : $type;
-                            ?>
+                            <?php $type = $this->question->getAnswerType(); ?>
                             <label style="padding-right: 10px;">
                                 <input type="radio" name="answerType"
                                        value="single" <?php echo ($type === 'single') ? 'checked="checked"' : ''; ?>>
@@ -200,6 +195,7 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
                                        value="multiple" <?php echo ($type === 'multiple') ? 'checked="checked"' : ''; ?>>
                                 <?php _e('Multiple choice', 'wp-trivia'); ?>
                             </label>
+                            <!-- TODO - Implement other question types
                             <label style="padding-right: 10px;">
                                 <input type="radio" name="answerType"
                                        value="free_answer" <?php echo ($type === 'free_answer') ? 'checked="checked"' : ''; ?>>
@@ -210,6 +206,7 @@ class WpTrivia_View_QuestionEdit extends WpTrivia_View_View
                                        value="sort_answer" <?php echo ($type === 'sort_answer') ? 'checked="checked"' : ''; ?>>
                                 <?php _e('"Sorting" choice', 'wp-trivia'); ?>
                             </label>
+                            -->
                         </div>
                     </div>
                     <?php $this->singleChoiceOptions(); ?>

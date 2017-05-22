@@ -29,11 +29,10 @@ class WpTrivia_Model_Quiz extends WpTrivia_Model_Model
     protected $_id = 0;
     protected $_name = '';
     protected $_text = '';
-    protected $_resultText;
+    protected $_finalText;
     protected $_timeLimit = 0;
     protected $_statisticsOn = false;
     protected $_statisticsIpLock = 1440;
-    protected $_resultGradeEnabled = false;
     protected $_showPoints = false;
     protected $_quizRunOnce = false;
     protected $_quizRunOnceType = 0;
@@ -130,16 +129,16 @@ class WpTrivia_Model_Quiz extends WpTrivia_Model_Model
         return $this->_text;
     }
 
-    public function setResultText($_resultText)
+    public function setFinalText($_finalText)
     {
-        $this->_resultText = $_resultText;
+        $this->_finalText = $_finalText;
 
         return $this;
     }
 
-    public function getResultText()
+    public function getFinalText()
     {
-        return $this->_resultText;
+        return $this->_finalText;
     }
 
     public function setTimeLimit($_timeLimit)
@@ -176,18 +175,6 @@ class WpTrivia_Model_Quiz extends WpTrivia_Model_Model
     public function getStatisticsIpLock()
     {
         return $this->_statisticsIpLock;
-    }
-
-    public function setResultGradeEnabled($_resultGradeEnabled)
-    {
-        $this->_resultGradeEnabled = (bool)$_resultGradeEnabled;
-
-        return $this;
-    }
-
-    public function isResultGradeEnabled()
-    {
-        return $this->_resultGradeEnabled;
     }
 
     public function setShowPoints($_showPoints)

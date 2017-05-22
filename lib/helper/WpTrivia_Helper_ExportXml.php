@@ -67,10 +67,9 @@ class WpTrivia_Helper_ExportXml
         $quizElement->appendChild($text = $dom->createElement('text'));
         $text->appendChild($dom->createCDATASection($quiz->getText()));
 
-        if (is_array($quiz->getResultText())) {
-            $resultArray = $quiz->getResultText();
-            $result = $dom->createElement('resultText');
-            $result->setAttribute('gradeEnabled', $this->booleanToTrueOrFalse($quiz->isResultGradeEnabled()));
+        if (is_array($quiz->getFinalText())) {
+            $resultArray = $quiz->getFinalText();
+            $result = $dom->createElement('finalText');
 
             for ($i = 0; $i < count($resultArray); $i++) {
                 $r = $dom->createElement('text');
@@ -82,9 +81,8 @@ class WpTrivia_Helper_ExportXml
 
             $quizElement->appendChild($result);
         } else {
-            $result = $dom->createElement('resultText');
-            $result->setAttribute('gradeEnabled', $this->booleanToTrueOrFalse($quiz->isResultGradeEnabled()));
-            $result->appendChild($dom->createCDATASection($quiz->getResultText()));
+            $result = $dom->createElement('finalText');
+            $result->appendChild($dom->createCDATASection($quiz->getFinalText()));
 
             $quizElement->appendChild($result);
         }

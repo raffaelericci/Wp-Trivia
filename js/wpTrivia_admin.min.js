@@ -34,90 +34,6 @@ jQuery(document).ready(function($) {
 
         var methode = {
 
-            addResult: function () {
-                $('#resultList').children().each(function () {
-                    if ($(this).css('display') == 'none') {
-                        //TODO rework
-                        var $this = $(this);
-                        var $text = $this.find('textarea[name="resultTextGrade[text][]"]');
-                        var id = $text.attr('id');
-                        var hidden = true;
-
-                        $this.find('input[name="resultTextGrade[prozent][]"]').val('0');
-                        $this.find('input[name="resultTextGrade[activ][]"]').val('1').keyup();
-
-                        if (tinymce.editors[id] != undefined && !tinymce.editors[id].isHidden()) {
-                            hidden = false;
-                        }
-
-                        if (switchEditors != undefined && !hidden) {
-                            switchEditors.go(id, 'toggle');
-                            switchEditors.go(id, 'toggle');
-                        }
-
-                        if (tinymce.editors[id] != undefined) {
-                            tinymce.editors[id].setContent('');
-                        } else {
-                            $text.val('');
-                        }
-
-                        if (tinymce.editors[id] != undefined && !hidden) {
-                            tinyMCE.execCommand('mceRemoveControl', false, id);
-                        }
-
-                        $this.parent().children(':visible').last().after($this);
-
-                        if (tinymce.editors[id] != undefined && !hidden) {
-                            tinyMCE.execCommand('mceAddControl', false, id);
-                        }
-
-                        $(this).show();
-
-                        if (switchEditors != undefined && !hidden) {
-                            switchEditors.go(id, 'toggle');
-                        }
-
-                        return false;
-                    }
-                });
-            },
-
-            deleteResult: function (e) {
-                $(e).parent().parent().hide();
-                $(e).siblings('input[name="resultTextGrade[activ][]"]').val('0');
-            },
-
-            changeResult: function (e) {
-                var $this = $(e);
-
-                if (methode.validResultInput($this.val())) {
-                    $this.siblings('.resultProzent').text($this.val());
-                    $this.removeAttr('style');
-                    return true;
-                }
-
-                $this.css('background-color', '#FF9696');
-
-                return false;
-            },
-
-            validResultInput: function (input) {
-
-                if (isEmpty(input))
-                    return false;
-
-                input = input.replace(/\,/, '.');
-
-                if (!isNaN(input) && Number(input) <= 100 && Number(input) >= 0) {
-                    if (input.match(/\./) != null)
-                        return input.split('.')[1].length < 3;
-
-                    return true;
-                }
-
-                return false;
-            },
-
             validInput: function () {
                 if (isEmpty($('#wpTrivia_title').val())) {
                     alert(wpTriviaLocalize.no_title_msg);
@@ -135,24 +51,6 @@ jQuery(document).ready(function($) {
                 if (isEmpty(text)) {
                     alert(wpTriviaLocalize.no_quiz_start_msg);
                     return false;
-                }
-
-                if ($('#wpTrivia_resultGradeEnabled:checked').length) {
-                    var rCheck = true;
-
-                    $('#resultList').children().each(function () {
-                        if ($(this).is(':visible')) {
-                            if (!methode.validResultInput($(this).find('input[name="resultTextGrade[prozent][]"]').val())) {
-                                rCheck = false;
-                                return false;
-                            }
-                        }
-                    });
-
-                    if (!rCheck) {
-                        alert(wpTriviaLocalize.fail_grade_result);
-                        return false;
-                    }
                 }
 
                 return true;
@@ -224,32 +122,6 @@ jQuery(document).ready(function($) {
                     $('#statistics_ip_lock_tr').show();
                 } else {
                     $('#statistics_ip_lock_tr').hide();
-                }
-            });
-
-            $('.addResult').click(function () {
-                methode.addResult();
-            });
-
-            $('.deleteResult').click(function (e) {
-                methode.deleteResult(this);
-            });
-
-            $('input[name="resultTextGrade[prozent][]"]').keyup(function (event) {
-                methode.changeResult(this);
-            }).keydown(function (event) {
-                if (event.which == 13) {
-                    event.preventDefault();
-                }
-            });
-
-            $('#wpTrivia_resultGradeEnabled').change(function () {
-                if (this.checked) {
-                    $('#resultGrade').show();
-                    $('#resultNormal').hide();
-                } else {
-                    $('#resultGrade').hide();
-                    $('#resultNormal').show();
                 }
             });
 
@@ -377,7 +249,6 @@ jQuery(document).ready(function($) {
             }).change();
 
             $('#statistics_on').change();
-            $('#wpTrivia_resultGradeEnabled').change();
             $('input[name="quizRunOnce"]').change();
             $('input[name="quizRunOnceType"]:checked').change();
             $('input[name="showMaxQuestion"]').change();

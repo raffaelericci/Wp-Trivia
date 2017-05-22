@@ -107,10 +107,6 @@ class WpTrivia_Controller_Quiz extends WpTrivia_Controller_Controller
         } else {
             if (isset($this->_post['submit'])) {
 
-                if (isset($this->_post['resultGradeEnabled'])) {
-                    $this->_post['result_text'] = $this->filterResultTextGrade($this->_post);
-                }
-
                 $this->_post['adminEmail'] = new WpTrivia_Model_Email($this->_post['adminEmail']);
                 $this->_post['userEmail'] = new WpTrivia_Model_Email($this->_post['userEmail']);
 
@@ -299,10 +295,6 @@ class WpTrivia_Controller_Quiz extends WpTrivia_Controller_Controller
     {
         $templateMapper = new WpTrivia_Model_TemplateMapper();
 
-        if (isset($this->_post['resultGradeEnabled'])) {
-            $this->_post['result_text'] = $this->filterResultTextGrade($this->_post);
-        }
-
         $this->_post['adminEmail'] = new WpTrivia_Model_Email($this->_post['adminEmail']);
         $this->_post['userEmail'] = new WpTrivia_Model_Email($this->_post['userEmail']);
 
@@ -479,19 +471,6 @@ class WpTrivia_Controller_Quiz extends WpTrivia_Controller_Controller
     private function checkValidit($post)
     {
         return (isset($post['name']) && !empty($post['name']) && isset($post['text']) && !empty($post['text']));
-    }
-
-    private function filterResultTextGrade($post)
-    {
-        $activ = array_keys($post['resultTextGrade']['activ'], '1');
-        $result = array();
-
-        foreach ($activ as $k) {
-            $result['text'][] = $post['resultTextGrade']['text'][$k];
-            $result['prozent'][] = (float)str_replace(',', '.', $post['resultTextGrade']['prozent'][$k]);
-        }
-
-        return $result;
     }
 
     private function setResultCookie(WpTrivia_Model_Quiz $quiz)

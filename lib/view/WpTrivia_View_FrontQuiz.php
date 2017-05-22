@@ -53,14 +53,12 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
 
         $question_count = count($this->question);
 
-        $result = $this->quiz->getResultText();
+        $result = $this->quiz->getFinalText();
 
-        if (!$this->quiz->isResultGradeEnabled()) {
-            $result = array(
-                'text' => array($result),
-                'prozent' => array(0)
-            );
-        }
+        $result = array(
+            'text' => array($result),
+            'prozent' => array(0)
+        );
 
         $resultsProzent = json_encode($result['prozent']);
 
@@ -111,7 +109,6 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                 init: {
                     quizId: <?php echo (int)$this->quiz->getId(); ?>,
                     timelimit: <?php echo (int)$this->quiz->getTimeLimit(); ?>,
-                    resultsGrade: <?php echo $resultsProzent; ?>,
                     bo: <?php echo $bo ?>,
                     qpp: <?php echo $this->quiz->getQuestionsPerPage(); ?>,
                     formPos: <?php echo (int)$this->quiz->getFormShowPosition(); ?>,
@@ -148,14 +145,12 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
 
         $question_count = count($this->question);
 
-        $result = $this->quiz->getResultText();
+        $result = $this->quiz->getFinalText();
 
-        if (!$this->quiz->isResultGradeEnabled()) {
-            $result = array(
-                'text' => array($result),
-                'prozent' => array(0)
-            );
-        }
+        $result = array(
+            'text' => array($result),
+            'prozent' => array(0)
+        );
 
         $resultsProzent = json_encode($result['prozent']);
 
@@ -189,7 +184,6 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                 $('#wpTrivia_<?php echo $this->quiz->getId(); ?>').wpTriviaFront({
                     quizId: <?php echo (int)$this->quiz->getId(); ?>,
                     timelimit: <?php echo (int)$this->quiz->getTimeLimit(); ?>,
-                    resultsGrade: <?php echo $resultsProzent; ?>,
                     bo: <?php echo $bo ?>,
                     qpp: <?php echo $this->quiz->getQuestionsPerPage(); ?>,
                     formPos: <?php echo (int)$this->quiz->getFormShowPosition(); ?>,
@@ -551,10 +545,10 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
             <?php } ?>
             <div>
                 <ul class="wpTrivia_resultsList">
-                    <?php foreach ($result['text'] as $resultText) { ?>
+                    <?php foreach ($result['text'] as $finalText) { ?>
                         <li style="display: none;">
                             <div>
-                                <?php echo do_shortcode(apply_filters('comment_text', $resultText)); ?>
+                                <?php echo do_shortcode(apply_filters('comment_text', $finalText)); ?>
                             </div>
                         </li>
                     <?php } ?>

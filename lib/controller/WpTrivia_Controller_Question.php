@@ -511,7 +511,6 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
      * @return {array} $res  | isCorrect, array correctAnswer
      */
     public static function ajaxCheckAnswer($data) {
-        // TODO - Post-action callback
         $questionMapper = new WpTrivia_Model_QuestionMapper();
         $correctAnswers = $questionMapper->fetch($data['questionId'])->getAnswerData();
         $res = [
@@ -520,7 +519,7 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
         ];
         switch($data['questionType']) {
             case 'single':
-            case 'multi':
+            case 'multiple':
                 foreach($correctAnswers as $index => $a) {
                     $res['correctAnswer'][] = $a->isCorrect();
                     if ($data['answer'][$index] && ($data['answer'][$index] != $a->isCorrect())) {
@@ -545,10 +544,13 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
         $questionMapper = new WpTrivia_Model_QuestionMapper();
         $nextQuestion = $questionMapper->fetchNext($data['questionId']);
         if (!$nextQuestion) {
-            // Quiz ended
-            // TODO -
-            //$questionMapper->fetchFinalPage($data['questionId']);
-            return json_encode(["ended" => true]);
+            // Quiz ended. Fetch final page
+            $quizMapper = new WpTrivia_Model_QuizMapper();
+            $quiz = $quizMapper->fetch($data['quizId']);
+            return json_encode([
+                "ended" => true,
+                "final_text" => $quiz->getFinalText()
+            ]);
         }
         return $nextQuestion->getPublicJson();
     }

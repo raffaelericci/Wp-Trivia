@@ -38,7 +38,6 @@ class WpTrivia_Controller_Admin
             'no_correct_msg' => __('Correct answer was not selected!', 'wp-trivia'),
             'no_answer_msg' => __('No answer deposited!', 'wp-trivia'),
             'no_quiz_start_msg' => __('No quiz description filled!', 'wp-trivia'),
-            'fail_grade_result' => __('The percent values in result text are incorrect.', 'wp-trivia'),
             'no_nummber_points' => __('No number in the field "Points" or less than 1', 'wp-trivia'),
             'no_nummber_points_new' => __('No number in the field "Points" or less than 0', 'wp-trivia'),
             'no_selected_quiz' => __('No quiz selected', 'wp-trivia'),
