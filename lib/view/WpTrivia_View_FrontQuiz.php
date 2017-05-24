@@ -587,17 +587,30 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
      *
      * @param  {int} $questionCount
      */
-    private function showQuizBox($questionCount)
-    {
+    private function showQuizBox($questionCount) {
         ?>
+        <div class="wpTrivia_quiz_progress" style="<?php echo "width: " . $questionCount * 45 . "px;" ?>">
+            <div class="wpTrivia_quiz_progress_step active">
+                <div class="wpTrivia_quiz_progress_bar_container"><div class="wpTrivia_quiz_progress_bar"></div></div>
+                <a href="#" data-step="0" class="wpTrivia_quiz_progress_dot"></a>
+            </div>
+            <?php
+            for ($i = 1; $i <= $questionCount - 1; $i++) {
+            ?>
+            <div class="wpTrivia_quiz_progress_step disabled">
+                <div class="wpTrivia_quiz_progress_bar_container"><div class="wpTrivia_quiz_progress_bar"></div></div>
+                <a href="#" data-step="<?php echo $i; ?>" class="wpTrivia_quiz_progress_dot"></a>
+            </div>
+            <?php
+            }
+            ?>
+        </div>
         <div class="wpTrivia_quiz">
             <ol class="wpTrivia_list">
                 <?php
                 $question = $this->question[0];
-
                 /* @var $answerArray WpTrivia_Model_AnswerTypes[] */
                 $answerArray = $question->getAnswerData();
-
                 ?>
                 <li class="wpTrivia_listItem">
                     <div class="wpTrivia_progress_header" <?php $this->isDisplayNone(!$this->quiz->isHideQuestionPositionOverview()); ?> >

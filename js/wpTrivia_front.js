@@ -27,11 +27,8 @@
         wtf.currentQuestionId = 0;
         wtf.currentAnswersList = null;
         wtf.currentAnswerType = '';
-        wtf.globalNames = {
-            answersList: '.wpTrivia_answersList',
-            inputTypes: {
-                'singleMulti': '.wpTrivia_answerInput_singleMulti'
-            }
+        wtf.inputTypes = {
+            'singleMulti': '.wpTrivia_answerInput_singleMulti'
         };
         wtf.globalElements = {};
 
@@ -47,6 +44,7 @@
                 next: wtf._e.find('.wpTrivia_button.next'),
                 quizName: $('#quizName'),
                 questionCount: $('#questionCount'),
+                quizProgressBar: wtf._e.find('.wpTrivia_quiz_progress'),
                 /*
                 results: wtf._e.find('.wpTrivia_results'),
                 timelimit: wtf._e.find('.wpTrivia_time_limit'),
@@ -54,7 +52,7 @@
                 */
             };
             wtf.currentQuestion = wtf.globalElements.listItems.eq(questionIdx);
-            wtf.currentAnswersList = wtf.currentQuestion.find(wtf.globalNames.answersList);
+            wtf.currentAnswersList = wtf.currentQuestion.find('.wpTrivia_answersList');
             wtf.currentQuestionId = wtf.currentAnswersList.data('question_id');
             wtf.currentAnswerType = wtf.currentAnswersList.data('type');
         };
@@ -67,9 +65,9 @@
             switch(wtf.currentAnswerType) {
                 case 'single':
                 case 'multiple':
-                    wtf.currentAnswersList.find(wtf.globalNames.inputTypes.singleMulti).on("click." + wtf.currentQuestionId, function() {
+                    wtf.currentAnswersList.find(wtf.inputTypes.singleMulti).on("click." + wtf.currentQuestionId, function() {
                         if (wtf.currentAnswerType == 'single') {
-                            wtf.currentAnswersList.find(wtf.globalNames.inputTypes.singleMulti).removeClass('selected');
+                            wtf.currentAnswersList.find(wtf.inputTypes.singleMulti).removeClass('selected');
                             $(this).addClass('selected');
                         } else {
                             if ($(this).hasClass('selected')) {
@@ -91,7 +89,7 @@
             switch(wtf.currentAnswerType) {
                 case 'single':
                 case 'multiple':
-                    wtf.currentAnswersList.find(wtf.globalNames.inputTypes.singleMulti).off("click." + wtf.currentQuestionId);
+                    wtf.currentAnswersList.find(wtf.inputTypes.singleMulti).off("click." + wtf.currentQuestionId);
                     break;
             }
         };
@@ -145,7 +143,7 @@
             switch (wtf.currentAnswerType) {
                 case 'single':
                 case 'multiple':
-                    var inputs = wtf.currentAnswersList.find(wtf.globalNames.inputTypes.singleMulti);
+                    var inputs = wtf.currentAnswersList.find(wtf.inputTypes.singleMulti);
                     inputs.each(function(index, el) {
                         var selected = $(el).hasClass('selected');
                         if (selected) {
@@ -263,6 +261,29 @@
         };
 
         /**
+         * Updates the quiz progression bar
+         *
+         * @param {boolean} isCorrect
+         */
+        wtf.updateProgressBar = function(isCorrect) {
+            var bar = $(wtf.globalElements.quizProgressBar);
+            var currentActive = bar.find('.active');
+            currentActive.removeClass('active');
+            currentActive.addClass('complete');
+            var a = currentActive.find('a');
+            if (isCorrect) {
+                a.addClass('correct');
+            } else {
+                a.addClass('wrong');
+            }
+            var nextActive = bar.find('.wpTrivia_quiz_progress_step').eq(currentActive.index() + 1);
+            if (nextActive.length) {
+                nextActive.removeClass('disabled');
+                nextActive.addClass('active');
+            }
+        };
+
+        /**
          * Check button handler
          */
         wtf.globalElements.check.click(function() {
@@ -281,17 +302,36 @@
                 }
             }, function(res) {
                 res = JSON.parse(res);
-                var inputs = wtf.currentAnswersList.find(wtf.globalNames.inputTypes.singleMulti);
-                for (var r in res.correctAnswer) {
-                    if (res.correctAnswer[r]) {
-                        inputs.eq(r).addClass('correct');
-                    } else if (!res.correctAnswer[r] && inputs.eq(r).hasClass('selected')) {
-                        inputs.eq(r).addClass('wrong');
-                    }
-                    inputs.eq(r).removeClass('selected');
+                switch(wtf.currentAnswerType) {
+                    case 'single':
+                        var inputs = wtf.currentAnswersList.find(wtf.inputTypes.singleMulti);
+                        for (var r in res.correctAnswer) {
+                            if (res.correctAnswer[r]) {
+                                inputs.eq(r).addClass('correct');
+                            } else if (!res.correctAnswer[r] && inputs.eq(r).hasClass('selected')) {
+                                inputs.eq(r).addClass('wrong');
+                            }
+                            inputs.eq(r).removeClass('selected');
+                        }
+                        break;
+                    case 'multiple':
+                        var inputs = wtf.currentAnswersList.find(wtf.inputTypes.singleMulti);
+                        for (var r in res.correctAnswer) {
+                            if (res.correctAnswer[r] && inputs.eq(r).hasClass('selected')) {
+                                inputs.eq(r).addClass('correct');
+                            } else if (res.correctAnswer[r] && !inputs.eq(r).hasClass('selected')) {
+                                inputs.eq(r).addClass('missing-correct');
+                            } else if (!res.correctAnswer[r] && inputs.eq(r).hasClass('selected')) {
+                                inputs.eq(r).addClass('wrong');
+                            }
+                            inputs.eq(r).removeClass('selected');
+                        }
+                        break;
+                    // TODO - Implement other question types
                 }
                 wtf.currentQuestion.addClass('solved');
                 wtf.loadNextQuestion();
+                wtf.updateProgressBar(res.isCorrect);
             }).fail(function(err) {
                 console.log(err);
                 alert(WpTriviaGlobal.connectionError);
@@ -304,6 +344,13 @@
         $(wtf.globalElements.questionList).on('beforeChange', function(event, slick, currentSlide, nextSlide){
             wtf.unsetAnswersHandlers();
             wtf.initQuestion(nextSlide);
+        });
+
+        /**
+         * Quiz steps handler
+         */
+        $(wtf.globalElements.quizProgressBar).find('a').on('click', function(event) {
+            $(wtf.globalElements.questionList).slick('slickGoTo', $(this).data('step'));
         });
     };
 
