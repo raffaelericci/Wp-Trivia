@@ -232,7 +232,7 @@ class WpTrivia_Model_Question extends WpTrivia_Model_Model {
         $pj = [
             "quizId" => $this->getQuizId(),
             "questionId" => $this->getId(),
-            "index" => $this->getSort() + 1,
+            "index" => $this->getSort(),
             "title" => $this->getTitle(),
             "image" => $this->getImageId() ? wp_get_attachment_url($this->getImageId()) : null,
             "question" => $this->getQuestion(),
