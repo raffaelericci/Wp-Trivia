@@ -58,22 +58,14 @@ class WpTrivia_Model_Quiz extends WpTrivia_Model_Model
 
     protected $_toplistData = array();
 
-    protected $_showAverageResult = false;
-
     protected $_prerequisite = false;
 
     //0.22
     protected $_toplistDataAddAutomatic = false;
-    protected $_showReviewQuestion = false;
-    protected $_quizSummaryHide = false;
-    protected $_skipQuestionDisabled = false;
     protected $_emailNotification = 0;
 
     //0.24
     protected $_userEmailNotification = false;
-    protected $_hideResultCorrectQuestion = false;
-    protected $_hideResultQuizTime = false;
-    protected $_hideResultPoints = false;
 
     //0.25
     protected $_forcingQuestionSolve = false;
@@ -449,18 +441,6 @@ class WpTrivia_Model_Quiz extends WpTrivia_Model_Model
         return $this->_toplistDataCaptcha;
     }
 
-    public function setShowAverageResult($_showAverageResult)
-    {
-        $this->_showAverageResult = (bool)$_showAverageResult;
-
-        return $this;
-    }
-
-    public function isShowAverageResult()
-    {
-        return $this->_showAverageResult;
-    }
-
     public function setPrerequisite($_prerequisite)
     {
         $this->_prerequisite = (bool)$_prerequisite;
@@ -485,42 +465,6 @@ class WpTrivia_Model_Quiz extends WpTrivia_Model_Model
         return $this->_toplistDataAddAutomatic;
     }
 
-    public function setShowReviewQuestion($_showReviewQuestion)
-    {
-        $this->_showReviewQuestion = (bool)$_showReviewQuestion;
-
-        return $this;
-    }
-
-    public function isShowReviewQuestion()
-    {
-        return $this->_showReviewQuestion;
-    }
-
-    public function setQuizSummaryHide($_quizSummaryHide)
-    {
-        $this->_quizSummaryHide = (bool)$_quizSummaryHide;
-
-        return $this;
-    }
-
-    public function isQuizSummaryHide()
-    {
-        return $this->_quizSummaryHide;
-    }
-
-    public function setSkipQuestionDisabled($_skipQuestion)
-    {
-        $this->_skipQuestionDisabled = (bool)$_skipQuestion;
-
-        return $this;
-    }
-
-    public function isSkipQuestionDisabled()
-    {
-        return $this->_skipQuestionDisabled;
-    }
-
     public function setEmailNotification($_emailNotification)
     {
         $this->_emailNotification = (int)$_emailNotification;
@@ -543,42 +487,6 @@ class WpTrivia_Model_Quiz extends WpTrivia_Model_Model
     public function isUserEmailNotification()
     {
         return $this->_userEmailNotification;
-    }
-
-    public function setHideResultCorrectQuestion($_hideResultCorrectQuestion)
-    {
-        $this->_hideResultCorrectQuestion = (bool)$_hideResultCorrectQuestion;
-
-        return $this;
-    }
-
-    public function isHideResultCorrectQuestion()
-    {
-        return $this->_hideResultCorrectQuestion;
-    }
-
-    public function setHideResultQuizTime($_hideResultQuizTime)
-    {
-        $this->_hideResultQuizTime = (bool)$_hideResultQuizTime;
-
-        return $this;
-    }
-
-    public function isHideResultQuizTime()
-    {
-        return $this->_hideResultQuizTime;
-    }
-
-    public function setHideResultPoints($_hideResultPoints)
-    {
-        $this->_hideResultPoints = (bool)$_hideResultPoints;
-
-        return $this;
-    }
-
-    public function isHideResultPoints()
-    {
-        return $this->_hideResultPoints;
     }
 
     public function setForcingQuestionSolve($_forcingQuestionSolve)

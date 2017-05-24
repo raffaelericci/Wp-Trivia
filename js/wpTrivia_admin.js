@@ -240,14 +240,6 @@ jQuery(document).ready(function($) {
 
             }).change();
 
-            $('input[name="showReviewQuestion"]').change(function () {
-                if (this.checked) {
-                    $('.wpTrivia_reviewQuestionOptions').show();
-                } else {
-                    $('.wpTrivia_reviewQuestionOptions').hide();
-                }
-            }).change();
-
             $('#statistics_on').change();
             $('input[name="quizRunOnce"]').change();
             $('input[name="quizRunOnceType"]:checked').change();

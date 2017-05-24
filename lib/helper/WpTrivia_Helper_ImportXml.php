@@ -251,16 +251,10 @@ class WpTrivia_Helper_ImportXml
             $model->setToplistDataAddAutomatic($xml->toplist->toplistDataAddAutomatic == 'true');
         }
 
-        $model->setShowAverageResult($xml->showAverageResult == 'true');
         $model->setPrerequisite($xml->prerequisite == 'true');
-        $model->setShowReviewQuestion($xml->showReviewQuestion == 'true');
-        $model->setQuizSummaryHide($xml->quizSummaryHide == 'true');
         $model->setSkipQuestionDisabled($xml->skipQuestionDisabled == 'true');
         $model->setEmailNotification($xml->emailNotification);
         $model->setUserEmailNotification($xml->userEmailNotification == 'true');
-        $model->setHideResultCorrectQuestion($xml->hideResultCorrectQuestion == 'true');
-        $model->setHideResultQuizTime($xml->hideResultQuizTime == 'true');
-        $model->setHideResultPoints($xml->hideResultPoints == 'true');
         $model->setForcingQuestionSolve($xml->forcingQuestionSolve == 'true');
         $model->setHideQuestionPositionOverview($xml->hideQuestionPositionOverview == 'true');
         $model->setHideQuestionNumbering($xml->hideQuestionNumbering == 'true');

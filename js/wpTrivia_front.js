@@ -46,7 +46,6 @@
                 questionCount: $('#questionCount'),
                 quizProgressBar: wtf._e.find('.wpTrivia_quiz_progress'),
                 /*
-                results: wtf._e.find('.wpTrivia_results'),
                 timelimit: wtf._e.find('.wpTrivia_time_limit'),
                 toplistShowInButton: wtf._e.find('.wpTrivia_toplistShowInButton')
                 */

@@ -132,25 +132,11 @@ class WpTrivia_Helper_ExportXml
 
         $quizElement->appendChild($toplist);
 
-        $quizElement->appendChild($dom->createElement('showAverageResult',
-            $this->booleanToTrueOrFalse($quiz->isShowAverageResult())));
         $quizElement->appendChild($dom->createElement('prerequisite',
             $this->booleanToTrueOrFalse($quiz->isPrerequisite())));
-        $quizElement->appendChild($dom->createElement('showReviewQuestion',
-            $this->booleanToTrueOrFalse($quiz->isShowReviewQuestion())));
-        $quizElement->appendChild($dom->createElement('quizSummaryHide',
-            $this->booleanToTrueOrFalse($quiz->isQuizSummaryHide())));
-        $quizElement->appendChild($dom->createElement('skipQuestionDisabled',
-            $this->booleanToTrueOrFalse($quiz->isSkipQuestionDisabled())));
         $quizElement->appendChild($dom->createElement('emailNotification', $quiz->getEmailNotification()));
         $quizElement->appendChild($dom->createElement('userEmailNotification',
             $this->booleanToTrueOrFalse($quiz->isUserEmailNotification())));
-        $quizElement->appendChild($dom->createElement('hideResultCorrectQuestion',
-            $this->booleanToTrueOrFalse($quiz->isHideResultCorrectQuestion())));
-        $quizElement->appendChild($dom->createElement('hideResultQuizTime',
-            $this->booleanToTrueOrFalse($quiz->isHideResultQuizTime())));
-        $quizElement->appendChild($dom->createElement('hideResultPoints',
-            $this->booleanToTrueOrFalse($quiz->isHideResultPoints())));
         $quizElement->appendChild($dom->createElement('forcingQuestionSolve',
             $this->booleanToTrueOrFalse($quiz->isForcingQuestionSolve())));
         $quizElement->appendChild($dom->createElement('hideQuestionPositionOverview',

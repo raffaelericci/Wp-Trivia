@@ -53,38 +53,15 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
 
         $question_count = count($this->question);
 
-        $result = $this->quiz->getFinalText();
-
-        $result = array(
-            'text' => array($result),
-            'prozent' => array(0)
-        );
-
-        $resultsProzent = json_encode($result['prozent']);
-
-        $resultReplace = array();
-
-        foreach ($this->forms as $form) {
-            /* @var $form WpTrivia_Model_Form */
-
-            $resultReplace['$form{' . $form->getSort() . '}'] = '<span class="wpTrivia_resultForm" data-form_id="' . $form->getFormId() . '"></span>';
-        }
-
-        foreach ($result['text'] as &$text) {
-            $text = str_replace(array_keys($resultReplace), $resultReplace, $text);
-        }
-
         ?>
         <div class="wpTrivia_content" id="wpTrivia_<?php echo $this->quiz->getId(); ?>">
             <?php
 
             $this->showTimeLimitBox();
-            $this->showCheckPageBox($question_count);
-            $this->showInfoPageBox();
+
             $this->showLockBox();
             $this->showStartOnlyRegisteredUserBox();
             $this->showPrerequisiteBox();
-            $this->showResultBox($result, $question_count);
 
             if ($this->quiz->getToplistDataShowIn() == WpTrivia_Model_Quiz::QUIZ_TOPLIST_SHOW_IN_BUTTON) {
                 $this->showToplistInButtonBox();
@@ -111,8 +88,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                     timelimit: <?php echo (int)$this->quiz->getTimeLimit(); ?>,
                     bo: <?php echo $bo ?>,
                     qpp: <?php echo $this->quiz->getQuestionsPerPage(); ?>,
-                    formPos: <?php echo (int)$this->quiz->getFormShowPosition(); ?>,
-                    lbn: <?php echo json_encode(($this->quiz->isShowReviewQuestion() && !$this->quiz->isQuizSummaryHide()) ? $this->_buttonNames['quiz_summary'] : $this->_buttonNames['finish_quiz']); ?>
+                    formPos: <?php echo (int)$this->quiz->getFormShowPosition(); ?>
                 }
             });
         </script>
@@ -128,9 +104,6 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
         $bo |= ((int)$preview) << 4;
         $bo |= ((int)get_option('wpTrivia_corsActivated')) << 5;
         $bo |= ((int)$this->quiz->isToplistDataAddAutomatic()) << 6;
-        $bo |= ((int)$this->quiz->isShowReviewQuestion()) << 7;
-        $bo |= ((int)$this->quiz->isQuizSummaryHide()) << 8;
-        $bo |= ((int)(!$this->quiz->isSkipQuestionDisabled() && $this->quiz->isShowReviewQuestion())) << 9;
         $bo |= ((int)$this->quiz->isForcingQuestionSolve()) << 11;
         $bo |= ((int)$this->quiz->isHideQuestionPositionOverview()) << 12;
         $bo |= ((int)$this->quiz->isFormActivated()) << 13;
@@ -145,26 +118,15 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
 
         $question_count = count($this->question);
 
-        $result = $this->quiz->getFinalText();
-
-        $result = array(
-            'text' => array($result),
-            'prozent' => array(0)
-        );
-
-        $resultsProzent = json_encode($result['prozent']);
-
         ?>
         <div class="wpTrivia_content" id="wpTrivia_<?php echo $this->quiz->getId(); ?>">
             <?php
 
             $this->showTimeLimitBox();
-            $this->showCheckPageBox($question_count);
-            $this->showInfoPageBox();
+
             $this->showLockBox();
             $this->showStartOnlyRegisteredUserBox();
             $this->showPrerequisiteBox();
-            $this->showResultBox($result, $question_count);
 
             if ($this->quiz->getToplistDataShowIn() == WpTrivia_Model_Quiz::QUIZ_TOPLIST_SHOW_IN_BUTTON) {
                 $this->showToplistInButtonBox();
@@ -186,8 +148,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                     timelimit: <?php echo (int)$this->quiz->getTimeLimit(); ?>,
                     bo: <?php echo $bo ?>,
                     qpp: <?php echo $this->quiz->getQuestionsPerPage(); ?>,
-                    formPos: <?php echo (int)$this->quiz->getFormShowPosition(); ?>,
-                    lbn: <?php echo json_encode(($this->quiz->isShowReviewQuestion() && !$this->quiz->isQuizSummaryHide()) ? $this->_buttonNames['quiz_summary'] : $this->_buttonNames['finish_quiz']); ?>
+                    formPos: <?php echo (int)$this->quiz->getFormShowPosition(); ?>
                 });
             });
         </script>
@@ -396,67 +357,6 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
         <?php
     }
 
-    private function showCheckPageBox($questionCount)
-    {
-        ?>
-        <div class="wpTrivia_checkPage" style="display: none;">
-            <h4 class="wpTrivia_header"><?php echo $this->_buttonNames['quiz_summary']; ?></h4>
-
-            <p>
-                <?php printf(__('%s of %s questions completed', 'wp-trivia'), '<span>0</span>', $questionCount); ?>
-            </p>
-
-            <p><?php _e('Questions', 'wp-trivia'); ?>:</p>
-
-            <div style="margin-bottom: 20px;" class="wpTrivia_box">
-                <ol>
-                    <?php for ($xy = 1; $xy <= $questionCount; $xy++) { ?>
-                        <li><?php echo $xy; ?></li>
-                    <?php } ?>
-                </ol>
-                <div style="clear: both;"></div>
-            </div>
-
-            <?php
-            if ($this->quiz->isFormActivated() && $this->quiz->getFormShowPosition() == WpTrivia_Model_Quiz::QUIZ_FORM_POSITION_END
-                && ($this->quiz->isShowReviewQuestion() && !$this->quiz->isQuizSummaryHide())
-            ) {
-
-                ?>
-                <h4 class="wpTrivia_header"><?php _e('Information', 'wp-trivia'); ?></h4>
-                <?php
-                $this->showFormBox();
-            }
-
-            ?>
-
-            <input type="button" name="endQuizSummary" value="<?php echo $this->_buttonNames['finish_quiz']; ?>"
-                   class="wpTrivia_button">
-        </div>
-        <?php
-    }
-
-    private function showInfoPageBox()
-    {
-        ?>
-        <div class="wpTrivia_infopage" style="display: none;">
-            <h4><?php _e('Information', 'wp-trivia'); ?></h4>
-
-            <?php
-            if ($this->quiz->isFormActivated() && $this->quiz->getFormShowPosition() == WpTrivia_Model_Quiz::QUIZ_FORM_POSITION_END
-                && (!$this->quiz->isShowReviewQuestion() || $this->quiz->isQuizSummaryHide())
-            ) {
-                $this->showFormBox();
-            }
-
-            ?>
-
-            <input type="button" name="endInfopage" value="<?php echo $this->_buttonNames['finish_quiz']; ?>"
-                   class="wpTrivia_button">
-        </div>
-        <?php
-    }
-
     private function showTimeLimitBox()
     {
         ?>
@@ -491,83 +391,6 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                     </li>
                 </ol>
                 <div style="clear: both;"></div>
-            </div>
-        </div>
-        <?php
-    }
-
-    private function showResultBox($result, $questionCount)
-    {
-        ?>
-        <div style="display: none;" class="wpTrivia_results">
-            <h4 class="wpTrivia_header"><?php _e('Results', 'wp-trivia'); ?></h4>
-            <?php if (!$this->quiz->isHideResultCorrectQuestion()) { ?>
-                <p>
-                    <?php printf(__('%s of %s questions answered correctly', 'wp-trivia'),
-                        '<span class="wpTrivia_correct_answer">0</span>', '<span>' . $questionCount . '</span>'); ?>
-                </p>
-            <?php }
-            if (!$this->quiz->isHideResultQuizTime()) { ?>
-                <p class="wpTrivia_quiz_time">
-                    <?php _e('Your time: <span></span>', 'wp-trivia'); ?>
-                </p>
-            <?php } ?>
-            <p class="wpTrivia_time_limit_expired" style="display: none;">
-                <?php _e('Time has elapsed', 'wp-trivia'); ?>
-            </p>
-            <?php if (!$this->quiz->isHideResultPoints()) { ?>
-                <p class="wpTrivia_points">
-                    <?php printf(__('You have reached %s of %s points, (%s)', 'wp-trivia'), '<span>0</span>',
-                        '<span>0</span>', '<span>0</span>'); ?>
-                </p>
-            <?php } ?>
-            <?php if ($this->quiz->isShowAverageResult()) { ?>
-                <div class="wpTrivia_resultTable">
-                    <table>
-                        <tbody>
-                        <tr>
-                            <td class="wpTrivia_resultName"><?php _e('Average score', 'wp-trivia'); ?></td>
-                            <td class="wpTrivia_resultValue">
-                                <div style="background-color: #6CA54C;">&nbsp;</div>
-                                <span>&nbsp;</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="wpTrivia_resultName"><?php _e('Your score', 'wp-trivia'); ?></td>
-                            <td class="wpTrivia_resultValue">
-                                <div style="background-color: #F79646;">&nbsp;</div>
-                                <span>&nbsp;</span>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            <?php } ?>
-            <div>
-                <ul class="wpTrivia_resultsList">
-                    <?php foreach ($result['text'] as $finalText) { ?>
-                        <li style="display: none;">
-                            <div>
-                                <?php echo do_shortcode(apply_filters('comment_text', $finalText)); ?>
-                            </div>
-                        </li>
-                    <?php } ?>
-                </ul>
-            </div>
-            <?php
-            if ($this->quiz->isToplistActivated()) {
-                if ($this->quiz->getToplistDataShowIn() == WpTrivia_Model_Quiz::QUIZ_TOPLIST_SHOW_IN_NORMAL) {
-                    echo do_shortcode('[WpTrivia_toplist ' . $this->quiz->getId() . ' q="true"]');
-                }
-
-                $this->showAddToplist();
-            }
-            ?>
-            <div style="margin: 10px 0px;">
-                <?php if ($this->quiz->isToplistActivated() && $this->quiz->getToplistDataShowIn() == WpTrivia_Model_Quiz::QUIZ_TOPLIST_SHOW_IN_BUTTON) { ?>
-                    <input class="wpTrivia_button" type="button" name="showToplist"
-                           value="<?php _e('Show leaderboard', 'wp-trivia'); ?>">
-                <?php } ?>
             </div>
         </div>
         <?php
@@ -739,12 +562,6 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
                                 <?php echo do_shortcode(apply_filters('comment_text', $question->getTipMsg())); ?>
                             </div>
                         </div>
-                    <?php } ?>
-
-                    <?php if (!$this->quiz->isSkipQuestionDisabled() && $this->quiz->isShowReviewQuestion()) { ?>
-                        <input type="button" name="skip" value="<?php _e('Skip question', 'wp-trivia'); ?>"
-                               class="wpTrivia_button"
-                               style="float: left; margin-right: 10px !important;">
                     <?php } ?>
                     <?php if ($question->isTipEnabled()) { ?>
                         <input type="button" name="tip" value="<?php _e('Hint', 'wp-trivia'); ?>"

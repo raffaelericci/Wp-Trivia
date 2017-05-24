@@ -13,19 +13,6 @@ class WpTrivia_Controller_Statistics extends WpTrivia_Controller_Controller
         }
     }
 
-    public function getAverageResult($quizId)
-    {
-        $statisticRefMapper = new WpTrivia_Model_StatisticRefMapper();
-
-        $result = $statisticRefMapper->fetchFrontAvg($quizId);
-
-        if (isset($result['g_points']) && $result['g_points']) {
-            return round(100 * $result['points'] / $result['g_points'], 2);
-        }
-
-        return 0;
-    }
-
     private function showNew($quizId)
     {
         if (!current_user_can('wpTrivia_show_statistics')) {
