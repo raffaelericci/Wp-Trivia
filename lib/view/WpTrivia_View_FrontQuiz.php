@@ -53,46 +53,56 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
 
         $question_count = count($this->question);
 
+		if (!$preview){
         ?>
         <div class="wpTrivia_content" id="wpTrivia_<?php echo $this->quiz->getId(); ?>">
             <?php
+				$this->showTimeLimitBox();
 
-            $this->showTimeLimitBox();
+				$this->showLockBox();
+				$this->showStartOnlyRegisteredUserBox();
+				$this->showPrerequisiteBox();
 
-            $this->showLockBox();
-            $this->showStartOnlyRegisteredUserBox();
-            $this->showPrerequisiteBox();
+				if ($this->quiz->getToplistDataShowIn() == WpTrivia_Model_Quiz::QUIZ_TOPLIST_SHOW_IN_BUTTON) {
+					$this->showToplistInButtonBox();
+				}
 
-            if ($this->quiz->getToplistDataShowIn() == WpTrivia_Model_Quiz::QUIZ_TOPLIST_SHOW_IN_BUTTON) {
-                $this->showToplistInButtonBox();
-            }
+				$this->showReviewBox($question_count);
+				$this->showQuizAnker();
 
-            $this->showReviewBox($question_count);
-            $this->showQuizAnker();
+				$quizData = $this->showQuizBox($question_count);
 
-            $quizData = $this->showQuizBox($question_count);
 
-            ?>
-        </div>
-        <?php
+				?>
+			</div>
+			<?php
 
-        $bo = $this->createOption($preview);
-        ?>
-        <script type="text/javascript">
-            window.wpTriviaInitList = window.wpTriviaInitList || [];
+			$bo = $this->createOption($preview);
+			?>
+			<script type="text/javascript">
+				window.wpTriviaInitList = window.wpTriviaInitList || [];
 
-            window.wpTriviaInitList.push({
-                id: '#wpTrivia_<?php echo $this->quiz->getId(); ?>',
-                init: {
-                    quizId: <?php echo (int)$this->quiz->getId(); ?>,
-                    timelimit: <?php echo (int)$this->quiz->getTimeLimit(); ?>,
-                    bo: <?php echo $bo ?>,
-                    qpp: <?php echo $this->quiz->getQuestionsPerPage(); ?>,
-                    formPos: <?php echo (int)$this->quiz->getFormShowPosition(); ?>
-                }
-            });
-        </script>
-        <?php
+				window.wpTriviaInitList.push({
+					id: '#wpTrivia_<?php echo $this->quiz->getId(); ?>',
+					init: {
+						quizId: <?php echo (int)$this->quiz->getId(); ?>,
+						timelimit: <?php echo (int)$this->quiz->getTimeLimit(); ?>,
+						bo: <?php echo $bo ?>,
+						qpp: <?php echo $this->quiz->getQuestionsPerPage(); ?>,
+						formPos: <?php echo (int)$this->quiz->getFormShowPosition(); ?>
+					}
+				});
+			</script>
+			<?php
+		}else{
+			?>
+			<div class="wpTrivia_contentList">
+				<?php
+				$quizData = $this->showQuizPreviewBox($question_count);
+				?>
+			</div>
+			<?php
+		}
     }
 
     private function createOption($preview)
@@ -578,6 +588,39 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
             <div class="wpTrivia_button next">
                 <img src="<?php echo WPPROQUIZ_URL . '/img/arrow-right.png'; ?>" alt="Next">
             </div>
+        </div>
+        <?php
+	}
+
+	/**
+     * Prints quiz's html preview structure
+     *
+     * @param  {int} $questionCount
+     */
+    private function showQuizPreviewBox($questionCount) {
+        ?>
+        <div class="wpTrivia_quizPreview">
+			<?php
+			$quiz = $this->quiz;
+			$question = $this->question[0];
+			$answerArray = $question->getAnswerData();
+			$quizLink = basename($_SERVER['REQUEST_URI']);
+			$quizLink .= (strpos($quizLink,'?')) ? '&' : '?';
+			$quizLink .= 'idQuiz=' . $quiz->getId();
+			?>
+			<div class="wpTrivia_quizItem">
+				<?php if ($question->getImageId()) { ?>
+					<div class="wpTrivia_quizImg">
+						<img alt="question image" src="<?php echo wp_get_attachment_url($question->getImageId()); ?>">
+					</div>
+				<?php } ?>
+				<div class="wpTrivia_quizText">
+					<h5><?php echo $questionCount ?>&nbsp;<?php echo __('QUESTIONS') ?></h5>
+					<h2><?php echo $quiz->getName() ?></h2>
+					<p><?php echo $quiz->getText() ?></p>
+				</div>
+				<a href="<?php echo $quizLink ?>" class="wpTrivia_button"><?php _e('Play', 'wp-trivia'); ?></a>
+			</div>
         </div>
         <?php
     }

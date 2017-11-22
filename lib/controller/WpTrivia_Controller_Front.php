@@ -91,22 +91,33 @@ class WpTrivia_Controller_Front
 
     public function shortcode($attr)
     {
-        $id = $attr[0];
+		$id = '';
+		if (isset($attr) && is_array($attr) && count($attr) > 0){
+			$id = $attr[0];
+		}elseif (!empty($_GET['idQuiz'])){
+			$id = $_GET['idQuiz'];
+		}
         $content = '';
 
         if (!$this->_settings->isJsLoadInHead()) {
             $this->loadJsScripts();
         }
 
+		ob_start();
         if (is_numeric($id)) {
-            ob_start();
-
             $this->handleShortCode($id);
-
-            $content = ob_get_contents();
-
-            ob_end_clean();
-        }
+        }else{
+			echo '<div id="wpTrivia_quizList" class="clearfix">';
+            $quizMapper = new WpTrivia_Model_QuizMapper();
+            $quizList = $quizMapper->fetchAll();
+            foreach ($quizList as $quiz){
+                $this->handleShortCode($quiz->getId(), true);
+			}
+			echo '</div>';
+			echo '<div id="wpTrivia_quizDetails"></div>';
+		}
+		$content = ob_get_contents();
+		ob_end_clean();
 
         if ($this->_settings->isAddRawShortcode()) {
             return '[raw]' . $content . '[/raw]';
@@ -115,7 +126,7 @@ class WpTrivia_Controller_Front
         return $content;
     }
 
-    public function handleShortCode($id)
+    public function handleShortCode($id, $preview = false)
     {
         $view = new WpTrivia_View_FrontQuiz();
 
@@ -157,7 +168,7 @@ class WpTrivia_Controller_Front
         if ($maxQuestion) {
             $view->showMaxQuestion();
         } else {
-            $view->show();
+            $view->show($preview);
         }
     }
 
@@ -211,5 +222,5 @@ class WpTrivia_Controller_Front
         $mapper = new WpTrivia_Model_GlobalSettingsMapper();
 
         $this->_settings = $mapper->fetchAll();
-    }
+	}
 }

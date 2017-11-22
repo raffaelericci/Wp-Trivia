@@ -65,7 +65,7 @@ class WpTrivia_Controller_Ajax
             'completedQuiz' => array('WpTrivia_Controller_Quiz', 'ajaxCompletedQuiz'),
             'quizCheckLock' => array('WpTrivia_Controller_Quiz', 'ajaxQuizCheckLock'),
             'addInToplist' => array('WpTrivia_Controller_Toplist', 'ajaxAddInToplist'),
-            'showFrontToplist' => array('WpTrivia_Controller_Toplist', 'ajaxShowFrontToplist')
+			'showFrontToplist' => array('WpTrivia_Controller_Toplist', 'ajaxShowFrontToplist')
         );
 
         //nopriv
@@ -73,7 +73,7 @@ class WpTrivia_Controller_Ajax
             'completedQuiz' => array('WpTrivia_Controller_Quiz', 'ajaxCompletedQuiz'),
             'quizCheckLock' => array('WpTrivia_Controller_Quiz', 'ajaxQuizCheckLock'),
             'addInToplist' => array('WpTrivia_Controller_Toplist', 'ajaxAddInToplist'),
-            'showFrontToplist' => array('WpTrivia_Controller_Toplist', 'ajaxShowFrontToplist')
+			'showFrontToplist' => array('WpTrivia_Controller_Toplist', 'ajaxShowFrontToplist')
         );
     }
 }

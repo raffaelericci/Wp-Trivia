@@ -132,7 +132,8 @@
 }
 .wpTrivia_content .wpTrivia_question_text p {
     text-transform: uppercase;
-    font-size: 40px;
+	font-size: 40px;
+	line-height: 40px;
     font-weight: 700;
     text-align: center;
 }
@@ -174,7 +175,7 @@
     border: 2px solid #e40038;
     background: #e40038;
 }
-.wpTrivia_content .wpTrivia_answerInput_singleMulti, .wpTrivia_content .wpTrivia_button {
+.wpTrivia_content .wpTrivia_answerInput_singleMulti, .wpTrivia_content .wpTrivia_button, .wpTrivia_contentList .wpTrivia_button {
     cursor: pointer;
     background: #000;
     height: 48px;
@@ -228,3 +229,32 @@
     width: auto;
 }
 /** //Final Page **/
+
+
+/** List Page **/
+.wpTrivia_contentList .wpTrivia_quizPreview{
+	width: 33%;
+    float: left;
+	box-sizing: border-box;
+	padding: 10px;
+}
+.wpTrivia_contentList .wpTrivia_quizPreview .wpTrivia_quizImg{
+	width: 280px;
+	height: 190px;
+	margin-bottom: 20px;
+}
+.wpTrivia_contentList .wpTrivia_quizPreview .wpTrivia_quizText{
+	height: 190px;
+	margin-bottom: 25px;
+}
+.wpTrivia_contentList .wpTrivia_quizPreview .wpTrivia_button{
+	display: inline-block;
+	box-sizing: border-box;
+	min-width: 95px;
+	background-color: #03a9db;
+	text-align: center;
+	padding: 13px 25px;
+	color: #fff;
+	line-height: 1em;
+}
+/** // List Page **/
