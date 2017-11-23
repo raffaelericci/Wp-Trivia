@@ -604,14 +604,23 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
 			$quiz = $this->quiz;
 			$question = $this->question[0];
 			$answerArray = $question->getAnswerData();
-			$quizLink = basename($_SERVER['REQUEST_URI']);
+			$quizLink = $_SERVER['REQUEST_URI'];
 			$quizLink .= (strpos($quizLink,'?')) ? '&' : '?';
 			$quizLink .= 'idQuiz=' . $quiz->getId();
+
+			$inactive = false;
+			$userMetaTrivia = get_user_meta(get_current_user_id(), 'wp-trivia', true);
+			if (is_array($userMetaTrivia) && array_key_exists($quiz->getId(), $userMetaTrivia)){
+				if ($questionCount == count($userMetaTrivia[$quiz->getId()])){
+					$inactive = true;
+				}
+			}
 			?>
 			<div class="wpTrivia_quizItem">
 				<?php if ($question->getImageId()) { ?>
 					<div class="wpTrivia_quizImg">
 						<img alt="question image" src="<?php echo wp_get_attachment_url($question->getImageId()); ?>">
+						<span class="verb-points">+<?php echo Wordpress_Mambo::get()->getBehaviourPoints('invite_friend') ?></span>
 					</div>
 				<?php } ?>
 				<div class="wpTrivia_quizText">
@@ -619,7 +628,11 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
 					<h2><?php echo $quiz->getName() ?></h2>
 					<p><?php echo $quiz->getText() ?></p>
 				</div>
-				<a href="<?php echo $quizLink ?>" class="wpTrivia_button"><?php _e('Play', 'wp-trivia'); ?></a>
+				<?php if (!$inactive) { ?>
+					<a href="<?php echo $quizLink ?>" class="wpTrivia_button"><?php _e('Play', 'wp-trivia'); ?></a>
+				<?php } else { ?>
+					<span class="wpTrivia_button inactive"><?php _e("You've already played", "wp-trivia"); ?></span>
+				<?php } ?>
 			</div>
         </div>
         <?php

@@ -528,7 +528,22 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
                 }
                 break;
             // TODO - Implement other question types
-        }
+		}
+
+		// Salvataggio quiz e risposte nei meta dell'utente
+		global $post;
+
+		$user = wp_get_current_user();
+		$userTrivia = get_user_meta($user->ID, 'wp-trivia', true);
+		$userTriviaQuizQuestion = array();
+		if (array_key_exists($data['quizId'], $userTrivia)){
+			$userTriviaQuizQuestion = $userTrivia[$data['quizId']];
+		}
+		$userTriviaQuizQuestion[$data['questionId']] = $data['answer'];
+		$userTrivia[$data['quizId']] = $userTriviaQuizQuestion;
+		update_user_meta( $user->ID, 'wp-trivia', $userTrivia);
+
+
         do_action('wptrivia_after_answer', $data, $res);
         return json_encode($res);
     }

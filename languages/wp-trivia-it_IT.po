@@ -2,14 +2,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-Pro-Quiz\n"
 "POT-Creation-Date: 2015-08-30 10:26+0200\n"
-"PO-Revision-Date: 2015-08-30 10:26+0200\n"
+"PO-Revision-Date: 2017-11-23 11:14+0100\n"
 "Last-Translator: Julius Fischer <webmaster@it-gecko.de>\n"
 "Language-Team: \n"
 "Language: it_IT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.4\n"
+"X-Generator: Poedit 1.8.8\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -21,7 +21,7 @@ msgstr "Vuoi davvero eliminare il quiz/la domanda?"
 
 #: lib/controller/WpProQuiz_Controller_Admin.php:110
 msgid "Title is not filled!"
-msgstr "MAnca il titolo"
+msgstr "Manca il titolo"
 
 #: lib/controller/WpProQuiz_Controller_Admin.php:111
 msgid "No question deposited!"
@@ -2972,6 +2972,14 @@ msgid ""
 msgstr ""
 "E' possibile gtradurre WP-Pro-Quiz da una lingua esistente ad altra "
 "esistente (p.e. da inglese a inglese) p.e per rinominare i pulsanti."
+
+#: lib/view/WpProQuiz_View_FrontQuiz.php:632
+msgid "Play"
+msgstr "Gioca"
+
+#: lib/view/WpProQuiz_View_FrontQuiz.php:634
+msgid "You've already played"
+msgstr "Hai già giocato"
 
 #~ msgid "In case of problems"
 #~ msgstr "In caso di problemi"
