@@ -421,6 +421,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
      * @param  {int} $questionCount
      */
     private function showQuizBox($questionCount) {
+        if (!$this->isQuizActive()) return;
         ?>
         <div class="wpTrivia_quiz_progress" style="<?php echo "width: " . $questionCount * 45 . "px;" ?>">
             <div class="wpTrivia_quiz_progress_step active">
@@ -590,7 +591,20 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
             </div>
         </div>
         <?php
-	}
+    }
+    
+    private function isQuizActive() {
+        $active = true;
+        $quiz = $this->quiz;
+        $questionCount = count($this->question);
+        $userMetaTrivia = get_user_meta(get_current_user_id(), 'wp-trivia', true);
+        if (is_array($userMetaTrivia) && array_key_exists($quiz->getId(), $userMetaTrivia)){
+            if ($questionCount == count($userMetaTrivia[$quiz->getId()])){
+                $active = false;
+            }
+        }
+        return $active;
+    }
 
 	/**
      * Prints quiz's html preview structure
@@ -598,9 +612,9 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
      * @param  {int} $questionCount
      */
     private function showQuizPreviewBox($questionCount) {
-        ?>
+    ?>
         <div class="wpTrivia_quizPreview">
-			<?php
+		<?php
 			$quiz = $this->quiz;
 			$question = $this->question[0];
 			$answerArray = $question->getAnswerData();
@@ -608,14 +622,8 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
 			$quizLink .= (strpos($quizLink,'?')) ? '&' : '?';
 			$quizLink .= 'idQuiz=' . $quiz->getId();
 
-			$inactive = false;
-			$userMetaTrivia = get_user_meta(get_current_user_id(), 'wp-trivia', true);
-			if (is_array($userMetaTrivia) && array_key_exists($quiz->getId(), $userMetaTrivia)){
-				if ($questionCount == count($userMetaTrivia[$quiz->getId()])){
-					$inactive = true;
-				}
-			}
-			?>
+            $inactive = !$this->isQuizActive();
+		?>
 			<div class="wpTrivia_quizItem">
 				<?php if ($question->getImageId()) { ?>
 					<div class="wpTrivia_quizImg">

@@ -511,6 +511,8 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
      * @return {array} $res  | isCorrect, array correctAnswer
      */
     public static function ajaxCheckAnswer($data) {
+        $quizMapper = new WpTrivia_Model_QuizMapper();
+        $quiz = $quizMapper->fetch($data['quizId']);
         $questionMapper = new WpTrivia_Model_QuestionMapper();
         $correctAnswers = $questionMapper->fetch($data['questionId'])->getAnswerData();
         $res = [
@@ -541,10 +543,15 @@ class WpTrivia_Controller_Question extends WpTrivia_Controller_Controller
 		}
 		$userTriviaQuizQuestion[$data['questionId']] = $data['answer'];
 		$userTrivia[$data['quizId']] = $userTriviaQuizQuestion;
-		update_user_meta( $user->ID, 'wp-trivia', $userTrivia);
-
-
+        update_user_meta( $user->ID, 'wp-trivia', $userTrivia);
+        
         do_action('wptrivia_after_answer', $data, $res);
+        
+        if (is_array($userTrivia) && array_key_exists($quiz->getId(), $userTrivia) && 
+            $quiz->fetchCountQuestions() == count($userTrivia[$quiz->getId()])) {
+                do_action('wptrivia_quiz_complete', $quiz->getId());
+        }
+
         return json_encode($res);
     }
 

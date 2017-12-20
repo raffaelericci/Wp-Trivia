@@ -240,8 +240,6 @@
 }
 .wpTrivia_contentList .wpTrivia_quizPreview .wpTrivia_quizImg{
 	position: relative;
-	width: 280px;
-	height: 190px;
 	margin-bottom: 20px;
 }
 .wpTrivia_contentList .wpTrivia_quizPreview .wpTrivia_quizText{
@@ -277,7 +275,9 @@
 	font-family: "MiniSansSerif", Arial, Helvetica, sans-serif;
 	font-weight: normal;
 	text-decoration: none;
-	font-size: 15px;
+    font-size: 15px;
+    height: auto;
+    border: none;
 }
 .wpTrivia_contentList .wpTrivia_quizPreview .wpTrivia_button.inactive{
 	background-color: #cfcfcf;
