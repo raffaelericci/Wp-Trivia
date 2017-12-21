@@ -63,6 +63,40 @@ class WpTrivia_View_QuizEdit extends WpTrivia_View_View
                                 <tbody>
                                 <tr>
                                     <th scope="row">
+                                        <?php _e('Valid from date', 'wp-trivia'); ?>
+                                    </th>
+                                    <td>
+                                        <fieldset>
+                                            <legend class="screen-reader-text">
+                                                <span><?php _e('Valid from date', 'wp-trivia'); ?></span>
+                                            </legend>
+                                            <label for="valid_from_date">
+                                                <input type="text" class="regular-text" id="valid_from_date"
+                                                       value="<?php echo $this->quiz->getValidFromDate(); ?>"
+                                                       name="validFromDate">
+                                            </label>
+                                        </fieldset>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <?php _e('Valid to date', 'wp-trivia'); ?>
+                                    </th>
+                                    <td>
+                                        <fieldset>
+                                            <legend class="screen-reader-text">
+                                                <span><?php _e('Valid to date', 'wp-trivia'); ?></span>
+                                            </legend>
+                                            <label for="valid_to_date">
+                                                <input type="text" class="regular-text" id="valid_to_date"
+                                                       value="<?php echo $this->quiz->getValidToDate(); ?>"
+                                                       name="validToDate">
+                                            </label>
+                                        </fieldset>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
                                         <?php _e('Time limit', 'wp-trivia'); ?>
                                     </th>
                                     <td>

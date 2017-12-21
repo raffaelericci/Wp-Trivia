@@ -110,9 +110,19 @@ class WpTrivia_Controller_Front
 			echo '<div id="wpTrivia_quizList" class="clearfix">';
             $quizMapper = new WpTrivia_Model_QuizMapper();
             $quizList = $quizMapper->fetchAll();
-            foreach ($quizList as $quiz){
+
+            echo '<h1 class="headline2">' . __('Current Trivia') . '</h1>';
+            $validQuizList = array_filter($quizList, function($quiz){ return $quiz->isValidToday(); });
+            foreach ($validQuizList as $quiz){
                 $this->handleShortCode($quiz->getId(), true);
-			}
+            }
+            
+            echo '<h1 class="headline2">' . __('Past Trivia') . '</h1>';
+            $pastQuizList = array_filter($quizList, function($quiz){ return !$quiz->isValidToday(); });
+            foreach ($pastQuizList as $quiz){
+                $this->handleShortCode($quiz->getId(), true);
+            }
+
 			echo '</div>';
 			echo '<div id="wpTrivia_quizDetails"></div>';
 		}

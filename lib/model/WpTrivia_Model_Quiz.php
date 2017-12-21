@@ -85,6 +85,10 @@ class WpTrivia_Model_Quiz extends WpTrivia_Model_Model
     //0.33
     protected $_pluginContainer = null;
 
+    //0.34
+    protected $_validFromDate = null;
+    protected $_validToDate = null;
+
     public function setId($_id)
     {
         $this->_id = (int)$_id;
@@ -578,6 +582,37 @@ class WpTrivia_Model_Quiz extends WpTrivia_Model_Model
         $this->_adminEmail = $_adminEmail;
 
         return $this;
+    }
+    
+    public function setValidFromDate($date) {
+        $this->_validFromDate = $date;
+    }
+    
+    public function getValidFromDate($date) {
+        return $this->_validFromDate;
+    }
+    
+    public function setValidToDate($date) {
+        $this->_validToDate = $date;
+    }
+    
+    public function getValidToDate($date) {
+        return $this->_validToDate;
+    }
+
+    public function isValidToday() {
+        $validFromDate = strtotime($this->getValidFromDate());
+        $validToDate = strtotime($this->getValidToDate());
+        $today = strtotime('today');
+        if (!$validFromDate && !$validToDate) {
+            return true;
+        } elseif ($validFromDate && !$validToDate) {
+            return $today >= $validFromDate; 
+        } elseif (!$validFromDate && $validToDate) {
+            return $today <= $validToDate;
+        } else {
+            return $today >= $validFromDate && $today <= $validToDate;
+        }
     }
 
     /**

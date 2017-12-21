@@ -50,11 +50,10 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
     public function show($preview = false)
     {
         $this->loadButtonNames();
-
         $question_count = count($this->question);
-
+        $bo = $this->createOption($preview);
 		if (!$preview){
-        ?>
+    ?>
         <div class="wpTrivia_content" id="wpTrivia_<?php echo $this->quiz->getId(); ?>">
             <?php
 				$this->showTimeLimitBox();
@@ -71,37 +70,26 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
 				$this->showQuizAnker();
 
 				$quizData = $this->showQuizBox($question_count);
-
-
-				?>
-			</div>
-			<?php
-
-			$bo = $this->createOption($preview);
 			?>
-			<script type="text/javascript">
-				window.wpTriviaInitList = window.wpTriviaInitList || [];
-
-				window.wpTriviaInitList.push({
-					id: '#wpTrivia_<?php echo $this->quiz->getId(); ?>',
-					init: {
-						quizId: <?php echo (int)$this->quiz->getId(); ?>,
-						timelimit: <?php echo (int)$this->quiz->getTimeLimit(); ?>,
-						bo: <?php echo $bo ?>,
-						qpp: <?php echo $this->quiz->getQuestionsPerPage(); ?>,
-						formPos: <?php echo (int)$this->quiz->getFormShowPosition(); ?>
-					}
-				});
-			</script>
-			<?php
-		}else{
-			?>
-			<div class="wpTrivia_contentList">
-				<?php
-				$quizData = $this->showQuizPreviewBox($question_count);
-				?>
-			</div>
-			<?php
+		</div>
+        <script type="text/javascript">
+            window.wpTriviaInitList = window.wpTriviaInitList || [];
+            window.wpTriviaInitList.push({
+                id: '#wpTrivia_<?php echo $this->quiz->getId(); ?>',
+                init: {
+                    quizId: <?php echo (int)$this->quiz->getId(); ?>,
+                    timelimit: <?php echo (int)$this->quiz->getTimeLimit(); ?>,
+                    bo: <?php echo $bo ?>,
+                    qpp: <?php echo $this->quiz->getQuestionsPerPage(); ?>,
+                    formPos: <?php echo (int)$this->quiz->getFormShowPosition(); ?>
+                }
+            });
+        </script>
+    <?php } else { ?>
+        <div class="wpTrivia_contentList">
+            <?php $quizData = $this->showQuizPreviewBox($question_count); ?>
+        </div>
+    <?php
 		}
     }
 
@@ -635,12 +623,14 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
 					<h5><?php echo $questionCount ?>&nbsp;<?php echo __('QUESTIONS') ?></h5>
 					<h2><?php echo $quiz->getName() ?></h2>
 					<p><?php echo $quiz->getText() ?></p>
-				</div>
-				<?php if (!$inactive) { ?>
-					<a href="<?php echo $quizLink ?>" class="wpTrivia_button"><?php _e('Play', 'wp-trivia'); ?></a>
-				<?php } else { ?>
-					<span class="wpTrivia_button inactive"><?php _e("You've already played", "wp-trivia"); ?></span>
-				<?php } ?>
+                </div>
+                <?php if ($quiz->isValidToday()) { ?>
+                    <?php if (!$inactive) { ?>
+                        <a href="<?php echo $quizLink ?>" class="wpTrivia_button"><?php _e('Play', 'wp-trivia'); ?></a>
+                    <?php } else { ?>
+                        <span class="wpTrivia_button inactive"><?php _e("You've already played", "wp-trivia"); ?></span>
+                    <?php } ?>
+                <?php } ?>
 			</div>
         </div>
         <?php

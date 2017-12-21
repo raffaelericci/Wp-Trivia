@@ -126,6 +126,8 @@ class WpTrivia_Helper_DbUpgrade
 			  admin_email text NOT NULL,
   			  user_email text NOT NULL,
 			  plugin_container text,
+			  valid_from_date date NULL DEFAULT NULL,
+			  valid_to_date date NULL DEFAULT NULL,
 			  PRIMARY KEY  (id)
 			) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 

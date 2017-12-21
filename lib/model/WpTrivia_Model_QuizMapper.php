@@ -165,135 +165,70 @@ class WpTrivia_Model_QuizMapper extends WpTrivia_Model_Mapper
             'questions_per_page' => $data->getQuestionsPerPage(),
             'admin_email' => $data->getAdminEmail(true),
             'user_email' => $data->getUserEmail(true),
-            'plugin_container' => $data->getPluginContainer(true)
+            'plugin_container' => $data->getPluginContainer(true),
+            'valid_from_date' => $data->getValidFromDate(),
+            'valid_to_date' => $data->getValidToDate()
         );
 
+        $format = [
+            '%s',		
+            '%s',		
+            '%s',
+            '%d',
+            '%d',
+            '%d',
+            '%d',
+            '%d',
+            '%d',
+            '%d',
+            '%d',
+            '%d',
+            '%d',
+            '%d',
+            '%d',
+            '%d',
+            '%d',
+            '%d',
+            '%s',
+            '%d',
+            '%d',
+            '%d',
+            '%d',
+            '%d',
+            '%d',
+            '%d',
+            '%d',
+            '%d',
+            '%d',
+            '%s',
+            '%s',
+            '%s',
+            '%s',
+            '%s'
+        ];
+
         if ($data->getId() != 0) {
-            $result = $this->_wpdb->update($this->_table,
+            $result = $this->_wpdb->update(
+                $this->_table,
                 $set,
-                array(
-                    'id' => $data->getId()
-                ),
-                array(
-                    '%s',
-                    '%s',
-                    '%s',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%s',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%s',
-                    '%s',
-                    '%s'
-                ),
-                array('%d'));
+                array('id' => $data->getId()),
+                $format,
+                array('%d')
+            );
         } else {
-
-            $result = $this->_wpdb->insert($this->_table,
+            $result = $this->_wpdb->insert(
+                $this->_table,
                 $set,
-                array(
-                    '%s',
-                    '%s',
-                    '%s',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%s',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%d',
-                    '%s',
-                    '%s',
-                    '%s'
-                ));
-
+                $format
+            );
             $data->setId($this->_wpdb->insert_id);
         }
 
         if ($result === false) {
             return null;
+        } else {
+            return $data;
         }
-
-        return $data;
     }
 
     /**
