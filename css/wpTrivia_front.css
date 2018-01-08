@@ -1,8 +1,13 @@
 /** TODO - Work in progress: complete style rewrite **/
 
+#wpTrivia_quizList {
+    margin-bottom: 40px;
+}
+
 /** General **/
 .wpTrivia_content {
-    font-family: Helvetica;
+    margin-bottom: 40px;
+    color: #000;
 }
 .wpTrivia_content .wpTrivia_quiz .wpTrivia_list {
     list-style: none;
@@ -198,6 +203,7 @@
     display: none;
     width: 50px;
     height: 50px;
+    text-align: center;
 }
 .wpTrivia_content .wpTrivia_button.prev {
     top: calc(50% - 50px);
@@ -211,7 +217,7 @@
 }
 .wpTrivia_content .wpTrivia_button.prev img, .wpTrivia_content .wpTrivia_button.next img {
     width: 12px;
-    margin: calc(50% - 10px) auto auto;
+    margin: calc(50% - 24px) auto auto;
 }
 .wpTrivia_content .wpTrivia_button.prev:hover, .wpTrivia_content .wpTrivia_button.next:hover {
     background-color: #fff;
@@ -232,12 +238,6 @@
 
 
 /** List Page **/
-.wpTrivia_contentList .wpTrivia_quizPreview{
-	width: 33%;
-    float: left;
-	box-sizing: border-box;
-	padding: 10px;
-}
 .wpTrivia_contentList .wpTrivia_quizPreview .wpTrivia_quizImg{
 	position: relative;
 	margin-bottom: 20px;

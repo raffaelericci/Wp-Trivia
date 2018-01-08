@@ -111,17 +111,31 @@ class WpTrivia_Controller_Front
             $quizMapper = new WpTrivia_Model_QuizMapper();
             $quizList = $quizMapper->fetchAll();
 
-            echo '<h1 class="headline2">' . __('Current Trivia') . '</h1>';
-            $validQuizList = array_filter($quizList, function($quiz){ return $quiz->isValidToday(); });
+            echo '<section class="gamification clearfix">';
+            echo '<h1 class="headline2">' . __('Current Trivia.') . '</h1>';
+            echo '<div class="wpTrivia_contentList row">';
+            $validQuizList = array_filter($quizList, function($quiz){ 
+                return $quiz->isValidToday(); 
+            });
             foreach ($validQuizList as $quiz){
                 $this->handleShortCode($quiz->getId(), true);
             }
+			echo '</div>';
+            echo '</section>';
             
-            echo '<h1 class="headline2">' . __('Past Trivia') . '</h1>';
-            $pastQuizList = array_filter($quizList, function($quiz){ return !$quiz->isValidToday(); });
+            echo '<section class="gamification clearfix">';
+            echo '<h1 class="headline2">' . __('Past Trivia.') . '</h1>';
+            echo '<div class="wpTrivia_contentList row">';
+            $pastQuizList = array_filter($quizList, function($quiz){ 
+                $validToDate = strtotime($quiz->getValidToDate());
+                $today = strtotime('today');
+                return $validToDate && $today > $validToDate;
+            });
             foreach ($pastQuizList as $quiz){
                 $this->handleShortCode($quiz->getId(), true);
             }
+			echo '</div>';
+            echo '</section>';
 
 			echo '</div>';
 			echo '<div id="wpTrivia_quizDetails"></div>';

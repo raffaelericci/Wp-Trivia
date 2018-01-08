@@ -86,9 +86,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
             });
         </script>
     <?php } else { ?>
-        <div class="wpTrivia_contentList">
-            <?php $quizData = $this->showQuizPreviewBox($question_count); ?>
-        </div>
+        <?php $quizData = $this->showQuizPreviewBox($question_count); ?>
     <?php
 		}
     }
@@ -601,7 +599,7 @@ class WpTrivia_View_FrontQuiz extends WpTrivia_View_View
      */
     private function showQuizPreviewBox($questionCount) {
     ?>
-        <div class="wpTrivia_quizPreview">
+        <div class="wpTrivia_quizPreview col-md-8 col-sm-12">
 		<?php
 			$quiz = $this->quiz;
 			$question = $this->question[0];
