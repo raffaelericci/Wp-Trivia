@@ -588,7 +588,7 @@ class WpTrivia_Model_Quiz extends WpTrivia_Model_Model
         $this->_validFromDate = $date;
     }
     
-    public function getValidFromDate($date) {
+    public function getValidFromDate() {
         return $this->_validFromDate;
     }
     
@@ -596,7 +596,7 @@ class WpTrivia_Model_Quiz extends WpTrivia_Model_Model
         $this->_validToDate = $date;
     }
     
-    public function getValidToDate($date) {
+    public function getValidToDate() {
         return $this->_validToDate;
     }
 
